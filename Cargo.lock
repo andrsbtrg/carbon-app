@@ -24,6 +24,7 @@ checksum = "0d261e256854913907f67ed06efbc3338dfe6179796deefc1ff763fc1aee5535"
 name = "carbon_app"
 version = "0.1.0"
 dependencies = [
+ "dotenv",
  "ec3api",
 ]
 
@@ -58,7 +59,6 @@ checksum = "77c90badedccf4105eca100756a0b1289e191f6fcbdadd3cee1d2f614f97da8f"
 name = "ec3api"
 version = "0.1.0"
 dependencies = [
- "dotenv",
  "serde",
  "serde_json",
  "ureq",

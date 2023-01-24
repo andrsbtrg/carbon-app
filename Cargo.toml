@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 ec3api = {path = "./ec3api"}
+dotenv = "0.15.0"
