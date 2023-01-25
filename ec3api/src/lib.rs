@@ -1,5 +1,6 @@
 use std::fmt::Debug;
-use serde_json::Value;
+use serde::{Serialize, Deserialize};
+use serde_json::{Value, json};
 
 const BASE_PATH: &str = "https://buildingtransparency.org/api/";
 
@@ -7,11 +8,35 @@ pub struct Ec3api {
     api_key: String,
 }
 
+struct MyError {}
+
+
 #[derive(Debug)]
+#[derive(Serialize)]
+#[derive(Deserialize)]
 pub struct Ec3Material {
     pub name: String,
     pub gwp: String,
     pub image: String,
+}
+
+fn write_cache(json: String) {
+
+    match std::fs::write("cache.json", &json) {
+        Ok(_) => {println!("Results cached")},
+        Err(e) => {println!("{e:?}")},
+    };
+}
+fn read_cache() -> Result<Vec<Ec3Material>, MyError > {
+    match std::fs::read_to_string("cache.json") {
+        Ok(data) => {
+            
+                let result: Vec<Ec3Material> = serde_json::from_str(&data).expect("Error parsing cache");
+                Ok(result)
+
+        },
+        Err(_) => {Err(MyError{})},
+    }
 }
 
 impl Ec3api {
@@ -22,6 +47,13 @@ impl Ec3api {
     }
 
     pub fn get_epds(&self) -> Option<Vec<Ec3Material>> {
+
+        match read_cache() {
+            Ok(cache) => {println!("Cache found"); return Some(cache);},
+            Err(_) => {println!("No cache found")},
+            
+        }
+
         let path = BASE_PATH.to_string() + "epds";
         let auth = format!("{} {}", "Bearer", self.api_key);
 
@@ -51,6 +83,10 @@ impl Ec3api {
                 // dbg!(&v["name"]);
 
             });
+        match serde_json::to_string_pretty(&materials) {
+            Ok(json) => {write_cache(json)},
+            Err(e) => {dbg!(e);},
+        };
 
         // dbg!(materials);
         Some(materials)
