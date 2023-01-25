@@ -1,6 +1,6 @@
 use std::fmt::Debug;
 use serde::{Serialize, Deserialize};
-use serde_json::{Value, json};
+use serde_json::{Value};
 
 const BASE_PATH: &str = "https://buildingtransparency.org/api/";
 
