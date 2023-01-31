@@ -1,23 +1,99 @@
-use std::fmt::Debug;
+use std::{fmt::Debug, error, str::FromStr};
 use serde::{Serialize, Deserialize};
-use serde_json::{Value};
+use serde_json::{Value, json};
+use thiserror::Error;
 
 const BASE_PATH: &str = "https://buildingtransparency.org/api/";
 
 pub struct Ec3api {
     api_key: String,
 }
+#[derive(Error, Debug)]
+pub enum ApiError {
+    #[error("Request failed")]
+    RequestError(#[from] ureq::Error),
 
-struct MyError {}
+    #[error("Could not read cache")]
+    CacheError(#[from] std::io::Error),
+
+    #[error("Could not deserialize")]
+    Deserialize(#[from] serde_json::Error),
+
+    #[error("Request succeded but the material list is empty")]
+    EmptyArray(),
+
+    #[error("Wrong GWP format")]
+    GwpError,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub enum GwpUnits {
+    KgCO2e, 
+}
+
+impl FromStr for GwpUnits {
+    type Err = ();
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+            match s {
+                "KgCO2e" => Ok(Self::KgCO2e),
+                _ => Err(())
+            }
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Gwp {
+    value: f64,
+    unit: GwpUnits
+}
+
+impl Gwp {
+    pub fn as_str(&self) -> String {
+        format!("{} {:?}", self.value, self.unit)
+    }
+}
+
+impl Into<String> for Gwp {
+    fn into(self) -> String {
+        format!("{} {:?}", self.value, self.unit)
+    }
+}
+
+impl Default for Gwp {
+    fn default() -> Self {
+        Self { value:0 as f64, unit: GwpUnits::KgCO2e }
+    }
+}
+
+impl FromStr for Gwp {
+        type Err = ApiError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let (x, y) = s
+            .split_once(' ')
+            .ok_or(ApiError::GwpError)?;
+        // dbg!(x,y);
+        let value = x.parse::<f64>().map_err(|_| ApiError::GwpError)?;
+        let unit = y.parse::<GwpUnits>().map_err(|_| ApiError::GwpError)?;
+        dbg!(&value, &unit);
+        Ok(Gwp{ value, unit })
+    }
+}
 
 
-#[derive(Debug)]
-#[derive(Serialize)]
-#[derive(Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Ec3Material {
     pub name: String,
-    pub gwp: String,
+    pub gwp: Gwp,
     pub image: String,
+}
+
+impl Ec3Material {
+    fn from_json(value: &serde_json::Value) -> Self {
+        
+        todo!()
+
+    }
 }
 
 fn write_cache(json: String) {
@@ -27,16 +103,14 @@ fn write_cache(json: String) {
         Err(e) => {println!("{e:?}")},
     };
 }
-fn read_cache() -> Result<Vec<Ec3Material>, MyError > {
-    match std::fs::read_to_string("cache.json") {
-        Ok(data) => {
-            
-                let result: Vec<Ec3Material> = serde_json::from_str(&data).expect("Error parsing cache");
-                Ok(result)
+fn read_cache() -> Result<Vec<Ec3Material>, ApiError> {
 
-        },
-        Err(_) => {Err(MyError{})},
-    }
+    let contents = std::fs::read_to_string("cache.json")?;
+    
+    let result: Vec<Ec3Material> = serde_json::from_str(&contents)?;
+    
+    Ok(result)
+
 }
 
 impl Ec3api {
@@ -46,41 +120,41 @@ impl Ec3api {
         }
     }
 
-    pub fn get_epds(&self) -> Option<Vec<Ec3Material>> {
+    pub fn get_epds(&self) -> Result<Vec<Ec3Material>, ApiError> {
 
-        match read_cache() {
-            Ok(cache) => {println!("Cache found"); return Some(cache);},
-            Err(_) => {println!("No cache found")},
-            
+        if let Ok(ret) = read_cache() {
+            return Ok(ret)
         }
 
-        let path = BASE_PATH.to_string() + "epds";
+        println!("Querying materials...");
+
+        let path = BASE_PATH.to_string() + "materials";
+
         let auth = format!("{} {}", "Bearer", self.api_key);
 
 
         let response = ureq::get(&path)
             .set("Authorization", &auth)
             // .set("X-Total-Count", "1")
-            .call()
-            .unwrap();
-
-        let json: Value = serde_json::from_str(&response.into_string().unwrap()).unwrap();
+            .call()?
+            .into_string()?;
+        
+        let json: Value = serde_json::from_str(&response)?;
 
         let mut materials: Vec<Ec3Material> = Vec::new();
 
         json.as_array()
-            .unwrap()
+            .ok_or(ApiError::EmptyArray())?
             .iter()
             .for_each(|v| {
-
+                
                 let material = Ec3Material {
-                    name: v["name"].to_string(),
-                    gwp: v["gwp"].to_string(),
-                    image: v["image"].to_string(),
+                    name: v.get("name").unwrap().as_str().unwrap().to_string(),
+                    gwp: Gwp::from_str(v["gwp"].as_str().unwrap()).unwrap_or_default(),
+                    image: v.get("image").unwrap_or(&json!("No Image".to_string())).as_str().unwrap_or("").to_string(),
                 };
-                materials.push(material);
 
-                // dbg!(&v["name"]);
+                materials.push(material);
 
             });
         match serde_json::to_string_pretty(&materials) {
@@ -89,7 +163,7 @@ impl Ec3api {
         };
 
         // dbg!(materials);
-        Some(materials)
+        Ok(materials)
 
     }
 }
