@@ -28,7 +28,8 @@ pub enum ApiError {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub enum GwpUnits {
-    KgCO2e, 
+    KgCO2e,
+    Unknown 
 }
 
 impl FromStr for GwpUnits {
@@ -36,7 +37,9 @@ impl FromStr for GwpUnits {
     fn from_str(s: &str) -> Result<Self, Self::Err> {
             match s {
                 "KgCO2e" => Ok(Self::KgCO2e),
-                _ => Err(())
+                "kgCO2e" => Ok(Self::KgCO2e),
+                "kgCo2e" => Ok(Self::KgCO2e),
+                _ => Ok(Self::Unknown)
             }
     }
 }
@@ -151,7 +154,7 @@ impl Ec3api {
                 let material = Ec3Material {
                     name: v.get("name").unwrap().as_str().unwrap().to_string(),
                     gwp: Gwp::from_str(v["gwp"].as_str().unwrap()).unwrap_or_default(),
-                    image: v.get("image").unwrap_or(&json!("No Image".to_string())).as_str().unwrap_or("").to_string(),
+                    image: v.get("image").unwrap_or(&json!("".to_string())).as_str().unwrap_or("<No Image>").to_string(),
                 };
 
                 materials.push(material);
