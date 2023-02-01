@@ -13,9 +13,10 @@ impl MaterialWindow {
         let collection: Vec<MaterialsData> = materials.iter()
             .map(|m| {
             MaterialsData {
-                title: m.name.clone(),
+                title: m.name.to_string(),
                 descr: m.gwp.as_str(),
-                img_url: m.image.clone(),
+                country: m.manufacturer.country.to_owned(),
+                // img_url: m.image.to_owned().unwrap_or("<No image>".to_string()),
             }
         }).collect();
 
@@ -29,14 +30,9 @@ impl MaterialWindow {
             
             ui.label(&m.title);
             ui.monospace(&m.descr);
-            // ui.image(texture_id, size)
-            
-            // let mut link: String = m.img_url.to_string();
-            // link.pop();
 
-            // link.remove(0);
-
-            ui.hyperlink(&m.img_url);
+            // ui.hyperlink(&m.img_url); // removed for now
+            ui.monospace(&m.country);
             ui.add_space(2.);
             ui.separator();
             
@@ -47,12 +43,12 @@ impl MaterialWindow {
 struct MaterialsData {
     title: String,
     descr: String,
-    img_url: String,
-    // country: todo!(),
+    // img_url: String,
+    country: String,
 }
 
 impl eframe::App for MaterialWindow {
-    fn update(&mut self, ctx: &eframe::egui::Context, frame: &mut eframe::Frame) {
+    fn update(&mut self, ctx: &eframe::egui::Context, _frame: &mut eframe::Frame) {
         CentralPanel::default().show(ctx, |ui| {
 
             ScrollArea::vertical().auto_shrink([false;2]).show(ui, |ui| {
@@ -70,10 +66,14 @@ fn main() {
     let api_key = env::var("API_KEY").expect("API Key missing!");
 
 
-    let api = ec3api::Ec3api::new(&api_key);
+    let materials = ec3api::Ec3api::new(&api_key)
+        .set_country("US")
+        .set_endpoint("materials")
+        .call()
+        .unwrap();
     // dbg!(app);
 
-    let materials = api.get_epds().unwrap();
+    // let materials = &api.call().unwrap();
 
     let app = MaterialWindow::new(&materials);
     
