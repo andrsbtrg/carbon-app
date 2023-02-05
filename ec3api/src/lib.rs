@@ -5,10 +5,37 @@ use thiserror::Error;
 
 const BASE_PATH: &str = "https://buildingtransparency.org/api/";
 
+pub enum Country {
+    Us,
+    Germany,
+    UK,
+    None
+}
+impl ToString for Country {
+    fn to_string(&self) -> String {
+        match &self {
+            Country::Us => "US".to_string(),
+            Country::Germany => "DE".to_string(),
+            Country::UK => "UK".to_string(),
+            Country::None => "".to_string(),
+        }
+    }
+}
+pub enum Endpoint {
+    Materials,
+}
+impl ToString for Endpoint {
+    fn to_string(&self) -> String {
+        match &self {
+            Endpoint::Materials => "materials".to_string(),
+        }
+    }
+}
+
 pub struct Ec3api {
     api_key: String,
-    endpoint: String,
-    country: String,
+    endpoint: Endpoint,
+    country: Country,
 }
 #[derive(Error, Debug)]
 pub enum ApiError {
@@ -106,14 +133,6 @@ pub struct Ec3Material {
     pub manufacturer: Manufacturer,
 }
 
-impl Ec3Material {
-    fn from_json(value: &serde_json::Value) -> Self {
-        
-        todo!()
-
-    }
-}
-
 fn write_cache(json: String) {
 
     match std::fs::write("cache.json", &json) {
@@ -131,26 +150,38 @@ fn read_cache() -> Result<Vec<Ec3Material>, ApiError> {
 }
 
 impl Ec3api {
-    pub fn new(api_key: &str) -> Self {
+    pub fn new(api_key: &str) -> Ec3api {
         Ec3api {
             api_key: api_key.to_string(),
-            endpoint: "materials".to_string(),
-            country: "".to_string(),
+            endpoint: Endpoint::Materials,
+            country: Country::Germany,
         }
     }
 
-    pub fn set_country(& mut self, country_code: &str) -> &mut Self {
-        self.country = country_code.to_owned();
+    pub fn country(& mut self, country_code: Country) -> &mut Self {
+        self.country = country_code;
 
         self
     }
 
-    pub fn set_endpoint(& mut self, endpoint: &str) -> &mut Self {
-        self.endpoint = endpoint.to_owned();
+    pub fn endpoint(& mut self, endpoint: Endpoint) -> &mut Self {
+        self.endpoint = endpoint;
 
         self
     }
-    pub fn call(& mut self) -> Result<Vec<Ec3Material>, ApiError> {
+    fn prepare_url(& self) -> Result<String, ApiError> {
+
+        let jurisdiction = match self.country {
+            Country::None => "".to_owned(),
+            _ => format!("?jurisdiction={}", self.country.to_string()),
+        };
+        let url = format!("{}{}{}", BASE_PATH ,self.endpoint.to_string(), jurisdiction);
+
+        Ok(url)
+
+    }
+    pub fn fetch(& mut self) -> Result<Vec<Ec3Material>, ApiError> {
+
         if let Ok(ret) = read_cache() {
             return Ok(ret)
         } else {
@@ -159,12 +190,7 @@ impl Ec3api {
 
         println!("Querying materials...");
 
-        let jurisdiction = match self.country.is_empty() {
-            true => "".to_owned(),
-            false => format!("?jurisdiction={}", self.country),
-        };
-
-        let path = BASE_PATH.to_string() + &self.endpoint + &jurisdiction;
+        let path = self.prepare_url().unwrap();
 
         let auth = format!("{} {}", "Bearer", self.api_key);
 

@@ -1,1202 +1,1202 @@
 [
   {
-    "name": "CCS 3,000 PSI CUSTOM FLOOR MIX",
+    "name": "GLAPOR cellular glass",
     "gwp": {
-      "value": 277.0,
+      "value": 79.7,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/eb325c502cf94eccb19050a6e45cc6c6.png",
+    "manufacturer": {
+      "name": "GLAPOR Werk Mitterteich GmbH",
+      "country": "DE"
+    }
+  },
+  {
+    "name": "Steel Core Piles",
+    "gwp": {
+      "value": 1020.0,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/8c41f5a5e40d4a91a5cb2d8049c5415f.png",
+    "manufacturer": {
+      "name": "UAB Scandia Steel",
+      "country": "SE"
+    }
+  },
+  {
+    "name": "MAXI-TEC® UW 100-06",
+    "gwp": {
+      "value": 1.68,
       "unit": "KgCO2e"
     },
     "image": null,
     "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
+      "name": "Profil-Vertrieb",
+      "country": "DE"
     }
   },
   {
-    "name": "1617609",
+    "name": "MAXI-TEC® UW 50-06",
     "gwp": {
-      "value": 268.0,
+      "value": 2.11,
       "unit": "KgCO2e"
     },
     "image": null,
     "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
+      "name": "Profil-Vertrieb",
+      "country": "DE"
     }
   },
   {
-    "name": "Elite Sports 3000 .55 25% Ash",
-    "gwp": {
-      "value": 279.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "MAG AA 4000 STANDARD",
-    "gwp": {
-      "value": 389.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "5000psi 0.45 W/C 20% Fly Ash",
-    "gwp": {
-      "value": 350.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "MAG AA 4000 ASH FLOWABLE",
+    "name": "Non-reinforced AAC 8-0.80",
     "gwp": {
       "value": 303.0,
       "unit": "KgCO2e"
     },
     "image": null,
     "manufacturer": {
-      "name": "CEMEX",
+      "name": "H+H Deutschland GmbH",
+      "country": "DE"
+    }
+  },
+  {
+    "name": "Non-reinforced AAC 2-0.35",
+    "gwp": {
+      "value": 180.0,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/a12a398b578041039401efe4f8add40d.png",
+    "manufacturer": {
+      "name": "H+H Deutschland GmbH",
+      "country": "DE"
+    }
+  },
+  {
+    "name": "Carbon Steel Reinforcing Bar (secondary production route - scrap)",
+    "gwp": {
+      "value": 900.0,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/52a8fe2ff4144a8c9131379fe896dea2.png",
+    "manufacturer": {
+      "name": "ArcelorMittal",
+      "country": "LU"
+    }
+  },
+  {
+    "name": "Knauf Fire Panel 15 mm",
+    "gwp": {
+      "value": 4.27,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/d182221e334d4f0d95cae3322223f9c7.png",
+    "manufacturer": {
+      "name": "Knauf UK/I",
+      "country": "GB"
+    }
+  },
+  {
+    "name": "Knauf Fire Panel 12.5mm",
+    "gwp": {
+      "value": 3.67,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/d182221e334d4f0d95cae3322223f9c7.png",
+    "manufacturer": {
+      "name": "Knauf UK/I",
+      "country": "GB"
+    }
+  },
+  {
+    "name": "Knauf Sound Panel 12.5mm",
+    "gwp": {
+      "value": 3.44,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/56dfd58c385843c8b317ae7dbe2aaaae.png",
+    "manufacturer": {
+      "name": "Knauf UK/I",
+      "country": "GB"
+    }
+  },
+  {
+    "name": "Classic Planed",
+    "gwp": {
+      "value": 38.8,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/a4a3fe6b5b0e44fa8e770f355d0b9403.png",
+    "manufacturer": {
+      "name": "Stora Enso",
+      "country": "FI"
+    }
+  },
+  {
+    "name": "Classic Sawn",
+    "gwp": {
+      "value": 33.9,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/e85e6f5d1bfb45b98d11e886586737c7.png",
+    "manufacturer": {
+      "name": "Stora Enso",
+      "country": "FI"
+    }
+  },
+  {
+    "name": "Supafil Loft 045",
+    "gwp": {
+      "value": 2.07,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/10d0394354a54e3e8e9b250a1997021a.png",
+    "manufacturer": {
+      "name": "Knauf Insulation",
+      "country": "BE"
+    }
+  },
+  {
+    "name": "TI 135 U, Classic 035, EXPERT LRR 035 U, FHR 035, UNIFIT 034, Naturoll D-035",
+    "gwp": {
+      "value": 5.71,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/8e49d02410864c25913fa9b2a397af5a.png",
+    "manufacturer": {
+      "name": "Knauf Insulation",
+      "country": "BE"
+    }
+  },
+  {
+    "name": "Heraklith, homogenous board",
+    "gwp": {
+      "value": 9.218,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/1b76fe10b79f4fce878e384a43efbcb8.png",
+    "manufacturer": {
+      "name": "Knauf Insulation North America",
       "country": "US"
     }
   },
   {
-    "name": "MAG A 3000 STANDARD",
+    "name": "Heraklith, Heratekta",
     "gwp": {
-      "value": 343.0,
+      "value": 15.7,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/cbb2fdf32308440dafcb55ce0d66d130.png",
+    "manufacturer": {
+      "name": "Knauf Insulation",
+      "country": "BE"
+    }
+  },
+  {
+    "name": "Neopor® Plus (GPS) - Type IX",
+    "gwp": {
+      "value": 3.58,
       "unit": "KgCO2e"
     },
     "image": null,
+    "manufacturer": {
+      "name": "BASF Corporation",
+      "country": "US"
+    }
+  },
+  {
+    "name": "Neopor® Plus (GPS)  - Type II",
+    "gwp": {
+      "value": 2.8,
+      "unit": "KgCO2e"
+    },
+    "image": null,
+    "manufacturer": {
+      "name": "BASF Corporation",
+      "country": "US"
+    }
+  },
+  {
+    "name": "Neopor® Plus (GPS)  - Type I",
+    "gwp": {
+      "value": 1.2379,
+      "unit": "KgCO2e"
+    },
+    "image": null,
+    "manufacturer": {
+      "name": "BASF Corporation",
+      "country": "US"
+    }
+  },
+  {
+    "name": "Neopor® Plus (GPS)  - Type VIII",
+    "gwp": {
+      "value": 2.23,
+      "unit": "KgCO2e"
+    },
+    "image": null,
+    "manufacturer": {
+      "name": "BASF Corporation",
+      "country": "US"
+    }
+  },
+  {
+    "name": "Wood Fibre Insulating Boards",
+    "gwp": {
+      "value": -164.0,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/e5800ad3ea304700bbded1e7f6ec39e3.png",
+    "manufacturer": {
+      "name": "GUTEX Holzfaserplattenwerk H.",
+      "country": "DE"
+    }
+  },
+  {
+    "name": "XPS insulation panel JACKODUR Plus",
+    "gwp": {
+      "value": 13.0,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/54cb326bacbb4c6f8d5239b377a39791.png",
+    "manufacturer": {
+      "name": "JACKON Insulation GmbH",
+      "country": "DE"
+    }
+  },
+  {
+    "name": "JACKODUR Plus XPS",
+    "gwp": {
+      "value": 3.38,
+      "unit": "KgCO2e"
+    },
+    "image": null,
+    "manufacturer": {
+      "name": "JACKON Insulation GmbH",
+      "country": "DE"
+    }
+  },
+  {
+    "name": "Insulation board made of Neopor® Plus BMB",
+    "gwp": {
+      "value": 16.22,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/a860cf8e25e4432e9f989e70499a4b60.png",
+    "manufacturer": {
+      "name": "Karl Bachl Kunststoffverarbeitung",
+      "country": "DE"
+    }
+  },
+  {
+    "name": "7 mm Desso Ecobase backing",
+    "gwp": {
+      "value": 6.44,
+      "unit": "KgCO2e"
+    },
+    "image": null,
+    "manufacturer": {
+      "name": "Tarkett",
+      "country": "US"
+    }
+  },
+  {
+    "name": "6.19 mm Desso Ecobase backing",
+    "gwp": {
+      "value": 5.4,
+      "unit": "KgCO2e"
+    },
+    "image": null,
+    "manufacturer": {
+      "name": "Tarkett",
+      "country": "US"
+    }
+  },
+  {
+    "name": "7.01 mm Desso Ecobase backing",
+    "gwp": {
+      "value": 5.99,
+      "unit": "KgCO2e"
+    },
+    "image": null,
+    "manufacturer": {
+      "name": "Tarkett",
+      "country": "US"
+    }
+  },
+  {
+    "name": "6.47 mm Desso Ecobase backing",
+    "gwp": {
+      "value": 5.68,
+      "unit": "KgCO2e"
+    },
+    "image": null,
+    "manufacturer": {
+      "name": "Tarkett",
+      "country": "US"
+    }
+  },
+  {
+    "name": "Building Steel Profiles",
+    "gwp": {
+      "value": 18.0,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/ebcff29c03794f44a4e816bfd917b8a9.png",
+    "manufacturer": {
+      "name": "ArcelorMittal",
+      "country": "LU"
+    }
+  },
+  {
+    "name": "Resysta® Profiles as Cladding",
+    "gwp": {
+      "value": 1790.0,
+      "unit": "KgCO2e"
+    },
+    "image": null,
+    "manufacturer": {
+      "name": "Falcon Panel Products Ltd",
+      "country": "GB"
+    }
+  },
+  {
+    "name": "Naturescapes HPD™, Nature's Tile & Plank HPD™",
+    "gwp": {
+      "value": 4.26,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/fd28835f9a4e4107b7c4dcaf68268063.png",
+    "manufacturer": {
+      "name": "Teknoflor",
+      "country": "US"
+    }
+  },
+  {
+    "name": "TEKNOFLOR® Naturescapes HPD™",
+    "gwp": {
+      "value": 4.26,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/7e11868b02814a1986bd2d8c0d7c692b.png",
+    "manufacturer": {
+      "name": "Teknoflor",
+      "country": "US"
+    }
+  },
+  {
+    "name": "TX Classic heterogeneous vinyl flooring",
+    "gwp": {
+      "value": 5.79,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/dd9a9f92321e4aa5bbc45bae18669fa6.png",
+    "manufacturer": {
+      "name": "Tarkett",
+      "country": "US"
+    }
+  },
+  {
+    "name": "noraplan® ed",
+    "gwp": {
+      "value": 12.0,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/412893f203c5491c82fb423f74663db0.png",
+    "manufacturer": {
+      "name": "Nora",
+      "country": "DE"
+    }
+  },
+  {
+    "name": "noraplan® acoustic, resilient, footfall sound absorbing floor covering from rubber",
+    "gwp": {
+      "value": 8.4,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/d5583dde4b6244759eab8af6449c506e.png",
+    "manufacturer": {
+      "name": "Nora",
+      "country": "DE"
+    }
+  },
+  {
+    "name": "norament® 928 ed, resilient, electrostatically dissipative floor covering from rubber",
+    "gwp": {
+      "value": 20.8,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/cdc949053d91469cadccd1df571f194a.png",
+    "manufacturer": {
+      "name": "Nora",
+      "country": "DE"
+    }
+  },
+  {
+    "name": "Sika ComfortFloor® PS-66 floor finish",
+    "gwp": {
+      "value": 11.4,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/cda6abeabef849ed9fbb1fab78164054.png",
+    "manufacturer": {
+      "name": "Sika UK",
+      "country": "GB"
+    }
+  },
+  {
+    "name": "Sika ComfortFloor® PS-24 floor finish",
+    "gwp": {
+      "value": 10.1,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/80823d0b37a246a8b22dd75d8ee0afdb.png",
+    "manufacturer": {
+      "name": "Sika UK",
+      "country": "GB"
+    }
+  },
+  {
+    "name": "Sika ComfortFloor® PS-27 floor finish",
+    "gwp": {
+      "value": 7.83,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/8d14c27f0f0d40c6a7670ec1e8b1d18c.png",
+    "manufacturer": {
+      "name": "Sika UK",
+      "country": "GB"
+    }
+  },
+  {
+    "name": "Sika ComfortFloor® PS-65 floor finish",
+    "gwp": {
+      "value": 11.5,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/3c6694df77fd4b7b8ef51fcd5f1079eb.png",
+    "manufacturer": {
+      "name": "Sika UK",
+      "country": "GB"
+    }
+  },
+  {
+    "name": "Sika ComfortFloor® PS-23 floor finish",
+    "gwp": {
+      "value": 10.1,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/0b0188b3b4104d36817f26f55b4706a4.png",
+    "manufacturer": {
+      "name": "Sika UK",
+      "country": "GB"
+    }
+  },
+  {
+    "name": "Altro Comfort Floor Products 2.85mm",
+    "gwp": {
+      "value": 7.56,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/a778b69a2bd54d0fafcf208723c692d5.png",
+    "manufacturer": {
+      "name": "Altro Ltd",
+      "country": "GB"
+    }
+  },
+  {
+    "name": "Altro Acoustic Floor Products 3.9mm",
+    "gwp": {
+      "value": 7.53,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/379ac23dc6e14444aa1c09a21ee6d76f.png",
+    "manufacturer": {
+      "name": "Altro Ltd",
+      "country": "GB"
+    }
+  },
+  {
+    "name": "Altro Compact Floor Products 2mm",
+    "gwp": {
+      "value": 7.27,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/c090d4cffae04af9baef0b0c0424c3ef.png",
+    "manufacturer": {
+      "name": "Altro Ltd",
+      "country": "GB"
+    }
+  },
+  {
+    "name": "Altro Wood Safety 2mm",
+    "gwp": {
+      "value": 7.2,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/b7213b8a4d714c01988a389d6c32acbd.png",
+    "manufacturer": {
+      "name": "Altro Ltd",
+      "country": "GB"
+    }
+  },
+  {
+    "name": "Altro Wood Safety Comfort 2.85mm",
+    "gwp": {
+      "value": 7.0,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/e72d0c64663c4968a7d7ecf5b0c787a0.png",
+    "manufacturer": {
+      "name": "Altro Ltd",
+      "country": "GB"
+    }
+  },
+  {
+    "name": "Commercial Bio-Based Polyurethane Resilient Flooring",
+    "gwp": {
+      "value": 4.26,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/49d815d36d18401c89ee69ed96c7cc25.png",
+    "manufacturer": {
+      "name": "Patcraft",
+      "country": "US"
+    }
+  },
+  {
+    "name": "Bio-Based Polyurethane Resilient Flooring",
+    "gwp": {
+      "value": 4.26,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/0cea74eff84b4a76877c8344d4bafaa5.png",
+    "manufacturer": {
+      "name": "Shaw Contract",
+      "country": "US"
+    }
+  },
+  {
+    "name": "SCHWENK Miljøsement, Cem II/B-S 52,5 N",
+    "gwp": {
+      "value": 511.99,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/b5198c71092c493aaa476a95b536c5b5.png",
+    "manufacturer": {
+      "name": "SCHWENK Norge AS",
+      "country": "NO"
+    }
+  },
+  {
+    "name": "SCHWENK Lavvarmesement, Cem III/B 42,5 L-LH/SR (na)",
+    "gwp": {
+      "value": 223.21,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/228b8c468de14ac7ae2374729fc8c429.png",
+    "manufacturer": {
+      "name": "SCHWENK Norge AS",
+      "country": "NO"
+    }
+  },
+  {
+    "name": "SCHWENK Rapidsement, Cem I 52,5 R (ft)",
+    "gwp": {
+      "value": 739.53,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/987c9059fa6942f29bb08c56fa805f1f.png",
+    "manufacturer": {
+      "name": "SCHWENK Norge AS",
+      "country": "NO"
+    }
+  },
+  {
+    "name": "Cemex, Cem III/A 42,5 L-LH/NA",
+    "gwp": {
+      "value": 430.57,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/40ba0b28fa354134a68fbc299be11ac1.png",
     "manufacturer": {
       "name": "CEMEX",
       "country": "US"
     }
   },
   {
-    "name": "4000 ASH 40% 1/2\" FLOW",
+    "name": "CLT (Cross Laminated Timber)",
     "gwp": {
-      "value": 330.0,
+      "value": 53.8,
       "unit": "KgCO2e"
     },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "4000 psi fly ash flowable performance mix",
-    "gwp": {
-      "value": 336.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "Elite Sports 4000 .45 25% Ash",
-    "gwp": {
-      "value": 331.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "AUSTIN 3000 PSI CUSTOM FLOOR MIX",
-    "gwp": {
-      "value": 277.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "4500 psi 0.45 w/c 25% fly ash",
-    "gwp": {
-      "value": 330.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "5000psi 0.45 W/C 20% Fly Ash Flowable",
-    "gwp": {
-      "value": 352.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "3000 psi fly ash flowable LRC",
-    "gwp": {
-      "value": 302.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "5000 psi FLY ASH AIR FLOWABLE",
-    "gwp": {
-      "value": 391.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "4000psi 0.50 W/C 22% Fly Ash Flowable",
-    "gwp": {
-      "value": 313.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "1547309",
-    "gwp": {
-      "value": 325.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "3500 ASH 40% 1/2\" FLOW",
-    "gwp": {
-      "value": 331.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "3000 ASH 40% 1/2\" FLOWABLE",
-    "gwp": {
-      "value": 327.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "1561103",
-    "gwp": {
-      "value": 259.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "1571501",
-    "gwp": {
-      "value": 310.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "5000 PSI FLY ASH FLOWABLE 3/8\" GRAVEL",
-    "gwp": {
-      "value": 383.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "1530902",
-    "gwp": {
-      "value": 286.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "3000 psi fly ash flowable performance mix",
-    "gwp": {
-      "value": 303.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "1332808",
-    "gwp": {
-      "value": 367.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "1618460",
-    "gwp": {
-      "value": 337.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "1581372",
-    "gwp": {
-      "value": 291.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "1555049",
-    "gwp": {
-      "value": 266.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "#8 3000psi ASH EXP STD",
-    "gwp": {
-      "value": 299.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "1552285",
-    "gwp": {
-      "value": 391.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "1555050",
-    "gwp": {
-      "value": 267.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "1556313",
-    "gwp": {
-      "value": 319.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "1532612",
-    "gwp": {
-      "value": 244.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "#8 4000 ASH FLOW GRTPUMPCONC",
-    "gwp": {
-      "value": 367.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "1624707",
-    "gwp": {
-      "value": 274.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "1624679",
-    "gwp": {
-      "value": 274.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "MAG A 3000 STANDARD",
-    "gwp": {
-      "value": 343.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "CCS 3,000 PSI CUSTOM FLOOR MIX",
-    "gwp": {
-      "value": 277.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "5000 PSI FLY ASH FLOWABLE 3/8\" GRAVEL",
-    "gwp": {
-      "value": 383.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "AUSTIN 3000 PSI CUSTOM FLOOR MIX",
-    "gwp": {
-      "value": 277.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "Elite Sports 3000 .55 25% Ash",
-    "gwp": {
-      "value": 279.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "3000 psi fly ash flowable performance mix",
-    "gwp": {
-      "value": 303.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "3000 psi fly ash flowable LRC",
-    "gwp": {
-      "value": 302.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "4000psi 0.50 W/C 22% Fly Ash Flowable",
-    "gwp": {
-      "value": 313.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "MAG AA 4000 STANDARD",
-    "gwp": {
-      "value": 389.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "5000psi 0.45 W/C 20% Fly Ash Flowable",
-    "gwp": {
-      "value": 352.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/7226eba14aee416c973b743a3f1e31cd.png",
     "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
+      "name": "Stora Enso",
+      "country": "FI"
     }
   },
   {
-    "name": "#8 3000psi ASH EXP STD",
+    "name": "CLT Rib panel",
     "gwp": {
-      "value": 299.0,
+      "value": 30.06,
       "unit": "KgCO2e"
     },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "4000 psi fly ash flowable performance mix",
-    "gwp": {
-      "value": 336.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "Elite Sports 4000 .45 25% Ash",
-    "gwp": {
-      "value": 331.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "3000 ASH 40% 1/2\" FLOWABLE",
-    "gwp": {
-      "value": 327.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "5000psi 0.45 W/C 20% Fly Ash",
-    "gwp": {
-      "value": 350.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "MAG AA 4000 ASH FLOWABLE",
-    "gwp": {
-      "value": 303.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "4500 psi 0.45 w/c 25% fly ash",
-    "gwp": {
-      "value": 330.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
-    "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
-    }
-  },
-  {
-    "name": "5000 psi FLY ASH AIR FLOWABLE",
-    "gwp": {
-      "value": 391.0,
-      "unit": "KgCO2e"
-    },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/42bbf4caa78d469c9dd868294ad7c1b5.png",
     "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
+      "name": "Stora Enso",
+      "country": "FI"
     }
   },
   {
-    "name": "1552285",
+    "name": "Resysta® Profiles as Grooved Decking",
     "gwp": {
-      "value": 391.0,
+      "value": 1790.0,
       "unit": "KgCO2e"
     },
     "image": null,
     "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
+      "name": "Falcon Panel Products Ltd",
+      "country": "GB"
     }
   },
   {
-    "name": "1530902",
+    "name": "Resysta® Profiles as Grooved Decking",
     "gwp": {
-      "value": 286.0,
+      "value": 1790.0,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/01844fea3e8e4d9ca5e8e10340c71b25.png",
     "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
+      "name": "Falcon Panel Products Ltd",
+      "country": "GB"
     }
   },
   {
-    "name": "1571501",
+    "name": "POWDURA® ECO1 - PDS4-80R00",
     "gwp": {
-      "value": 310.0,
+      "value": 3.77,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/0886c99f3add4dad85fe82ccbfb528dd.png",
     "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "1555049",
+    "name": "POWDURA® ECO1 - PWT4-V0R00",
     "gwp": {
-      "value": 266.0,
+      "value": 4.91,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/0886c99f3add4dad85fe82ccbfb528dd.png",
     "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "1532612",
+    "name": "POWDURA® ECO1 - PWS4-V0R00",
     "gwp": {
-      "value": 244.0,
+      "value": 4.3,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/0886c99f3add4dad85fe82ccbfb528dd.png",
     "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "1556313",
+    "name": "POWDURA® ECO1 - PSZ4-80R00",
     "gwp": {
-      "value": 319.0,
+      "value": 5.1,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/0886c99f3add4dad85fe82ccbfb528dd.png",
     "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "1618460",
+    "name": "POWDURA® ECO1 - PWS8-80R15",
     "gwp": {
-      "value": 337.0,
+      "value": 4.6,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/0886c99f3add4dad85fe82ccbfb528dd.png",
     "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "1547309",
+    "name": "POWDURA® ECO1 - PBT2-80R09",
     "gwp": {
-      "value": 325.0,
+      "value": 4.13,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/0886c99f3add4dad85fe82ccbfb528dd.png",
     "manufacturer": {
-      "name": "CEMEX",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "530N4000",
+    "name": "POWDURA® ECO1 - PBS4-80R00",
     "gwp": {
-      "value": 419.0,
+      "value": 3.9,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/0886c99f3add4dad85fe82ccbfb528dd.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "301H7FSL",
+    "name": "Syntha Pulvin Matt - QS811830SM",
     "gwp": {
-      "value": 289.0,
+      "value": 5.13,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/619453f0f80e4bdab00f79849e0b2c3d.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "407H7FES",
+    "name": "Syntha Pulvin Matt - QS111819SM",
     "gwp": {
-      "value": 270.0,
+      "value": 5.07,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/619453f0f80e4bdab00f79849e0b2c3d.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "400H7F10",
+    "name": "Syntha Pulvin Matt - BR905270SM",
     "gwp": {
-      "value": 270.0,
+      "value": 4.02,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/619453f0f80e4bdab00f79849e0b2c3d.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "460H7E10",
+    "name": "Syntha Pulvin Matt - 65396.90",
     "gwp": {
-      "value": 326.0,
+      "value": 5.24,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/619453f0f80e4bdab00f79849e0b2c3d.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "407L4F10",
+    "name": "Syntha Pulvin Matt - 3769.90",
     "gwp": {
-      "value": 270.0,
+      "value": 4.8,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/619453f0f80e4bdab00f79849e0b2c3d.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "407H7F10",
+    "name": "Inver PE/PPolyesterPowder Coating - 47455",
     "gwp": {
-      "value": 270.0,
+      "value": 4.0,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/433ab9a9bbc645a1b4cf2b06dbfddb6e.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "407B7FF4",
+    "name": "Inver PE/PPolyesterPowder Coating - 39265",
     "gwp": {
-      "value": 271.0,
+      "value": 4.87,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/433ab9a9bbc645a1b4cf2b06dbfddb6e.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "400H7AWC",
+    "name": "Inver PE/PPolyesterPowder Coating - 47455",
     "gwp": {
-      "value": 271.0,
+      "value": 4.0,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/433ab9a9bbc645a1b4cf2b06dbfddb6e.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "300L4F10",
+    "name": "Inver PE/PPolyesterPowder Coating - 39265",
     "gwp": {
-      "value": 245.0,
+      "value": 4.87,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/433ab9a9bbc645a1b4cf2b06dbfddb6e.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "300H7F10",
+    "name": "Inver PE/PPolyesterPowder Coating - 51195",
     "gwp": {
-      "value": 244.0,
+      "value": 3.76,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/433ab9a9bbc645a1b4cf2b06dbfddb6e.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "520H7000",
+    "name": "Inver PE/PPolyesterPowder Coating - 2089/K",
     "gwp": {
-      "value": 363.0,
+      "value": 4.54,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/433ab9a9bbc645a1b4cf2b06dbfddb6e.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "530N4000",
+    "name": "Inver PE/PPolyesterPowder Coating - 19444",
     "gwp": {
-      "value": 388.0,
+      "value": 4.52,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/433ab9a9bbc645a1b4cf2b06dbfddb6e.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "520N4000",
+    "name": "Inver PE/PPolyesterPowder Coating - 2889",
     "gwp": {
-      "value": 362.0,
+      "value": 3.97,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/433ab9a9bbc645a1b4cf2b06dbfddb6e.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "510N4200",
+    "name": "Inver PE/PPolyesterPowder Coating - P2A8878.90",
     "gwp": {
-      "value": 374.0,
+      "value": 4.09,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/433ab9a9bbc645a1b4cf2b06dbfddb6e.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "500N4400",
+    "name": "Inver PE/PPolyesterPowder Coating - PD911509G.90",
     "gwp": {
-      "value": 329.0,
+      "value": 5.24,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/433ab9a9bbc645a1b4cf2b06dbfddb6e.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "500H7400",
+    "name": "Inver PE/PPolyesterPowder Coating - PD409008SG.90",
     "gwp": {
-      "value": 329.0,
+      "value": 4.13,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/433ab9a9bbc645a1b4cf2b06dbfddb6e.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "430N4000",
+    "name": "Syntha Pulvin Gloss - 57715.90",
     "gwp": {
-      "value": 339.0,
+      "value": 4.71,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/16ced52dd9034eb19a4750fa597b71ee.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "420N4000",
+    "name": "Syntha Pulvin Gloss - 60205.90",
     "gwp": {
-      "value": 321.0,
+      "value": 4.63,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/16ced52dd9034eb19a4750fa597b71ee.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "420H7000",
+    "name": "Greenbar® - 720A009LG.366",
     "gwp": {
-      "value": 321.0,
+      "value": 8.24,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/7ac64733d16a417c9cb2ef14583680ba.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "410N4200",
+    "name": "Greenbar® - 720A009LG.217",
     "gwp": {
-      "value": 344.0,
+      "value": 8.31,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/7ac64733d16a417c9cb2ef14583680ba.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "409H7300",
+    "name": "Greenbar® - 720A009.375",
     "gwp": {
-      "value": 460.0,
+      "value": 8.37,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/7ac64733d16a417c9cb2ef14583680ba.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "400N4410",
+    "name": "Greenbar® - 720A009.368",
     "gwp": {
-      "value": 272.0,
+      "value": 8.19,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/7ac64733d16a417c9cb2ef14583680ba.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "400N4400",
+    "name": "Greenbar® - 720A009.367",
     "gwp": {
-      "value": 289.0,
+      "value": 8.25,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/7ac64733d16a417c9cb2ef14583680ba.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "400L4F10",
+    "name": "Greenbar® - 720A009.366",
     "gwp": {
-      "value": 270.0,
+      "value": 8.23,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/7ac64733d16a417c9cb2ef14583680ba.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "400L4AWC",
+    "name": "Greenbar® - 720A009.358",
     "gwp": {
-      "value": 264.0,
+      "value": 8.26,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/7ac64733d16a417c9cb2ef14583680ba.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "400H741W",
+    "name": "Greenbar® - 720A009.357",
     "gwp": {
-      "value": 280.0,
+      "value": 8.28,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/7ac64733d16a417c9cb2ef14583680ba.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "400H7400",
+    "name": "Greenbar® - 720A009.350",
     "gwp": {
-      "value": 290.0,
+      "value": 8.4,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/7ac64733d16a417c9cb2ef14583680ba.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "380N4000",
+    "name": "Greenbar® - 720A009.340",
     "gwp": {
-      "value": 315.0,
+      "value": 8.37,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/7ac64733d16a417c9cb2ef14583680ba.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "370N4000",
+    "name": "Greenbar® - 720A009.335",
     "gwp": {
-      "value": 305.0,
+      "value": 8.37,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/7ac64733d16a417c9cb2ef14583680ba.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "370H7000",
+    "name": "Greenbar® - 720A009.260",
     "gwp": {
-      "value": 306.0,
+      "value": 8.31,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/7ac64733d16a417c9cb2ef14583680ba.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "360N4200",
+    "name": "Greenbar® - 720A009.217",
     "gwp": {
-      "value": 320.0,
+      "value": 8.33,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/7ac64733d16a417c9cb2ef14583680ba.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "359H7300",
+    "name": "Powdura 4000 - BS3-60005",
     "gwp": {
-      "value": 453.0,
+      "value": 5.719,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/988e40c7c75c409e9cfa9a2059b8b344.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "350N4400",
+    "name": "POWDURA® ECO1 - TGIC Free - FWS8-80R03",
     "gwp": {
-      "value": 272.0,
+      "value": 4.12,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/1dec36e368f44ba0912840ae66188235.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "350H7300",
+    "name": "POWDURA® ECO1 - TGIC Free - FBS6-80R00",
     "gwp": {
-      "value": 279.0,
+      "value": 3.22,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/1dec36e368f44ba0912840ae66188235.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "320H7000",
+    "name": "Inver PE/PPolyesterPowder Coating - PD109170M.90",
     "gwp": {
-      "value": 293.0,
+      "value": 4.75,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/433ab9a9bbc645a1b4cf2b06dbfddb6e.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "330N4000",
+    "name": "POWDURA® ECO1 - PBS9-80R00",
     "gwp": {
-      "value": 305.0,
+      "value": 5.15,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/0886c99f3add4dad85fe82ccbfb528dd.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   },
   {
-    "name": "320N4000",
+    "name": "Syntha Pulvin Gloss - 50720.90",
     "gwp": {
-      "value": 293.0,
+      "value": 4.78,
       "unit": "KgCO2e"
     },
-    "image": null,
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/16ced52dd9034eb19a4750fa597b71ee.png",
     "manufacturer": {
-      "name": "Concrete Supply Co.",
-      "country": "US"
+      "name": "Sherwin Williams",
+      "country": "GB"
     }
   }
 ]

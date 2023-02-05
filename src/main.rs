@@ -67,9 +67,9 @@ fn main() {
 
 
     let materials = ec3api::Ec3api::new(&api_key)
-        .set_country("US")
-        .set_endpoint("materials")
-        .call()
+        .country(ec3api::Country::Germany)
+        .endpoint(ec3api::Endpoint::Materials)
+        .fetch()
         .unwrap();
     // dbg!(app);
 
