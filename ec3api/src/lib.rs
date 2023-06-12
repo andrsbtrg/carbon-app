@@ -1,6 +1,6 @@
 use std::{fmt::Debug, str::FromStr};
 use serde::{Serialize, Deserialize, Deserializer, de};
-use serde_json::{Value};
+use serde_json::Value;
 use thiserror::Error;
 
 const BASE_PATH: &str = "https://buildingtransparency.org/api/";
@@ -128,8 +128,8 @@ pub struct Ec3Material {
     pub name: String,
     #[serde(deserialize_with = "deserialize_from_str")]
     pub gwp: Gwp,
+    #[serde(default)]
     pub image: Option<String>,
-    // #[serde(default)]
     pub manufacturer: Manufacturer,
 }
 
@@ -142,10 +142,25 @@ fn write_cache(json: String) {
 }
 fn read_cache() -> Result<Vec<Ec3Material>, ApiError> {
 
-    let contents = std::fs::read_to_string("cache.json")?;
+    let contents = std::fs::read_to_string("cache.json").unwrap();
     
-    let result: Vec<Ec3Material> = serde_json::from_str(&contents)?;
-    Ok(result)
+    let result: Value = serde_json::from_str(&contents).unwrap();
+
+    let mut out: Vec<Ec3Material> = Vec::new();
+
+    result.as_array().ok_or(ApiError::EmptyArray())?.iter().for_each(|m| {
+        dbg!(m);
+        let material = Ec3Material { 
+            name: m["name"].to_string(), 
+            gwp: Gwp { value: m["gwp"]["value"].as_f64().unwrap(), unit: GwpUnits::from_str(m["gwp"]["unit"].as_str().unwrap()).unwrap() }, 
+            image: Some(m["image"].to_string()), 
+            manufacturer: Manufacturer { name: m["manufacturer"]["name"].to_string(), country: m["manufacturer"]["name"].to_string() } 
+        };
+
+        out.push(material);
+    });
+
+    Ok(out)
 
 }
 
