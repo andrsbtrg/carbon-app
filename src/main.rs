@@ -1,4 +1,4 @@
-use ec3api::{self, Ec3Material};
+use ec3api;
 use eframe::{
     egui::{self, CentralPanel, ScrollArea},
     epaint::Vec2,
@@ -11,12 +11,14 @@ struct MaterialWindow {
 }
 
 impl MaterialWindow {
+    /// Creates a new [`MaterialWindow`].
     fn new(cc: &eframe::CreationContext<'_>) -> Self {
         setup_custom_fonts(&cc.egui_ctx);
         Self {
             materials: Vec::new(),
         }
     }
+
     /// Fetches materials for [`MaterialWindow`].
     ///
     /// # Panics
@@ -69,6 +71,7 @@ impl eframe::App for MaterialWindow {
             if ui.button("Load materials").clicked() {
                 self.load_materials();
             }
+            ui.add_space(4.);
             ScrollArea::vertical()
                 .auto_shrink([false; 2])
                 .show(ui, |ui| {
