@@ -1,33 +1,57 @@
 use ec3api::{self, Ec3Material};
-use eframe::{run_native, NativeOptions, epaint::Vec2, egui::{CentralPanel, ScrollArea}};
+use eframe::{
+    egui::{self, CentralPanel, ScrollArea},
+    epaint::Vec2,
+};
 
 use std::env;
 
 struct MaterialWindow {
-    materials: Vec<MaterialsData>
+    materials: Vec<MaterialsData>,
 }
 
 impl MaterialWindow {
-    fn new(materials: &Vec<Ec3Material>) -> Self {
-
-        let collection: Vec<MaterialsData> = materials.iter()
-            .map(|m| {
-            MaterialsData {
-                title: m.name.to_string(),
-                descr: m.gwp.as_str(),
-                country: m.manufacturer.country.to_owned(),
-                // img_url: m.image.to_owned().unwrap_or("<No image>".to_string()),
-            }
-        }).collect();
-
-        MaterialWindow { materials: collection }
-
+    fn new(cc: &eframe::CreationContext<'_>) -> Self {
+        setup_custom_fonts(&cc.egui_ctx);
+        Self {
+            materials: Vec::new(),
+        }
     }
-        
-    fn render_material_cards(&self, ui: &mut eframe::egui::Ui ) {
+    /// Fetches materials for [`MaterialWindow`].
+    ///
+    /// # Panics
+    ///
+    /// Panics if .env is missing or incomplete.
+    fn load_materials(&mut self) {
+        // Load data from api
+        dotenv::dotenv().expect("No .env file found!");
+        let api_key = env::var("API_KEY").expect("API Key missing!");
+
+        if let Ok(materials) = ec3api::Ec3api::new(&api_key)
+            .country(ec3api::Country::Germany)
+            .endpoint(ec3api::Endpoint::Materials)
+            .fetch()
+        {
+            let collection: Vec<MaterialsData> = materials
+                .iter()
+                .map(|m| {
+                    MaterialsData {
+                        title: m.name.as_str().to_owned(),
+                        descr: m.gwp.as_str(),
+                        country: m.manufacturer.country.as_str().to_owned(),
+                        // img_url: m.image.to_owned().unwrap_or("<No image>".to_string()),
+                    }
+                })
+                .collect();
+
+            self.materials = collection;
+        }
+    }
+
+    fn render_material_cards(&self, ui: &mut eframe::egui::Ui) {
         for m in &self.materials {
             ui.add_space(2.);
-            
+
             ui.label(&m.title);
             ui.monospace(&m.descr);
 
@@ -35,8 +59,22 @@ impl MaterialWindow {
             ui.monospace(&m.country);
             ui.add_space(2.);
             ui.separator();
-            
         }
+    }
+}
+
+impl eframe::App for MaterialWindow {
+    fn update(&mut self, ctx: &eframe::egui::Context, _frame: &mut eframe::Frame) {
+        CentralPanel::default().show(ctx, |ui| {
+            if ui.button("Load materials").clicked() {
+                self.load_materials();
+            }
+            ScrollArea::vertical()
+                .auto_shrink([false; 2])
+                .show(ui, |ui| {
+                    self.render_material_cards(ui);
+                });
+        });
     }
 }
 
@@ -47,42 +85,50 @@ struct MaterialsData {
     country: String,
 }
 
-impl eframe::App for MaterialWindow {
-    fn update(&mut self, ctx: &eframe::egui::Context, _frame: &mut eframe::Frame) {
-        CentralPanel::default().show(ctx, |ui| {
+fn main() -> Result<(), eframe::Error> {
+    // init egui
+    env_logger::init();
+    let win_options = eframe::NativeOptions {
+        initial_window_size: Some(Vec2::new(540., 800.)),
+        resizable: false,
+        follow_system_theme: true,
+        ..Default::default()
+    };
 
-            ScrollArea::vertical().auto_shrink([false;2]).show(ui, |ui| {
-                
-                self.render_material_cards(ui);
-                
-            });
-        });
-    }
-
+    eframe::run_native(
+        "Materials",
+        win_options,
+        Box::new(|cc| Box::new(MaterialWindow::new(cc))),
+    )
 }
 
-fn main() {
-    dotenv::dotenv().expect("No .env file found!");
-    let api_key = env::var("API_KEY").expect("API Key missing!");
+fn setup_custom_fonts(ctx: &eframe::egui::Context) {
+    // Start with the default fonts (we will be adding to them rather than replacing them).
+    let mut fonts = egui::FontDefinitions::default();
 
+    // Install my own font (maybe supporting non-latin characters).
+    // .ttf and .otf files supported.
+    fonts.font_data.insert(
+        "my_font".to_owned(),
+        egui::FontData::from_static(include_bytes!(
+            "../fonts/JetBrainsMonoNerdFontMono-BoldItalic.ttf"
+        )),
+    );
 
-    let materials = ec3api::Ec3api::new(&api_key)
-        .country(ec3api::Country::Germany)
-        .endpoint(ec3api::Endpoint::Materials)
-        .fetch()
-        .unwrap();
-    // dbg!(app);
+    // Put my font first (highest priority) for proportional text:
+    fonts
+        .families
+        .entry(egui::FontFamily::Proportional)
+        .or_default()
+        .insert(0, "my_font".to_owned());
 
-    // let materials = &api.call().unwrap();
+    // Put my font as last fallback for monospace:
+    fonts
+        .families
+        .entry(egui::FontFamily::Monospace)
+        .or_default()
+        .push("my_font".to_owned());
 
-    let app = MaterialWindow::new(&materials);
-    
-    let mut win_options = NativeOptions::default();
-    win_options.initial_window_size = Some(Vec2::new(540., 960.));
-    win_options.resizable = false;
-    win_options.follow_system_theme = false;
-    
-    // win_options.resizable = false;
-
-    run_native("Materials", win_options, Box::new(|_| Box::new(app)));
+    // Tell egui to use these fonts:
+    ctx.set_fonts(fonts);
 }

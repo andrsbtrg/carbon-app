@@ -60,18 +60,6 @@
     }
   },
   {
-    "name": "Non-reinforced AAC 2-0.35",
-    "gwp": {
-      "value": 180.0,
-      "unit": "KgCO2e"
-    },
-    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/a12a398b578041039401efe4f8add40d.png",
-    "manufacturer": {
-      "name": "H+H Deutschland GmbH",
-      "country": "DE"
-    }
-  },
-  {
     "name": "Carbon Steel Reinforcing Bar (secondary production route - scrap)",
     "gwp": {
       "value": 900.0,
@@ -117,6 +105,18 @@
     "manufacturer": {
       "name": "Knauf UK/I",
       "country": "GB"
+    }
+  },
+  {
+    "name": "Open sections",
+    "gwp": {
+      "value": 2350.0,
+      "unit": "KgCO2e"
+    },
+    "image": "https://cqddatastore.blob.core.windows.net/cqd/images/e0aa3a97256e4aeca4eea2daa0ba5ece.png",
+    "manufacturer": {
+      "name": "SSAB",
+      "country": "SE"
     }
   },
   {
