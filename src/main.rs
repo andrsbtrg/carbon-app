@@ -7,7 +7,9 @@ use eframe::{
 use std::env;
 
 struct MaterialWindow {
+    materials_loaded: bool,
     materials: Vec<MaterialsData>,
+    search_input: String,
 }
 
 impl MaterialWindow {
@@ -15,7 +17,9 @@ impl MaterialWindow {
     fn new(cc: &eframe::CreationContext<'_>) -> Self {
         setup_custom_fonts(&cc.egui_ctx);
         Self {
+            materials_loaded: false,
             materials: Vec::new(),
+            search_input: String::new(),
         }
     }
 
@@ -30,7 +34,7 @@ impl MaterialWindow {
         let api_key = env::var("API_KEY").expect("API Key missing!");
 
         if let Ok(materials) = ec3api::Ec3api::new(&api_key)
-            .country(ec3api::Country::Germany)
+            // .country(ec3api::Country::Germany)
             .endpoint(ec3api::Endpoint::Materials)
             .fetch()
         {
@@ -50,8 +54,12 @@ impl MaterialWindow {
         }
     }
 
-    fn render_material_cards(&self, ui: &mut eframe::egui::Ui) {
-        for m in &self.materials {
+    fn render_material_cards(&self, ui: &mut eframe::egui::Ui, filter: &str) {
+        for m in self
+            .materials
+            .iter()
+            .filter(|mat| mat.title.to_lowercase().contains(filter))
+        {
             ui.add_space(2.);
 
             ui.label(&m.title);
@@ -68,19 +76,27 @@ impl MaterialWindow {
 impl eframe::App for MaterialWindow {
     fn update(&mut self, ctx: &eframe::egui::Context, _frame: &mut eframe::Frame) {
         CentralPanel::default().show(ctx, |ui| {
-            if ui.button("Load materials").clicked() {
-                self.load_materials();
+            if !self.materials_loaded {
+                if ui.button("Load materials").clicked() {
+                    self.load_materials();
+                    self.materials_loaded = true;
+                }
             }
+            ui.add_visible(
+                self.materials_loaded,
+                egui::TextEdit::singleline(&mut self.search_input).hint_text("Search"),
+            );
             ui.add_space(4.);
             ScrollArea::vertical()
                 .auto_shrink([false; 2])
                 .show(ui, |ui| {
-                    self.render_material_cards(ui);
+                    self.render_material_cards(ui, &self.search_input.to_lowercase());
                 });
         });
     }
 }
 
+#[derive(Clone)]
 struct MaterialsData {
     title: String,
     descr: String,
