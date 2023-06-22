@@ -9,6 +9,10 @@
     "manufacturer": {
       "name": "GLAPOR Werk Mitterteich GmbH",
       "country": "DE"
+    },
+    "description": "Product definition GLAPOR cellular glass boards cellular glass products are vapour-tight, lightweight insulation materials for the construction industry made of 100 % recycled glass.",
+    "category": {
+      "description": "Thermal insulation materials for use in construction"
     }
   },
   {
@@ -21,6 +25,10 @@
     "manufacturer": {
       "name": "UAB Scandia Steel",
       "country": "SE"
+    },
+    "description": "Steel core piles are round bars of solid steel that are drilled into the ground in combination with steel tubes. The space between pipe and the steel core pile is filled up with concrete. The steel core piles is offered in sizes from 70mm to 230mm. The steel tube pipes consist of 100% steel.The steel grade used for the steel core piles are S355J2H",
+    "category": {
+      "description": "Cold formed steel elements, typically made from coil or sheet steel, such as steel framing."
     }
   },
   {
@@ -33,6 +41,10 @@
     "manufacturer": {
       "name": "Profil-Vertrieb",
       "country": "DE"
+    },
+    "description": "MAXI-TEC® profiles are prefabricated, thin-walled profiles made of hot-dip coated slit strip. The MAXI-TEC® CW 75-06 profile in a delivery length of 300 cm was selected as a representative product for all MAXI-TEC® profiles as it is an average product in terms of geometry and also displays the most popular shape and average values for all MAXI-TEC® profiles. Use of this profile can be regarded as a worst case scenario as it is heavier at 0.706 kg / running metre than the average weight of all profiles (approx. 0.648 kg / running metre). For the placing on the market of the product in the EU/EFTA (with the exception of Switzerland) /Regulation (EU) No. 305/2011 (CPR)/ applies. The product has a declaration of performance taking into consideration /EN 14195/ 2015-03/ Metal framing components for gypsum board systems - Definitions, requirements and test methods; German version EN 14195:2014 and the CE-marking. For the application and use the respective national provisions apply. 2",
+    "category": {
+      "description": "Cold formed steel elements, typically made from coil or sheet steel, such as steel framing."
     }
   },
   {
@@ -45,6 +57,10 @@
     "manufacturer": {
       "name": "Profil-Vertrieb",
       "country": "DE"
+    },
+    "description": "MAXI-TEC® profiles are prefabricated, thin-walled profiles made of hot-dip coated slit strip. The MAXI-TEC® CW 75-06 profile in a delivery length of 300 cm was selected as a representative product for all MAXI-TEC® profiles as it is an average product in terms of geometry and also displays the most popular shape and average values for all MAXI-TEC® profiles. Use of this profile can be regarded as a worst case scenario as it is heavier at 0.706 kg / running metre than the average weight of all profiles (approx. 0.648 kg / running metre). For the placing on the market of the product in the EU/EFTA (with the exception of Switzerland) /Regulation (EU) No. 305/2011 (CPR)/ applies. The product has a declaration of performance taking into consideration /EN 14195/ 2015-03/ Metal framing components for gypsum board systems - Definitions, requirements and test methods; German version EN 14195:2014 and the CE-marking. For the application and use the respective national provisions apply. 2",
+    "category": {
+      "description": "Cold formed steel elements, typically made from coil or sheet steel, such as steel framing."
     }
   },
   {
@@ -57,6 +73,10 @@
     "manufacturer": {
       "name": "H+H Deutschland GmbH",
       "country": "DE"
+    },
+    "description": "The products referred to are components and building elements in various formats made of autoclaved aerated concrete (AAC). AAC is classified as a porous, steam-cured, lightweight concrete. AAC products can be manufactured to various raw densities but are produced using the same manufacturing technology. When comparing products of various compressive strength classes, formulation differences are apparent, whereby the preliminary products used are always identical. The AAC 2-0.35 product selected for the Declaration represents the product in the lowest raw density class while the AAC 8-0.80 product represents the highest gross density class among the AAC masonry units manufactured by H+H Deutschland GmbH. An average for the AAC 2-0.35 product is formed by weighting in accordance with the annual production volume at the three locations. The AAC 8-0.80 product is only produced at one location (Wittenborn I). Application: Precision blocks, precision elements and precision panels for masonry, load-bearing and non-bearing walls. Not designated for unprotected use. This EPD has been registered under the scope of mutual recognition between Institut Bauen und Umwelt e.V. (IBU) and The International EPD® System. The EPD thus has the right to bear the logotype of both programmes, and is also published here: https://ibu-epd.com/.",
+    "category": {
+      "description": "Pre-manufactured concrete masonry blocks"
     }
   },
   {
@@ -69,6 +89,10 @@
     "manufacturer": {
       "name": "ArcelorMittal",
       "country": "LU"
+    },
+    "description": "Reinforcing steel bar (according to product standards listed in Sources of Additional Information) that is obtained from scrap, melted in an Electric Arc Furnace (EAF) followed by hot rolling.",
+    "category": {
+      "description": "Reinforcing bar used together with concrete."
     }
   },
   {
@@ -81,6 +105,10 @@
     "manufacturer": {
       "name": "Knauf UK/I",
       "country": "GB"
+    },
+    "description": "Knauf Fire Panel offers superior fire protection when used as part of a full Knauf system. The additional fire protection properties enable Knauf Fire Panel to be used where increased fire performance is required such as in domestic separating walls, garages and corridors.  This EPD applies to 12.5mm & 15mm of Knauf Fire Panel Plasterboard.",
+    "category": {
+      "description": "Gypsum board used for interior walls, ceilings, and similar applications."
     }
   },
   {
@@ -93,6 +121,10 @@
     "manufacturer": {
       "name": "Knauf UK/I",
       "country": "GB"
+    },
+    "description": "Knauf Fire Panel offers superior fire protection when used as part of a full Knauf system. The additional fire protection properties enable Knauf Fire Panel to be used where increased fire performance is required such as in domestic separating walls, garages and corridors.  This EPD applies to 12.5mm & 15mm of Knauf Fire Panel Plasterboard.",
+    "category": {
+      "description": "Gypsum board used for interior walls, ceilings, and similar applications."
     }
   },
   {
@@ -105,6 +137,10 @@
     "manufacturer": {
       "name": "Knauf UK/I",
       "country": "GB"
+    },
+    "description": "Knauf Sound Panel offers improved levels of sound performance making it ideal for residential applications to reduce or stop noise transfer between neighbouring rooms. At a density of 10kg/m2, Knauf Sound Panel can be used in conjunction with robust details and is Part E compliant. This EPD applies to 12.5mm of Knauf Sound Panel Plasterboard.",
+    "category": {
+      "description": "Gypsum board used for interior walls, ceilings, and similar applications."
     }
   },
   {
@@ -117,6 +153,10 @@
     "manufacturer": {
       "name": "SSAB",
       "country": "SE"
+    },
+    "description": "SSAB Domex Sections are suitable for practically any kind of steel structure for buildings, machines and appliances. SSAB Weathering Section is an open section with anti-corrosive properties, which minimize the need for maintenance and corrosion-prevention treatment. For Strenx® Sections typical applications include demanding load-bearing structures in the lifting, handling and transportation segments.",
+    "category": {
+      "description": "Hot rolled steel shapes, Hollow Sections, pipes, and similar hot-worked structural steels"
     }
   },
   {
@@ -129,6 +169,10 @@
     "manufacturer": {
       "name": "Stora Enso",
       "country": "FI"
+    },
+    "description": "We supply whitewood and redwood products in various qualities and cut to specific lengths according to customer needs. Across the world, we are a trusted supplier of high-quality, renewable raw materials for the construction, packaging, joinery and furniture industries. Like all our wood products, our classic planed products come with the highest environmental credentials so that you can build greener. Our classic planed segment focuses to serve industrial integrators, merchants and DIY retailers, as well as wholesalers and trading houses. We provide a vast array of options for wood frame houses, commercial and residential construction, and industrial applications. Our portfolio also includes CLS timber and TR26 timber. Stora Enso offers up to the highest C35 and C40 strength classes available and our products are CE-marked. This EPD has been registered as an ECO Platform EPD with ECO EPD Reference number 00001282. The International EPD System is a founding member of the ECO Platform and its procedures has undergone a peer audit to be able to use this logotype. All EPDs of construction products from different programmes that carry the ECO logotype are listed here.",
+    "category": {
+      "description": "Dimension lumber for light framing. Includes solid and finger-jointed lumber. Standard shapes include 2x4, 2x6, and 2x8."
     }
   },
   {
@@ -141,6 +185,10 @@
     "manufacturer": {
       "name": "Stora Enso",
       "country": "FI"
+    },
+    "description": "We supply whitewood and redwood products in various qualities and cut to specific lengths according to customer needs. Across the world, we are a trusted supplier of high-quality, renewable raw materials for the construction, packaging, joinery and furniture industries. Like all our wood products, our classic sawn products come with the highest environmental credentials so that you can build greener. Our classic sawn segment focuses to serve industrial integrators, merchants and DIY retailers, as well as wholesalers and trading houses. Uses include general construction (both new build and renovation), joinery, furniture and packaging. This EPD has been registered as an ECO Platform EPD with ECO EPD Reference number 00001281. The International EPD System is a founding member of the ECO Platform and its procedures has undergone a peer audit to be able to use this logotype. All EPDs of construction products from different programmes that carry the ECO logotype are listed here.",
+    "category": {
+      "description": "Dimension lumber for light framing. Includes solid and finger-jointed lumber. Standard shapes include 2x4, 2x6, and 2x8."
     }
   },
   {
@@ -153,6 +201,10 @@
     "manufacturer": {
       "name": "Knauf Insulation",
       "country": "BE"
+    },
+    "description": "The concerned product Supafil Loft 045 into this EPD is a loose-fill, binder-free, factory made mineral wool insulation. The main application for Supafil Loft 045 is loft. The product is particularly suitable for thermo-acoustic insulation of cold lofts",
+    "category": {
+      "description": "Loose-fill insulation for blow-in or closed cavity applications"
     }
   },
   {
@@ -165,6 +217,10 @@
     "manufacturer": {
       "name": "Knauf Insulation",
       "country": "BE"
+    },
+    "description": "The main application for TI 135 U, Classic 035, EXPERT LRR 035 U, FHR 035,  UNIFIT  034,  Naturoll  D-035 are pitched roof, loft floor and timber frame construction.",
+    "category": {
+      "description": "Rigid insulation products including rigid foams, wood fiberboard insulation, and rigid mineral wool boards"
     }
   },
   {
@@ -177,6 +233,10 @@
     "manufacturer": {
       "name": "Knauf Insulation North America",
       "country": "US"
+    },
+    "description": "Heraklith is a wood wool homogeneous product that is used as an insulation board. The product is painted in white on one side.",
+    "category": {
+      "description": "Rigid insulation products including rigid foams, wood fiberboard insulation, and rigid mineral wool boards"
     }
   },
   {
@@ -189,6 +249,10 @@
     "manufacturer": {
       "name": "Knauf Insulation",
       "country": "BE"
+    },
+    "description": "The production process of wood wool insulation boards consists of three main processes:1. Moulding: Preparation and blending of the raw materials followed by deposition of the mixture in amould of the corresponding size, the EPS is introduced in the mold;2. Demoulding: Demoulding and drying of the products;3. Finishing: Various sizing, forming, cutting and painting operations applied to the boards. Product  is  delivered  on  pallets  packaged  with  plastic  film  and  cardboard  protection.  The  estimatedreference service life for the wood wool insulation boards is about 50 years, as long as the buildingequipment in which it is used. No maintenance is conducted during the lifetime.",
+    "category": {
+      "description": "Rigid insulation products including rigid foams, wood fiberboard insulation, and rigid mineral wool boards"
     }
   },
   {
@@ -201,6 +265,10 @@
     "manufacturer": {
       "name": "BASF Corporation",
       "country": "US"
+    },
+    "description": "Neopor®Plus (GPS) insulation boards are graphite polystyrene (GPS) with a polymeric flame retardant in uniform distribution (blowing agent: pentane).",
+    "category": {
+      "description": "Rigid insulation products including rigid foams, wood fiberboard insulation, and rigid mineral wool boards"
     }
   },
   {
@@ -213,6 +281,10 @@
     "manufacturer": {
       "name": "BASF Corporation",
       "country": "US"
+    },
+    "description": "Neopor®Plus (GPS) insulation boards are graphite polystyrene (GPS) with a polymeric flame retardant in uniform distribution (blowing agent: pentane).",
+    "category": {
+      "description": "Rigid insulation products including rigid foams, wood fiberboard insulation, and rigid mineral wool boards"
     }
   },
   {
@@ -225,6 +297,10 @@
     "manufacturer": {
       "name": "BASF Corporation",
       "country": "US"
+    },
+    "description": "Neopor®Plus (GPS) insulation boards are graphite polystyrene (GPS) with a polymeric flame retardant in uniform distribution (blowing agent: pentane).",
+    "category": {
+      "description": "Rigid insulation products including rigid foams, wood fiberboard insulation, and rigid mineral wool boards"
     }
   },
   {
@@ -237,6 +313,10 @@
     "manufacturer": {
       "name": "BASF Corporation",
       "country": "US"
+    },
+    "description": "Neopor®Plus (GPS) insulation boards are graphite polystyrene (GPS) with a polymeric flame retardant in uniform distribution (blowing agent: pentane).",
+    "category": {
+      "description": "Rigid insulation products including rigid foams, wood fiberboard insulation, and rigid mineral wool boards"
     }
   },
   {
@@ -249,6 +329,10 @@
     "manufacturer": {
       "name": "GUTEX Holzfaserplattenwerk H.",
       "country": "DE"
+    },
+    "description": "GUTEX wood fibre insulating boards are board-shaped wood-based materials manufactured from wood fibres in accordance with /DIN EN 13171/. By adding low quantities of PUR resin, insulating boards are manufactured from wood fibres in a dry process. They are then cut online, and profiled and finished where necessary. Water-repellent and non-water-repellent single-layer insulation panels can be manufactured to a thickness of 240 mm. Directive (EU) No.305/2011 dated 9 March 2011 applies for placing the product on the market in the EU/EFTA (with the exception of Switzerland). The products require a Declaration of Performance taking consideration of the /DIN EN 13171/ (\"Thermal insulation products for buildings - Factory-made wood fibre (WF) products - Specification\"), and CE marking.The respective national guidelines apply for use; in Germany, these are /DIN 4108-10/ (\"Thermal insulation an energy economy in buildings - Part 10: Application-related requirements for thermal insulation materials - Factory-made products\"), /DIN EN 14964/ 2 (\"Rigid underlays for discontinuous roofing - Definitions and characteristics\") and the General Technical Approval: /Z-23.15-1404/ of the Deutsches Institut für Bautechnik, Berlin.",
+    "category": {
+      "description": "Rigid insulation products including rigid foams, wood fiberboard insulation, and rigid mineral wool boards"
     }
   },
   {
@@ -261,6 +345,10 @@
     "manufacturer": {
       "name": "JACKON Insulation GmbH",
       "country": "DE"
+    },
+    "description": "JACKODUR Plus is an extruded polystyrene foam (XPS) produced according to /EN 13164/ and available in board shape with a density range from 30 to 50 kg/m3, 38.4 kg/m3 in average (measured). It has specifically low values of thermal conductivity by using HFO1234 ze as blowing agent. The boards can be delivered in various compressive strength values from 300 to 700 kPa. To meet the need of various applications the boards are produced with different surfaces: with the extrusion skin, planed, grooved or with thermal embossing. JACKODUR Plus boards are supplied with different edge treatments such as butt edge, ship lap and tongue and groove. The EPD is related to an unlaminated product only; lamination and additional product treatment are not considered. 2.2 Application The variety of the performance properties of JACKODUR Plus make it suitable for use in a large number of applications such as: perimeter insulation, inverted roof insulation , insulation of pitched roofs, floor insulation including insulation of highly loaded industrial floors, insulation of thermal bridges for exterior walls, External Thermal Insulation Composite",
+    "category": {
+      "description": "Rigid insulation products including rigid foams, wood fiberboard insulation, and rigid mineral wool boards"
     }
   },
   {
@@ -273,6 +361,10 @@
     "manufacturer": {
       "name": "JACKON Insulation GmbH",
       "country": "DE"
+    },
+    "description": "JACKODUR Plus is an extruded polystyrene foam (XPS) produced according to /EN 13164/ and availablein board shape with a density range from 30 to 50 kg/m3, 38.4 kg/m3 in average (measured). It has specifically low values of thermal conductivity by  using HFO1234 ze as blowing agent. The boards can be delivered in  various compressive strength values from 300 to 700 kPa. To meet the need of various applications the boards are produced with different surfaces: with the extrusion skin, planed,grooved or with thermal embossing. JACKODUR Plus boards are supplied with different edge treatments such as butt edge, ship lap and tongue and groove. The EPD is related to an unlaminated product only; lamination and additional product treatment are not considered.",
+    "category": {
+      "description": "Rigid insulation products including rigid foams, wood fiberboard insulation, and rigid mineral wool boards"
     }
   },
   {
@@ -285,6 +377,10 @@
     "manufacturer": {
       "name": "Karl Bachl Kunststoffverarbeitung",
       "country": "DE"
+    },
+    "description": "Product definition Insulation boards made of Neopor® Plus BMB are expandable polystyrenes (EPS) with polymer flame retardants (Polymer FR). “BMB” stands for “Biomass Balance” products. The Biomass Balance method uses renewable raw materials such as bio-naphtha or biogas in the manufacture of chemical base products by the production network of BASF along with fossil raw materials. The organic content is then allocated to certain BASF sales products such as Neopor® Plus BMB granulate in accordance with a certified method /TÜV Süd Standard CMS 71/. BMB products display the same quality as non-BMB products as the product formulation is identical to that of its fossil equivalent. the form of a certificate of a standard recognised by the Renewable Energy Directive. Neopor® Plus BMB granulate is manufactured from biogas extracted from kitchen waste. The biogas used is certified in accordance with the /REDcert/ system. Directive (EU) No. 305/2011 (CPR) applies for placing the product on the market in the EU/EFTA (with the exception of Switzerland). The product requires a Declaration of Performance taking consideration of the /EN 13163:2012+A1:2015/, Thermal insulation materials for buildings - Factory-made expanded polystyrene (EPS) products - Specifications, and CE marking. Use is governed by the respective national regulations. The BMB approach applied by BASF supports the use of renewable raw materials which leads to savings in fossil resources and lower greenhouse gas emissions. The biomass used requires proof of sustainability in 2 Environmental Product Declaration BASF SE & Karl Bachl Kunststoffverarbeitung GmbH & Co.KG - Insulation board made of Neopor® Plus BMB",
+    "category": {
+      "description": "Rigid insulation products including rigid foams, wood fiberboard insulation, and rigid mineral wool boards"
     }
   },
   {
@@ -297,6 +393,10 @@
     "manufacturer": {
       "name": "Tarkett",
       "country": "US"
+    },
+    "description": "Carpet products offer a large choice of designs and colours in acoustic profiles. It is developed to be combined with a full and diversed range of accessories to meet and-users sensorial, functional and environmental needs and concerns in all segments.",
+    "category": {
+      "description": "Textile Floor Coverings"
     }
   },
   {
@@ -309,6 +409,10 @@
     "manufacturer": {
       "name": "Tarkett",
       "country": "US"
+    },
+    "description": "Carpet products offer a large choice of designs and colours in acoustic profiles. It is developed to be combined with a full and diversed range of accessories to meet and-users sensorial, functional and environmental needs and concerns in all segments.",
+    "category": {
+      "description": "Textile Floor Coverings"
     }
   },
   {
@@ -321,6 +425,10 @@
     "manufacturer": {
       "name": "Tarkett",
       "country": "US"
+    },
+    "description": "Carpet products offer a large choice of designs and colours in acoustic profiles. It is developed to be combined with a full and diversed range of accessories to meet and-users sensorial, functional and environmental needs and concerns in all segments.",
+    "category": {
+      "description": "Textile Floor Coverings"
     }
   },
   {
@@ -333,6 +441,10 @@
     "manufacturer": {
       "name": "Tarkett",
       "country": "US"
+    },
+    "description": "Carpet products offer a large choice of designs and colours in acoustic profiles. It is developed to be combined with a full and diversed range of accessories to meet and-users sensorial, functional and environmental needs and concerns in all segments.",
+    "category": {
+      "description": "Textile Floor Coverings"
     }
   },
   {
@@ -345,6 +457,10 @@
     "manufacturer": {
       "name": "ArcelorMittal",
       "country": "LU"
+    },
+    "description": "This Environmental Product Declaration refers to galvanized or organic coated steel profile produced by ArcelorMittal Construction. These products are made of cold-rolled steel profiles for roof, wall, facades and floors applications. The targeted applications are as follow: Roof & Decking Traditional wall Facade architectural Sidings Cassettes Wall liner trays Floors These profiles are available in different thicknesses from 0.4 to 1.5 mm. They can be covered with different metallic coating with masses from 60 to 350 g/m². They also can be constituted of an organic coating with thicknesses from 12 to 205 µm, applied on the metallic coating. 2 They are produced in the ArcelorMittal Construction production plants located in Austria (Neuhofen), Belgium (Geel), France (Cérons, Diémoz, Haironville, La Magdeleine, Montataire, Nérac, Strasbourg, Thouaré and Contrisson), Germany (Brehna and Reichshof), The Netherlands (Tiel), Poland (Rawa, Swietochlowice and Starachowice), Portugal (Cartaxo), Romania (Pantelimon), Slovakia (Senika), Spain (Berrioplano and Cervera) and Sweden (Sveg and Karlstad). For the placing on the market of the product in the European Union/European Free Trade Association (EU/EFTA) (with the exception of Switzerland) Regulation (EU) No. 305/2011 (CPR) applies. The product needs a declaration of performance and the CE-marking taking into consideration one of the following standards: EN 1090-1:2009 Execution of steel and aluminium structures - Part 1: Procedures for attestation of conformity for load-bearing components and the CE-marking; EN 14782:2006 Self-supporting metal sheet for roofing, external cladding and internal Environmental Product Declaration ArcelorMittal - Building Steel Profiles lining - Product specification and requirements and EN 14783:2013 Fully supported metal sheet and strip for roofing, external cladding and internal lining - Product specification and requirements. For the application and use the respective nat",
+    "category": {
+      "description": "Corrugated Decking made from cold-formed sheet steel.  Often filled with concrete."
     }
   },
   {
@@ -357,6 +473,10 @@
     "manufacturer": {
       "name": "Falcon Panel Products Ltd",
       "country": "GB"
+    },
+    "description": "Resysta profiles offer the look and feel of wood but are made from a fibre reinforced hybrid material comprising rice husks and polymers. They are extremely weather-resistant against sun, rain, snow and salt water. Resysta profiles are also very durable, requiring minimal care and are resistant to attack by insects and fungi. As such, they do not splinter, swell or crack and can also be provided in a range of colours and shapes. Coating is optional - the modelled product is uncoated as these are the type sold in the UK by Falcon Panel Products Ltd. Publicly available marketing literature and technical data on Resysta profiles are available on the Resysta web site (Resysta 2017). Technical Information Property Value, Unit Solid Density (ASTM D2395:2002) Approx. 1460 kg/m³ Typical Area Density for Grooved Decking (including 19.14 kg/m2 hollows/voids) Typical Area Density for Cladding (including hollows/voids) 10.36 kg/m2 EPD Number: 000170 Date of Issue: 07 December 2017 Expiry Date 22 October 2022 BF1805-C-ECOP Rev 0.0 Page 3 of 17 © BRE Global Ltd, 2017 Property Value, Unit Coefficient of linear thermal expansion (ASTM D696) 3.6 x 10-5 mC Little to no water absorption (only surface Water absorption & humidity (ASTM D1037:2006a) moistening) Slip test (wet area barefoot) (DIN 51097) Class C (Least slippery) B2 (E) - standard flammable (with additional Fire rating (German/European norm) (BS EN ISO 11925-2) treatment B1 reachable) Class A (flame propagation 25, smoke Fire rating according NFPA (US Norm) (ASTM E84) emission 450) Fire rating (British standard) (BS 476-7) Class 1 Emission (LGA-tested safety & contamination) LGA test passed Brinell hardness (HB) (BS EN 1534) 81.1 N/mm² Coefficient of sliding and friction μ (BS EN 13893) 0.46 Axial withdrawal force (of screws) (BS EN 320.2011-07) 5777 N Thermal conductivity (λ) BS (EN 12664) 0.199 W/(mK) Bending strength (BS EN ISO 178) 46 N/mm² Bending modulus (BS EN ISO 178) 3850 N/mm² Tensile strength (BS EN ISO 527)",
+    "category": {
+      "description": "Nonstructural materials used primarily on the outside of buildings"
     }
   },
   {
@@ -369,6 +489,10 @@
     "manufacturer": {
       "name": "Teknoflor",
       "country": "US"
+    },
+    "description": "Teknoflor Bio-Polyurethane Flooring is a commercialgrade resilient flooring product made, in part, from polyurethane processed with the renewable plant product castor oil. This resilient flooring product has all the advantages of vinyl: durability, easy maintenance and versatility, but without the vinyl. The product offers forty-two beautiful designs in four collections of plank and tile; twenty-four of the same, stunning designs are also available in three collections of sheet flooring. These products can be used independently or together to bring life to resilient flooring with design, color, performance and an environmental focus perfect for any commercial space. For the placing on the market of the product in the European Union/European Free Trade Association (EU/EFTA) (with the exception of Switzerland) Regulation (EU) No. 305/2011 Construction Producs Regulation CPR applies. The Declaration of Performance of the products taking into consideration EN 14041 and the CE-marking of the products can be found on the manufacturer's technical information section. 2 Application According to the use class as defined in ISO 10874 the product can be used - in all domestic areas, classified as use class 23, - in all commercial areas, classified as use class 34 - in all industrial areas, classified as use class 43",
+    "category": {
+      "description": "Resilient floor products (including vinyl, rubber, linoleum, composition cork, etc.) in modular square or rectangle shapes"
     }
   },
   {
@@ -381,6 +505,10 @@
     "manufacturer": {
       "name": "Teknoflor",
       "country": "US"
+    },
+    "description": "Product definition Teknoflor Naturescapes HPD is a commercial-grade resilient sheet flooring made, in part, from polyurethane processed with the renewable plant product castor oil. This resilient sheet flooring product has all the advantages of resilient sheet vinyl: durability, easy maintenance and versatility, but without the vinyl. The product offers twenty-four beautiful designs in three distinct styles that can be used independently or together. Naturescapes HPD brings life to resilient flooring with design, color, performance and an environmental focus perfect for any commercial space. For the placing on the market of the product in the European Union/European Free Trade Association (EU/EFTA) (with the exception of Switzerland) Regulation (EU) No. 305/2011 Construction Producs Regulation /CPR/ applies. The Declaration of Performance of the products taking into consideration /EN 14041/ and the CE-marking of the products can be found on the manufacturer's technical information section. - in all domestic areas, classified as use class 23, - in all commercial areas, classified as use class 34 - in all industrial areas, classified as use class 43",
+    "category": {
+      "description": "Resilient floor products (including vinyl, rubber, linoleum, composition cork, etc.) in modular square or rectangle shapes"
     }
   },
   {
@@ -393,6 +521,10 @@
     "manufacturer": {
       "name": "Tarkett",
       "country": "US"
+    },
+    "description": "Tapiflex and Tx proudcts offer a large choice of designs and colours in acoustic profiles. It is developed to be combined with a full and diversed range of accessories to meet and-users sensorial, functional and environmental needs and concerns in all segments.",
+    "category": {
+      "description": "Resilient floor products (including vinyl, rubber, linoleum, composition cork, etc.) in modular square or rectangle shapes"
     }
   },
   {
@@ -405,6 +537,10 @@
     "manufacturer": {
       "name": "Nora",
       "country": "DE"
+    },
+    "description": "/Product definition In this Environmental Product Declaration (EPD), resilient, electrostatically dissipative rubber floor coverings of the nora systems GmbH product line noraplan® ed with different designs and surface structures but same rubber recipes are modelled. For the product line noraplan® ed standards apply: EN 1817:2007-7: Resilient floor coverings Specification for homogeneous and heterogeneous smooth rubber floor coverings EN 14521:2004-9: Resilient floor coverings Specification for smooth rubber floor coverings with or without foam backing with a decorative layer ISO 10874:2009-11: Resilient, textile and laminate floor coverings - Classification EN 1081:2021-1: Resilient, laminate and modular multilayer floor coverings Determination of the electrical resistance 2 For the placing on the market of the product in the European Union/European Free Trade Association (EU/EFTA) (with the exception of Switzerland) Regulation (EU) No. 305/2011 (CPR) applies. The product needs a declaration of performance taking into consideration EN 14041:2018-5, Resilient, textile, laminate and modular multilayer floor coverings Essential characteristics and the CE-marking. For the application and use the respective national provisions apply.",
+    "category": {
+      "description": "Resilient floor products (including vinyl, rubber, linoleum, composition cork, etc.) in modular square or rectangle shapes"
     }
   },
   {
@@ -417,6 +553,10 @@
     "manufacturer": {
       "name": "Nora",
       "country": "DE"
+    },
+    "description": "/Product definition In this Environmental Product Declaration (EPD), resilient electrostatically dissipative rubber floor coverings of the nora systems GmbH product line noraplan® acoustic with different designs and surface structures but same rubber recipes are modelled. For the product line noraplan® acoustic standards apply: EN 18162020-7: Resilient floor coverings Specification for homogeneous and heterogeneous smooth rubber floor coverings with foam backing EN 14521:2004_9: Resilient floor coverings Specification for smooth rubber floor coverings with or without foam backing with a decorative layer ISO 10874:2009-11: Resilient, textile and laminate floor coverings - Classification 2 For the placing on the market of the product in the European Union/European Free Trade Association (EU/EFTA) (with the exception of Switzerland) Regulation (EU) No. 305/2011 (CPR) applies. The product needs a declaration of performance taking into consideration EN 14041:2018-5, Resilient, textile, laminate and modular multilayer floor coverings Essential characteristics and the CE-marking. For the application and use the respective national provisions apply.",
+    "category": {
+      "description": "Resilient floor products (including vinyl, rubber, linoleum, composition cork, etc.) in modular square or rectangle shapes"
     }
   },
   {
@@ -429,6 +569,10 @@
     "manufacturer": {
       "name": "Nora",
       "country": "DE"
+    },
+    "description": "/Product definition In this Environmental Product Declaration (EPD), resilient electrostatically dissipative rubber floor coverings of the nora systems GmbH product line norament® 928 ed with different designs and surface structures but same rubber recipes are modelled. For the product line norament® ed standards apply: EN 12199:2020: Resilient floor coverings Specifications for homogeneous and heterogeneous relief rubber floor coverings; depending on style DIN EN 1817: Resilient floor coverings -Specification for homogeneous and heterogeneous smooth rubber floor coverings ISO 10874:2009: Resilient, textile and laminate floor coverings - Classification EN 1081:2021: Resilient, laminate and modular multilayer floor coverings Determination of the electrical resistance 2 For the placing on the market of the product in the European Union/European Free Trade Association (EU/EFTA) (with the exception of Switzerland) Regulation (EU) No. 305/2011 (CPR) applies. The product needs a declaration of performance taking into consideration EN 14041:2018-5, Resilient, textile, laminate and modular multilayer floor coverings Essential characteristics and the CE-marking. For the application and use the respective national provisions apply.",
+    "category": {
+      "description": "Resilient floor products (including vinyl, rubber, linoleum, composition cork, etc.) in modular square or rectangle shapes"
     }
   },
   {
@@ -441,6 +585,10 @@
     "manufacturer": {
       "name": "Sika UK",
       "country": "GB"
+    },
+    "description": "Sika ComfortFloor® PS-66 system is a highly elastic polyurethane self-smoothening flooring system and is part of the Sika ComfortFloor® system range. The Sika ComfortFloor® PS-66 system is especially designed for decorative areas where high comfort under feet, soft footfall and increased impact noise reduction are required. The system is composed of a highly elastic, crack bridging polyurethane which fulfils the stringent demands for low VOC emitting products. Technical Information Property Value, Unit Shore A Hardness (DIN 53505) ~84 (14 days /+23 °C) Resistance to Wearing (EN 660-2:1999) Wearing group M Resistance to moving furniture (EN 424:2002) No damage Castor chair resistance (EN 425:1994) No damage (25000 cycles) Resistance to Impact (ISO 6272) Class II Indentation (EN 433:1994) ~ 0.1 mm Tensile Adhesion Strength (EN 13892-8) > 1.5 N/mm2 Reaction to Fire (EN 13501-1) Cfl-s1 Chemical Resistance Sika ComfortFloor® PS-66 always has to be sealed with Sikafloor®-304 W. Refer to the chemical resistance of Sikafloor®-304 W. EPD Number: 000153 Date of Issue:03 April 2018 Expiry Date 02 April 2023 BF1805-C-ECOP Rev 0.0 Page 3 of 14 © BRE Global Ltd, 2017 Property Value, Unit Capillary Absorption (EN 1062-3) < 0.01 kg/(m2h0,5) Permeability to CO2 (EN 1062-6) > 50 meter Sound Insulation (EN ISO 140-8) 17 dB Skid / Slip Resistance (DIN 51130) R10 Main Product Contents The table below shows the SIKA component layers that make up the Sika ComfortFloor® PS-66 system. The actual chemical inputs are not disclosed due to confidentiality reasons, but the product does not contain substances on the SVHC list of chemicals. Material/Chemical Input Kg/m2 Sikafloor® Comfort Adhesive 0.7 Sikafloor® Comfort Regupol®-4580 1.8 Sikafloor® Comfort Porefiller 0.8 Sikafloor®-300 base coat 2.6 Sikafloor®-304W seal coat 0.26 Coloured Flakes 0.05 Total product weight 6.21 EPD Number: 000153 Date of Issue:03 April 2018 Expiry Date 02 April 2023 BF1805-C-ECOP Rev 0.0 Page 4 of 14 © BRE Global Lt",
+    "category": {
+      "description": "Resilient floor products (including vinyl, rubber, linoleum, composition cork, etc.) in modular square or rectangle shapes"
     }
   },
   {
@@ -453,6 +601,10 @@
     "manufacturer": {
       "name": "Sika UK",
       "country": "GB"
+    },
+    "description": "Sika ComfortFloor® PS-24 system is an UV resistant, high elastic polyurethane self-smoothening flooring system and is part of the Sika ComfortFloor® system range. The Sika ComfortFloor® PS-24 system is especially designed for decorative areas where high comfort under feet, and soft footfall are required in combination with aesthetic design options. The system is composed of an elastic, crack bridging, UV stable polyurethane which fulfils the stringent demands for low VOC emitting products. Technical Information Property Value, Unit Shore A Hardness (DIN 53505) ~84 (14 days / +23 °C) Wearing resistance (EN 660-2:1999) Wearing group P Resistance to moving furniture (EN 424:2002) No damage Castor chair resistance (EN 425:1994) No damage (25000 cycles) Resistance to Impact (ISO 6272) Class I (~ 4 N/m) Indentation (EN 433:1994) 0.02 mm Tensile Strength (DIN 53504) ~8.0 N/mm² (14 days / +23 °C / Base coat) Tensile Adhesion Strength (EN 13892-8) > 1.5 N/mm2 Tear Strength (ISO 34-1) ~18 N/mm (14 days / +23 °C / Base coat) Elongation at Break (DIN 53504) ~70 % (14 days / +23 °C / Base coat) Reaction to Fire (EN 13501-1) Bfl-s1 EPD Number: 000151 Date of Issue:03 April 2018 Expiry Date 02 April 2023 BF1805-C-ECOP Rev 0.0 Page 3 of 14 © BRE Global Ltd, 2017 Property Value, Unit Resistance to Stubbed Cigarettes (EN 1399) Class 4 Chemical Resistance Sika ComfortFloor® PS-24 always has to be sealed with Sikafloor®-304 W. Refer to the chemical resistance of Sikafloor®-304 W. USGBC LEED Rating Conforms Section EQ (Indoor Environmental Quality), Credit 4.2 Low-Emitting Materials Paints and Coatings. Calculated VOC content ≤ 50 g/l Sound Insulation (EN ISO 140-8) 2 dB Skid / Slip Resistance (DIN 51130) R 10 Main Product Contents The table below shows the SIKA component layers that make up the Sika ComfortFloor® PS-24 system. The actual chemical inputs are not disclosed due to confidentiality reasons, but the product does not contain substances on the SVHC list of chemicals Material/C",
+    "category": {
+      "description": "Resilient floor products (including vinyl, rubber, linoleum, composition cork, etc.) in modular square or rectangle shapes"
     }
   },
   {
@@ -465,6 +617,10 @@
     "manufacturer": {
       "name": "Sika UK",
       "country": "GB"
+    },
+    "description": "Sika ComfortFloor® PS-27 system is a tough-elastic polyurethane self-smoothening flooring system and is part of the Sika ComfortFloor® system range. The Sika ComfortFloor® PS-27 system is especially designed for decorative areas where seamless hardwearing floors are required. The system is composed of a tough- elastic polyurethane which fulfils the stringent demands for low VOC emitting products. Technical Information Property Value, Unit Shore D Hardness (DIN 53505) ~65 (14 days / +23 °C) Abrasion Resistance (EN ISO 5470-1) < 3000 mg Resistance to Impact (ISO 6272) Class I Tensile Adhesion Strength (EN 13892-8) > 2.0 N/mm2 Reaction to Fire (EN 13501-1) Bfl-s1 Chemical Resistance Sika ComfortFloor® PS-27 always has to be sealed with Sikafloor®-305 W. Refer to the chemical resistance of Sikafloor®-305 W. UV Exposure (EN ISO 105-B02:2002) 8 / Colour fastness Permeability to Water Vapour (EN ISO 7783-1/-2) Class III Capillary Absorption (EN 1062-3) < 0.01 kg/m2 h0.5 EPD Number: 000157 Date of Issue:03 April 2018 Expiry Date 02 April 2023 BF1805-C-ECOP Rev 0.0 Page 3 of 14 © BRE Global Ltd, 2017 Property Value, Unit Permeability to CO2 (EN 1062-6) > 50 meter Skid / Slip Resistance (DIN 51130) R10 / R11 Main Product Contents The table below shows the SIKA component layers that make up the Sika ComfortFloor® PS-27 system. The actual chemical inputs are not disclosed due to confidentiality reasons, but the product does not contain substances on the SVHC list of chemicals Material/Chemical Input Kg/m2 Sikafloor®-161 primer 1.0 Sikafloor®-327 base coat 2.8 Sikafloor®-305W top sealer 0.27 Total Product Weight 4.07 EPD Number: 000157 Date of Issue:03 April 2018 Expiry Date 02 April 2023 BF1805-C-ECOP Rev 0.0 Page 4 of 14 © BRE Global Ltd, 2017 Manufacturing Process A flooring product from the ComfortFloor® family (e.g. Sikafloor®-330) is compounded as a master-batch by mixing the base polymer with all additives, fillers, stabilizers and pigments. The production starts with the",
+    "category": {
+      "description": "Resilient floor products (including vinyl, rubber, linoleum, composition cork, etc.) in modular square or rectangle shapes"
     }
   },
   {
@@ -477,6 +633,10 @@
     "manufacturer": {
       "name": "Sika UK",
       "country": "GB"
+    },
+    "description": "Sika ComfortFloor® PS-65 system is a high elastic polyurethane self-smoothening flooring system and is part of the Sika ComfortFloor® system range. The Sika ComfortFloor® PS-65 system is especially designed for decorative areas where high comfort under feet, soft footfall and increased impact noise reduction are required. The system is composed of a highly elastic, crack bridging polyurethane which fulfils the stringent demands for low VOC emitting products. Technical Information Property Value, Unit Shore A Hardness (DIN 53505) ~ 80 (14 days/+23°C) Resistance to Wearing (EN 660-2:1999) Wearing group M Resistance to moving furniture (EN 424:2002) No damage Castor chair resistance (EN 425:1994) No damage (25000 cycles) Resistance to Impact (ISO 6272) Class II Indentation (EN 433:1994) 0.07 mm Tensile Strength (DIN 53504) ~ 8.0 N/mm² (14 days/+23°C/Base coat) Tensile Adhesion Strength (EN 13892-8) > 1.5 N/mm2 Reaction to Fire (EN 13501-1) Bfl-s1 EPD Number: 000152 Date of Issue:03 April 2018 Expiry Date 02 April 2023 BF1805-C-ECOP Rev 0.0 Page 3 of 14 © BRE Global Ltd, 2017 Property Value, Unit Chemical Resistance Sika ComfortFloor® PS-65 always has to be sealed with Sikafloor®-305 W. Refer to the chemical resistance of Sikafloor®-305 W. UV Exposure (EN ISO 105-B02:2002) 8 / Colour fastness Capillary Absorption (EN 1062-3) < 0.01 kg/(m2h0,5) Permeability to CO2 (EN 1062-6) > 50 meter Sound Insulation (EN ISO 140-8) 19 dB Skid / Slip Resistance (DIN 51130) R10 / R11 Main Product Contents The table below shows the SIKA component layers that make up the Sika ComfortFloor® PS-65 system. The actual chemical inputs are not disclosed due to confidentiality reasons, but the product does not contain substances on the SVHC list of chemicals. Material/Chemical Input Kg/m2 Sikafloor® Comfort Adhesive 0.9 Sikafloor® Comfort Regupol®-6015H 2.7 Sikafloor® Comfort Porefiller 1.0 Sikafloor®-330 base coat 2.6 Sikafloor®-305W seal coat 0.27 Total product weight 7.67 EPD Number: 000152 D",
+    "category": {
+      "description": "Resilient floor products (including vinyl, rubber, linoleum, composition cork, etc.) in modular square or rectangle shapes"
     }
   },
   {
@@ -489,6 +649,10 @@
     "manufacturer": {
       "name": "Sika UK",
       "country": "GB"
+    },
+    "description": "Sika ComfortFloor® PS-23 system is a high elastic polyurethane self-smoothening flooring system and is part of the Sika ComfortFloor® system range. The Sika ComfortFloor® PS-23 system is especially designed for decorative areas where high comfort under feet, and soft footfall are required. The system is composed of a highly elastic, crack bridging polyurethane which fulfils the stringent demands for low VOC emitting products Technical Information Property Value, Unit Shore A Hardness (DIN 53505) ~ 80 (14 days/+23°C) Resistance to Wearing (EN 660-2:1999) Wearing group P Resistance to moving furniture (EN 424:2002) No damage Castor chair resistance (EN 425:1994) No damage (25000 cycles) Resistance to Impact (ISO 6272) Class I (~ 4 N/m) Indentation (EN 433:1994) 0.05 mm Tensile Strength (DIN 53504) ~ 8.0 N/mm² (14 days/+23°C/Base coat) Tensile Adhesion Strength (EN 13892-8) > 1.5 N/mm2 Elongation at Break (DIN 53504) ~ 150% (14 days/+23°C/Base coat) Reaction to Fire (EN 13501-1) Bfl-s1 Resistance to Stubbed Cigarettes (EN 1399) Class 4 EPD Number: 000150 Date of Issue:03 April 2018 Expiry Date 02 April 2023 BF1805-C-ECOP Rev 0.0 Page 3 of 14 © BRE Global Ltd, 2017 Property Value, Unit Chemical Resistance Sika ComfortFloor® PS-23 always has to be sealed with Sikafloor®-305 W. Refer to the chemical resistance of Sikafloor®-305 W. UV Exposure (EN ISO 105-B02:2002) 8 / Colour fastness USGBC LEED Rating Conforms Section EQ (Indoor Environmental Quality), Credit 4.2 Low-Emitting Materials Paints and Coatings. Calculated VOC content ≤ 50 g/l Sound Insulation (EN ISO 140-8) 2 dB Skid / Slip Resistance (DIN 51130) R10 / R11 Main Product Contents The table below shows the SIKA component layers that make up the Sika ComfortFloor® PS-23 system. The actual chemical inputs are not disclosed due to confidentiality reasons, but the product does not contain substances on the SVHC list of chemicals Material/Chemical Input Kg/m2 Sikafloor®-161 primer 1.0 Sikafloor®-330 base coat 2.8 Sika",
+    "category": {
+      "description": "Resilient floor products (including vinyl, rubber, linoleum, composition cork, etc.) in modular square or rectangle shapes"
     }
   },
   {
@@ -501,6 +665,10 @@
     "manufacturer": {
       "name": "Altro Ltd",
       "country": "GB"
+    },
+    "description": "Altro Debolon R200.1 Silence, also sold as Altro Orchestra, Altro Wood Silence and Altro Wood Comfort, product is a 2.85 mm sheet PVC based flooring, that comes in a range of designs for areas where comfort and sound reduction are important. Technical Information The below table covers the basic technical properties of the Altro Debolon R200.1 Silence, Altro Orchestra, Altro Wood Silence and Altro Wood Comfort products. For further properties, please see the products’ pages on Altro’s website: https://www.altrodebolon.de/Altro-Debolon-R-200-1, https://www.altro-me.com/Altro-Wood- Silence, https://www.altro.co.uk/Altro-Orchestra. Property Value, Unit Thickness (EN 428) 2.85 mm Mass per area (EN ISO 23997) 2.66 kg/m2 Slip resistance (DIN 51130) R10 Fire performance (EN 13501-1, EN ISO 9239-1, EN ISO 11925-2) Class Cfl-s1, ≥4.5 kW/m2, pass Sound insulation (ISO 140-8) 15 dB EPD Number: 000259 Date of Issue:09 March 2019 Expiry Date 08 March 2024 BF1805-C Rev 0.0 Page 3 of 7 © BRE Global Ltd, 2017 Main Product Contents Material/Chemical Input Mass (%) Plastisol 96 Scrim 2 Lacquer <1 Print ink <1 Fleece <1 Manufacturing Process Bulk liquids, powders, aggregates and performance additives are mixed together into a plastisol and placed in a holding tank. The plastisol is then pigmented and passed into inline mixers. The pigmented plastisol is spreadcoated on to a glass matt and gravure printed to give a range of designs. A fleece backing is added and the surface of the plastisol is coated with PUR to enhance cleanability and stain resistance. The product is then cured in an oven. Finally, the product is cut into rolls and packaged for dispatch. Process flow diagram EPD Number: 000259 Date of Issue:09 March 2019 Expiry Date 08 March 2024 BF1805-C Rev 0.0 Page 4 of 7 © BRE Global Ltd, 2017 Life Cycle Assessment Calculation Rules Declared / Functional unit description",
+    "category": {
+      "description": "Resilient floor products (including vinyl, rubber, linoleum, composition cork, etc.) in modular square or rectangle shapes"
     }
   },
   {
@@ -513,6 +681,10 @@
     "manufacturer": {
       "name": "Altro Ltd",
       "country": "GB"
+    },
+    "description": "Altro Debolon R450.1 Silence, also sold as Altro Serenade and Altro Wood Acoustic, is 3.9 mm thick PVC based sheet flooring, that does not only reduce noise, but provides a high level of comfort underfoot, making it a great solution for well-used spaces. Technical Information The below table covers the basic technical properties of the Altro Debolon R450.1 Silence, Altro Serenade and Altro Wood Acoustic products. For further properties, please see the products’ pages on Altro’s website: https://www.altrodebolon.de/Altro-Debolon-R-450-1, https://www.altro.co.uk/Altro-Serenade, https://www.altrofloors.com/AltroWoodAcoustic. Property Value, Unit Thickness (EN 428) 3.9 mm Mass per area (EN ISO 23997) 2.9 kg/m2 Slip resistance (DIN 51130) R10 Fire performance (EN 13501-1, EN ISO 9239-1, EN ISO 11925-2) Class Cfl-s1, ≥4.5 kW/m2,pass Sound insulation (ISO 140-8) 19 dB EPD Number: 000261 Date of Issue:09 March 2018 Expiry Date 08 March 2024 BF1805-C Rev 0.0 Page 3 of 7 © BRE Global Ltd, 2017 Main Product Contents Material/Chemical Input Mass (%) Plastisol 97 Scrim 2 Lacquer <1 Print ink <1 Manufacturing Process Bulk liquids, powders, aggregates and performance additives are mixed together into a plastisol and placed in a holding tank. The plastisol is then pigmented and passed into inline mixers. The pigmented plastisol is spread coated onto a scrim and gravure printed to give a range of designs. PUR is added for enhanced cleanability and the product is then cured in an oven. The final product is then cut into rolls and packaged for dispatch. Process flow diagram EPD Number: 000261 Date of Issue:09 March 2018 Expiry Date 08 March 2024 BF1805-C Rev 0.0 Page 4 of 7 © BRE Global Ltd, 2017 Life Cycle Assessment Calculation Rules Declared / Functional unit description",
+    "category": {
+      "description": "Resilient floor products (including vinyl, rubber, linoleum, composition cork, etc.) in modular square or rectangle shapes"
     }
   },
   {
@@ -525,6 +697,10 @@
     "manufacturer": {
       "name": "Altro Ltd",
       "country": "GB"
+    },
+    "description": "Altro Debolon R300.1, also sold as Altro Operetta, Altro Wood and Altro Zodiac, is robust 2mm thick PVC flooring with R10 slip resistance designed for medium to high traffic areas. Technical Information The below table covers the basic technical properties of the Altro Debolon R300.1, Altro Operetta, Altro Wood and Altro Zodiac products. For further properties, please see the products’ pages on Altro’s website: https://www.altrodebolon.de/Altro-Debolon-R-300-1, https://www.altro.co.uk/Altro-Operetta, https://www.altrofloors.com/Altro-Wood, https://www.altro.co.uk/Altro-Zodiac. Property Value, Unit Thickness (EN 428) 2.0 mm Mass per area (EN ISO 23997) 2.66 kg/m2 Slip resistance (DIN 51130) R10 Fire performance (EN 13501-1, EN ISO 9239-1, EN ISO 11925-2) Class Bfl-s1, ≥8 kW/m2, pass Sound insulation (ISO 140-8) 4 dB EPD Number: 000260 Date of Issue:09 March 2019 Expiry Date 08 March 2024 BF1805-C Rev 0.0 Page 3 of 7 © BRE Global Ltd, 2017 Main Product Contents Material/Chemical Input Mass (%) Plastisol 97 Scrim 2 Lacquer <1 Print ink <1 Manufacturing Process Bulk liquids, powders, aggregates and performance additives are mixed together into a plastisol and placed in a holding tank. The plastisol is then pigmented and passed into inline mixers. The pigmented plastisol is spread coated onto a scrim and gravure printed to give a range of designs. PUR is added for enhanced cleanability and the product is then cured in an oven. The final product is then cut into rolls and packaged for dispatch. Process flow diagram EPD Number: 000260 Date of Issue:09 March 2019 Expiry Date 08 March 2024 BF1805-C Rev 0.0 Page 4 of 7 © BRE Global Ltd, 2017 Life Cycle Assessment Calculation Rules Declared / Functional unit description",
+    "category": {
+      "description": "Resilient floor products (including vinyl, rubber, linoleum, composition cork, etc.) in modular square or rectangle shapes"
     }
   },
   {
@@ -537,6 +713,10 @@
     "manufacturer": {
       "name": "Altro Ltd",
       "country": "GB"
+    },
+    "description": "Altro Wood Safety product is a 2.0 mm sheet PVC based safety flooring to (EN 13845) covering a range of wood designs. Technical Information The below table covers the basic technical properties of the Altro Wood Safety product. For further properties, please see the product’s page on Altro’s website: https://www.altro.co.uk/Altro-Wood-Safety Property Value, Unit Thickness (EN 428) 2.0 mm Mass per area (EN ISO 23997) 2.66 kg/m2 Slip resistance (TRRL) PTV ≥ 36 Fire performance (EN 13501-1, EN ISO 9239-1, EN ISO11925-2) Class Bfl-s1, ≥8 kW/m2,pass Sound insulation (ISO 140-8) 4 dB EPD Number: 000262 Date of Issue:09 March 2019 Expiry Date 08 March 2024 BF1805-C Rev 0.0 Page 3 of 7 © BRE Global Ltd, 2017 Main Product Contents Material/Chemical Input Mass (%) Plastisol 93 Scatter 4 Scrim 2 Lacquer <1 Print ink <1 Manufacturing Process Bulk liquids, powders, performance additives and some aggregates are mixed together into a plastisol and placed in a holding tank. The plastisol is then pigmented and passed into inline mixers. PVC plastisol is spreadcoated on to a glass matt and gravure printed to give a range of designs. PUR, and aggregates, are added to the surface to enhance cleanability and stain resistance, and to provide slip resistance, respectively. The product is then cured in an oven. Finally, the product is cut into rolls and packaged for dispatch. Process flow diagram EPD Number: 000262 Date of Issue:09 March 2019 Expiry Date 08 March 2024 BF1805-C Rev 0.0 Page 4 of 7 © BRE Global Ltd, 2017 Life Cycle Assessment Calculation Rules Declared / Functional unit description",
+    "category": {
+      "description": "Resilient floor products (including vinyl, rubber, linoleum, composition cork, etc.) in modular square or rectangle shapes"
     }
   },
   {
@@ -549,6 +729,10 @@
     "manufacturer": {
       "name": "Altro Ltd",
       "country": "GB"
+    },
+    "description": "Altro Wood Safety Comfort product is a 2.85 mm sheet PVC based safety flooring to (EN 13845) covering a range of wood designs. It offers additional sound insulation to Altro’s Altro Wood Safety product. Technical Information The below table covers the basic technical properties of the Altro Wood Safety Comfort product. For further properties, please see the product’s page on Altro’s website: https://www.altro.co.uk/Altro-Wood-Safety- Comfort Property Value, Unit Thickness (EN 428) 2.85 mm Mass per area (EN ISO 23997) 2.66 kg/m2 Slip resistance (TRRL) PTV ≥ 36 Fire performance (EN 13501-1, EN ISO 9239-1, EN ISO 11925-2) Class Cfl-s1, ≥4.5 kW/m2,pass Sound insulation (ISO 140-8) 14 dB EPD Number: 000263 Date of Issue:09 March 2019 Expiry Date 09 March 2024 BF1805-C Rev 0.0 Page 3 of 7 © BRE Global Ltd, 2017 Main Product Contents Material/Chemical Input Mass (%) Plastisol 93 Scatter 4 Scrim 2 Lacquer <1 Print ink <1 Manufacturing Process Bulk liquids, powders, aggregates and performance additives are mixed together into a plastisol and placed in a holding tank. The plastisol is then pigmented and passed into inline mixers. The pigmented plastisol is spreadcoated on to a glass matt and gravure printed to give a range of designs. Aggregates are added to give slip resistance and PUR is added to the surface to enhance cleanability and stain resistance. The product is then cured in an oven. Finally, the product is cut into rolls and packaged for dispatch. Process flow diagram EPD Number: 000263 Date of Issue:09 March 2019 Expiry Date 09 March 2024 BF1805-C Rev 0.0 Page 4 of 7 © BRE Global Ltd, 2017 Life Cycle Assessment Calculation Rules Declared / Functional unit description",
+    "category": {
+      "description": "Resilient floor products (including vinyl, rubber, linoleum, composition cork, etc.) in modular square or rectangle shapes"
     }
   },
   {
@@ -561,6 +745,10 @@
     "manufacturer": {
       "name": "Patcraft",
       "country": "US"
+    },
+    "description": "Bio-Based Polyurethane Resilient Flooring is produced with the reactive component castor oil as renewable raw material and with natural inorganic filler. The total weight of the product is 3.9 kg/m 2 . EcoSystem coordinating tile and sheet products are derived from rapidly renewable resources.",
+    "category": {
+      "description": "Resilient floor products (including vinyl, rubber, linoleum, composition cork, etc.) in modular square or rectangle shapes"
     }
   },
   {
@@ -573,6 +761,10 @@
     "manufacturer": {
       "name": "Shaw Contract",
       "country": "US"
+    },
+    "description": "Bio-Based Polyurethane Resilient Flooring is produced with the reactive component castor oil as renewable raw material and with natural inorganic filler. The total weight of the product is 3.9 kg/m 2. For the placing on the market of the product in the European Union/European Free Trade Association (EU/EFTA) (with the exception of Switzerland) Regulation (EU) No. 305/2011 Construction Producs Regulation /CPR/ applies. The Declaration of Performance of the products taking into consideration /EN 14041/ and the CE-marking of the products can be found on the manufacturer's technical information section. Application According to the use class as defined in /ISO 10874/ the product can be used - in all domestic areas, classified as use class 23, - in all commercial areas, classified as use class 34 - in all industrial areas, classified as use class 43 Technical Data Name Value Unit Grammage 3.9 kg/m² Product thickness 2.5 mm Product Form several dimensions - Additional product properties in accordance with /EN 16776/ and performance data of the product in accordance with the Declaration of Performance with respect to its Essential Characteristics according to /EN 14041/ can be found on the manufacturer's technical information section (www.shawcontract.com). Base materials / Ancillary materials Name Value Unit Polyurethane including 64% renewable material 45.2 % Filler 50.2 % Paper 1.7 % Glass fibre 0.8 % Polyester 2.1 % 3 Environmental Product Declaration Shaw Contract - Bio-Based Polyurethane Resilient Flooring This product contains substances listed in the /REACH/ Candidate List of Substances of Very High Concern for Authorisation” (SVHC) (27.06.2018) exceeding 0.1 percentage by mass: no Reference service life A calculation of the reference service life according to /ISO 15686/ is not possible. The service life of resilient floor coverings depends on the correct installation taking into account the declared use classification and the adherence to cl",
+    "category": {
+      "description": "Resilient floor products (including vinyl, rubber, linoleum, composition cork, etc.) in modular square or rectangle shapes"
     }
   },
   {
@@ -585,6 +777,10 @@
     "manufacturer": {
       "name": "SCHWENK Norge AS",
       "country": "NO"
+    },
+    "description": "Bindelmiddel i betong. Injeksjon.",
+    "category": {
+      "description": "Cements, including Portland and blended cements, that can serve as the primary binder in a concrete mix."
     }
   },
   {
@@ -597,6 +793,10 @@
     "manufacturer": {
       "name": "SCHWENK Norge AS",
       "country": "NO"
+    },
+    "description": "Bindelmiddel i betong.",
+    "category": {
+      "description": "Cements, including Portland and blended cements, that can serve as the primary binder in a concrete mix."
     }
   },
   {
@@ -609,6 +809,10 @@
     "manufacturer": {
       "name": "SCHWENK Norge AS",
       "country": "NO"
+    },
+    "description": "Bindelmiddel i betong. Injeksjon.",
+    "category": {
+      "description": "Cements, including Portland and blended cements, that can serve as the primary binder in a concrete mix."
     }
   },
   {
@@ -621,6 +825,10 @@
     "manufacturer": {
       "name": "CEMEX",
       "country": "US"
+    },
+    "description": "Cemex slaggsement, CEM III / A 42,5 L-LH/NA, er en Portland- sement. Slaggtilsetningen øker styrken til betongen, reduserer permeabiliteten, og øker motstanden mot kjemiske reaksjoner og armeringsjernkorrosjon. Sementen består av masovnslagg, klinker, gips, ubrent kalkstein, og sementovnstøv. Klinker er brent kalkstein med mindre mengder tilsetninger, bl.a. sand",
+    "category": {
+      "description": "Cements, including Portland and blended cements, that can serve as the primary binder in a concrete mix."
     }
   },
   {
@@ -633,6 +841,10 @@
     "manufacturer": {
       "name": "Stora Enso",
       "country": "FI"
+    },
+    "description": "CLT by Stora Enso is a solid wood construction product consisting of several (3, 5, 7, or 8) bonded single-layer panels arranged at right angles to each other. The layers are bonded with carefully selected adhesives that are suitable for the respective purpose. CLT products are long-lasting and safe to use and recyclable. They are continuously tested to ensure that they meet the strictest requirements in terms of ambient air emissions. CLT also offers virtually boundless possibilities in terms of construction concept, style and architecture. Lightweight yet strong, with superior acoustic, fire, seismic, and thermal performance, CLT is currently being used in place of concrete, masonry and steel in the construction of residential, industrial and commercial buildings. Thanks to its inherent structural qualities, CLT presents no limitations to architecture. CLT resists high racking and compressive forces, so it can be especially cost-effective for multi-storey and long-span applications. Because of its dimensional stability and structural properties, this massive wooden product is well suited for floors, walls and roofs. CLT is a highly flexible wood product that is easily tailored for further processing. It can be used together with any building material. And compared with heavy mineral-based materials, CLT is easily moved by lighter cranes at the construction site. CLT is a renewable alternative to traditional construction materials that can have large environmental footprints. As trees grow – and when they are used as timber in buildings – they efficiently store carbon. This EPD has been registered as an ECO Platform EPD with ECO EPD Reference number 00001225. The International EPD System is a founding member of the ECO Platform and its procedures has undergone a peer audit to be able to use this logotype. All EPDs of construction products from different programmes that carry the ECO logotype are listed here.",
+    "category": {
+      "description": "Engineered heavy timber products including glue laminated (glulam), cross-laminated timber (CLT), dowel laminated timber (DLT), and nail laminated timber (NLT)"
     }
   },
   {
@@ -645,6 +857,10 @@
     "manufacturer": {
       "name": "Stora Enso",
       "country": "FI"
+    },
+    "description": "Prefabricated CLT rib panels by Stora Enso make the perfect choice for long-span structures and large open areas featuring unobstructed, column-free spaces. Made of massive wood they are lightweight, cost competitive and environmentally sound. The ready-to-install CLT rib panels are powering a new wave of visionary design and bringing the forest back to the cities. Lightweight yet strong, with superior acoustic, fire, seismic, and thermal performance, CLT is currently being used in place of concrete, masonry and steel in the construction of residential, industrial and commercial buildings. Thanks to its inherent structural qualities, CLT presents no limitations to architecture. CLT resists high racking and compressive forces, so it can be especially cost-effective for multi-storey and long-span applications. Because of its dimensional stability and structural properties, this massive wooden product is well suited for floors, walls and roofs. CLT is a highly flexible wood product that is easily tailored for further processing. It can be used together with any building material. And compared with heavy mineral-based materials, CLT is easily moved by lighter cranes at the construction site. CLT is a renewable alternative to traditional construction materials that can have large environmental footprints. As trees grow – and when they are used as timber in buildings – they efficiently store carbon. This EPD has been registered as an ECO Platform EPD with ECO EPD Reference number 00001226. The International EPD System is a founding member of the ECO Platform and its procedures has undergone a peer audit to be able to use this logotype. All EPDs of construction products from different programmes that carry the ECO logotype are listed here.",
+    "category": {
+      "description": "Engineered heavy timber products including glue laminated (glulam), cross-laminated timber (CLT), dowel laminated timber (DLT), and nail laminated timber (NLT)"
     }
   },
   {
@@ -657,6 +873,10 @@
     "manufacturer": {
       "name": "Falcon Panel Products Ltd",
       "country": "GB"
+    },
+    "description": "Resysta profiles offer the look and feel of wood but are made from a fibre reinforced hybrid material comprising rice husks and polymers. They are extremely weather-resistant against sun, rain, snow and salt water. Resysta profiles are also very durable, requiring minimal care and are resistant to attack by insects and fungi. As such, they do not splinter, swell or crack and can also be provided in a range of colours and shapes. Coating is optional - the modelled product is uncoated as these are the type sold in the UK by Falcon Panel Products Ltd. Publicly available marketing literature and technical data on Resysta profiles are available on the Resysta web site (Resysta 2017). Technical Information Property Value, Unit Solid Density (ASTM D2395:2002) Approx. 1460 kg/m³ Typical Area Density for Grooved Decking (including 19.14 kg/m2 hollows/voids) Typical Area Density for Cladding (including hollows/voids) 10.36 kg/m2 EPD Number: 000170 Date of Issue: 07 December 2017 Expiry Date 22 October 2022 BF1805-C-ECOP Rev 0.0 Page 3 of 17 © BRE Global Ltd, 2017 Property Value, Unit Coefficient of linear thermal expansion (ASTM D696) 3.6 x 10-5 mC Little to no water absorption (only surface Water absorption & humidity (ASTM D1037:2006a) moistening) Slip test (wet area barefoot) (DIN 51097) Class C (Least slippery) B2 (E) - standard flammable (with additional Fire rating (German/European norm) (BS EN ISO 11925-2) treatment B1 reachable) Class A (flame propagation 25, smoke Fire rating according NFPA (US Norm) (ASTM E84) emission 450) Fire rating (British standard) (BS 476-7) Class 1 Emission (LGA-tested safety & contamination) LGA test passed Brinell hardness (HB) (BS EN 1534) 81.1 N/mm² Coefficient of sliding and friction μ (BS EN 13893) 0.46 Axial withdrawal force (of screws) (BS EN 320.2011-07) 5777 N Thermal conductivity (λ) BS (EN 12664) 0.199 W/(mK) Bending strength (BS EN ISO 178) 46 N/mm² Bending modulus (BS EN ISO 178) 3850 N/mm² Tensile strength (BS EN ISO 527)",
+    "category": {
+      "description": "General category - finishes for interior ceilings, floors, walls"
     }
   },
   {
@@ -669,6 +889,10 @@
     "manufacturer": {
       "name": "Falcon Panel Products Ltd",
       "country": "GB"
+    },
+    "description": "Resysta profiles offer the look and feel of wood but are made from a fibre reinforced hybrid material comprising rice husks and polymers. They are extremely weather-resistant against sun, rain, snow and salt water. Resysta profiles are also very durable, requiring minimal care and are resistant to attack by insects and fungi. As such, they do not splinter, swell or crack and can also be provided in a range of colours and shapes. Coating is optional - the modelled product is uncoated as these are the type sold in the UK by Falcon Panel Products Ltd. Publicly available marketing literature and technical data on Resysta profiles are available on the Resysta web site (Resysta 2017). Technical Information Property Value, Unit Solid Density (ASTM D2395:2002) Approx. 1460 kg/m³ Typical Area Density for Grooved Decking (including 19.14 kg/m2 hollows/voids) Typical Area Density for Cladding (including hollows/voids) 10.36 kg/m2 EPD Number: 000170 Date of Issue: 07 December 2017 Expiry Date 22 October 2022 BF1805-C-ECOP Rev 0.0 Page 3 of 17 © BRE Global Ltd, 2017 Property Value, Unit Coefficient of linear thermal expansion (ASTM D696) 3.6 x 10-5 mC Little to no water absorption (only surface Water absorption & humidity (ASTM D1037:2006a) moistening) Slip test (wet area barefoot) (DIN 51097) Class C (Least slippery) B2 (E) - standard flammable (with additional Fire rating (German/European norm) (BS EN ISO 11925-2) treatment B1 reachable) Class A (flame propagation 25, smoke Fire rating according NFPA (US Norm) (ASTM E84) emission 450) Fire rating (British standard) (BS 476-7) Class 1 Emission (LGA-tested safety & contamination) LGA test passed Brinell hardness (HB) (BS EN 1534) 81.1 N/mm² Coefficient of sliding and friction μ (BS EN 13893) 0.46 Axial withdrawal force (of screws) (BS EN 320.2011-07) 5777 N Thermal conductivity (λ) BS (EN 12664) 0.199 W/(mK) Bending strength (BS EN ISO 178) 46 N/mm² Bending modulus (BS EN ISO 178) 3850 N/mm² Tensile strength (BS EN ISO 527)",
+    "category": {
+      "description": "General category - finishes for interior ceilings, floors, walls"
     }
   },
   {
@@ -681,6 +905,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The POWDURA® ECO products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -693,6 +921,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The POWDURA® ECO products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -705,6 +937,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The POWDURA® ECO products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -717,6 +953,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The POWDURA® ECO products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -729,6 +969,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The POWDURA® ECO products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -741,6 +985,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The POWDURA® ECO products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -753,6 +1001,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The POWDURA® ECO products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -765,6 +1017,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The Syntha Pulvin Matt products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -777,6 +1033,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The Syntha Pulvin Matt products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -789,6 +1049,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The Syntha Pulvin Matt products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -801,6 +1065,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The Syntha Pulvin Matt products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -813,6 +1081,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The Syntha Pulvin Matt products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -825,6 +1097,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The Inver PE/P polyester powder coating products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -837,6 +1113,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The Inver PE/P polyester powder coating products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -849,6 +1129,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The Inver PE/P polyester powder coating products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -861,6 +1145,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The Inver PE/P polyester powder coating products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -873,6 +1161,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The Inver PE/P polyester powder coating products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -885,6 +1177,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The Inver PE/P polyester powder coating products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -897,6 +1193,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The Inver PE/P polyester powder coating products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -909,6 +1209,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The Inver PE/P polyester powder coating products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -921,6 +1225,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The Inver PE/P polyester powder coating products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -933,6 +1241,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The Inver PE/P polyester powder coating products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -945,6 +1257,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The Inver PE/P polyester powder coating products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -957,6 +1273,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The Syntha Pulvin Gloss products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -969,6 +1289,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The Syntha Pulvin Gloss products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -981,6 +1305,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The GREENBAR® products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -993,6 +1321,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The GREENBAR® products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -1005,6 +1337,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The GREENBAR® products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -1017,6 +1353,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The GREENBAR® products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -1029,6 +1369,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The GREENBAR® products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -1041,6 +1385,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The GREENBAR® products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -1053,6 +1401,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The GREENBAR® products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -1065,6 +1417,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The GREENBAR® products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -1077,6 +1433,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The GREENBAR® products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -1089,6 +1449,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The GREENBAR® products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -1101,6 +1465,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The GREENBAR® products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -1113,6 +1481,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The GREENBAR® products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -1125,6 +1497,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The GREENBAR® products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -1137,6 +1513,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The POWDURA® 4000 products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -1149,6 +1529,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The POWDURA® ECO - TGIC FREE products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -1161,6 +1545,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The POWDURA® ECO - TGIC FREE products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -1173,6 +1561,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The Inver PE/P polyester powder coating products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -1185,6 +1577,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The POWDURA® ECO products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   },
   {
@@ -1197,6 +1593,10 @@
     "manufacturer": {
       "name": "Sherwin Williams",
       "country": "GB"
+    },
+    "description": "The Syntha Pulvin Gloss products listed below are included within this assessment. For information on other attributes of each of the specific formulations, please visit www.sherwin.com.",
+    "category": {
+      "description": "Paintings and coatings"
     }
   }
 ]

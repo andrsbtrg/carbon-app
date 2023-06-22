@@ -132,6 +132,12 @@ pub struct Ec3Material {
     #[serde(default)]
     pub image: Option<String>,
     pub manufacturer: Manufacturer,
+    pub description: String,
+    pub category: Category,
+}
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Category {
+    pub description: String,
 }
 
 fn write_cache(json: String) {
@@ -140,7 +146,7 @@ fn write_cache(json: String) {
             println!("Results cached")
         }
         Err(e) => {
-            println!("{e:?}")
+            println!("Could not write JSON file: {e:?}")
         }
     };
 }
@@ -156,7 +162,7 @@ fn read_cache() -> Result<Vec<Ec3Material>, ApiError> {
         .ok_or(ApiError::EmptyArray())?
         .iter()
         .for_each(|m| {
-            dbg!(m);
+            // dbg!(m);
             let material = Ec3Material {
                 name: m["name"].as_str().unwrap_or_default().to_string(),
                 gwp: Gwp {
@@ -171,6 +177,13 @@ fn read_cache() -> Result<Vec<Ec3Material>, ApiError> {
                         .unwrap_or_default()
                         .to_string(),
                     country: m["manufacturer"]["country"]
+                        .as_str()
+                        .unwrap_or_default()
+                        .to_string(),
+                },
+                description: m["description"].as_str().unwrap_or("").to_string(),
+                category: Category {
+                    description: m["category"]["description"]
                         .as_str()
                         .unwrap_or_default()
                         .to_string(),
@@ -249,6 +262,7 @@ impl Ec3api {
                 // let image = v.get("image").unwrap_or(&json!("".to_string())).as_str().unwrap_or("<No Image>").to_string();
                 // let country = v.get("country").unwrap_or.to_string();
                 // println!("{}", country);
+                dbg!(v);
                 let material: Ec3Material = serde_json::from_value(v.to_owned()).unwrap();
 
                 materials.push(material);
@@ -256,7 +270,7 @@ impl Ec3api {
         match serde_json::to_string_pretty(&materials) {
             Ok(json) => write_cache(json),
             Err(e) => {
-                dbg!(e);
+                eprint!("Error: could not write cache: {e:?}");
             }
         };
 

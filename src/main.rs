@@ -1,6 +1,6 @@
 use ec3api;
 use eframe::{
-    egui::{self, CentralPanel, ScrollArea},
+    egui::{self, CentralPanel, RichText, ScrollArea},
     epaint::Vec2,
 };
 
@@ -43,8 +43,9 @@ impl MaterialWindow {
                 .map(|m| {
                     MaterialsData {
                         title: m.name.as_str().to_owned(),
-                        descr: m.gwp.as_str(),
+                        gwp: m.gwp.as_str(),
                         country: m.manufacturer.country.as_str().to_owned(),
+                        category: m.category.description.as_str().to_owned(),
                         // img_url: m.image.to_owned().unwrap_or("<No image>".to_string()),
                     }
                 })
@@ -63,11 +64,16 @@ impl MaterialWindow {
             ui.add_space(2.);
 
             ui.label(&m.title);
-            ui.monospace(&m.descr);
+            ui.monospace(&m.gwp);
+            // ui.label(RichText::from(&m.gwp).color(eframe::epaint::Color32::RED));
 
             // ui.hyperlink(&m.img_url); // removed for now
             ui.monospace(&m.country);
             ui.add_space(2.);
+
+            ui.monospace(&m.category);
+            ui.add_space(2.);
+
             ui.separator();
         }
     }
@@ -99,9 +105,10 @@ impl eframe::App for MaterialWindow {
 #[derive(Clone)]
 struct MaterialsData {
     title: String,
-    descr: String,
+    gwp: String,
     // img_url: String,
     country: String,
+    category: String,
 }
 
 fn main() -> Result<(), eframe::Error> {
