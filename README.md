@@ -20,6 +20,9 @@ API_KEY="..."
 
 ![Screenshot from 2023-07-26 19-40-27](https://github.com/andrsbtrg/carbon-app/assets/63083862/60e30e08-bb30-4463-ad84-67c0bd5d24c5)
 
+![output](https://github.com/andrsbtrg/carbon-app/assets/63083862/4b18a75f-d9e1-4dbf-a988-bfa1e77dbe27)
+
+
 ## TODO!
 - Visualization of the GWP per element and per category
 - Indexing and searching per keyword. Basically make it possible to find a related material with some keywords.
