@@ -1,6 +1,6 @@
 use ec3api;
 use eframe::{
-    egui::{self, CentralPanel, RichText, ScrollArea},
+    egui::{self, CentralPanel, ScrollArea},
     epaint::Vec2,
 };
 
