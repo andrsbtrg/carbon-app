@@ -1,12 +1,8 @@
-[package]
-name = "carbon_app"
-version = "0.1.0"
-edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[dependencies]
-ec3api = {path = "./ec3api"}
-dotenv = "0.15.0"
-eframe = "0.21"
-env_logger = "0.10.0"
+[workspace]
+members = [
+  "carbon_app",
+  "ec3api",
+  "hot_reload_lib",
+  "view",
+  "shared",
+]
