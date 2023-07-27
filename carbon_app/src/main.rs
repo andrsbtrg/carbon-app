@@ -1,134 +1,88 @@
-pub(crate) use ec3api;
-use eframe::{
-    egui::{self, CentralPanel, ScrollArea, TopBottomPanel},
-    epaint::Vec2,
-};
+extern crate shared;
+
+#[cfg(feature = "hot_reload_libs")]
+extern crate hot_reload_lib;
+
+extern crate ec3api;
+#[cfg(not(feature = "hot_reload_libs"))]
+extern crate view;
+
+use eframe::{egui, epaint::Vec2};
+
+#[cfg(feature = "hot_reload_libs")]
+use hot_reload_lib::HotReloadLib;
 
 use std::env;
 
-struct MaterialWindow {
-    materials_loaded: bool,
-    materials: Vec<MaterialsData>,
-    search_input: String,
+#[cfg(feature = "hot_reload_libs")]
+struct HotReloadLibs {
+    view: HotReloadLib,
 }
 
-impl MaterialWindow {
-    /// Creates a new [`MaterialWindow`].
-    fn new(cc: &eframe::CreationContext<'_>) -> Self {
-        setup_custom_fonts(&cc.egui_ctx);
+#[cfg(feature = "hot_reload_libs")]
+impl HotReloadLibs {
+    fn new(hot_reload_libs_folder: &str) -> Self {
         Self {
-            materials_loaded: false,
-            materials: Vec::new(),
-            search_input: String::new(),
+            view: HotReloadLib::new(hot_reload_libs_folder, "view"),
         }
     }
 
-    /// Fetches materials for [`MaterialWindow`].
-    ///
-    /// # Panics
-    ///
-    /// Panics if .env is missing or incomplete.
-    fn load_materials(&mut self) {
-        // Load data from api
-        dotenv::dotenv().expect("No .env file found!");
-        let api_key = env::var("API_KEY").expect("API Key missing!");
-
-        if let Ok(materials) = ec3api::Ec3api::new(&api_key)
-            // .country(ec3api::Country::Germany)
-            .endpoint(ec3api::Endpoint::Materials)
-            .fetch()
-        {
-            let collection: Vec<MaterialsData> = materials
-                .iter()
-                .map(|m| {
-                    MaterialsData {
-                        title: m.name.as_str().to_owned(),
-                        gwp: m.gwp.as_str(),
-                        country: m.manufacturer.country.as_str().to_owned(),
-                        category: m.category.description.as_str().to_owned(),
-                        // img_url: m.image.to_owned().unwrap_or("<No image>".to_string()),
-                    }
-                })
-                .collect();
-
-            self.materials = collection;
-        }
-    }
-
-    fn render_material_cards(&self, ui: &mut eframe::egui::Ui, filter: &str) {
-        for m in self
-            .materials
-            .iter()
-            .filter(|mat| mat.title.to_lowercase().contains(filter))
-        {
-            ui.add_space(2.);
-
-            ui.label(&m.title);
-            ui.monospace(&m.gwp);
-            // ui.label(RichText::from(&m.gwp).color(eframe::epaint::Color32::RED));
-
-            // ui.hyperlink(&m.img_url); // removed for now
-            ui.monospace(&m.country);
-            ui.add_space(2.);
-
-            ui.monospace(&m.category);
-            ui.add_space(2.);
-
-            ui.separator();
+    fn update_libs(&mut self) {
+        if self.view.update() {
+            println!("Reloaded view lib");
         }
     }
 }
 
-impl eframe::App for MaterialWindow {
+struct Application {
+    state: shared::State,
+
+    #[cfg(feature = "hot_reload_libs")]
+    libs: HotReloadLibs,
+}
+
+impl Application {
+    fn new(
+        cc: &eframe::CreationContext<'_>,
+        _hot_reload_libs_folder: &str,
+        api_key: String,
+    ) -> Application {
+        setup_custom_fonts(&cc.egui_ctx);
+
+        Application {
+            state: shared::State::new(api_key),
+
+            #[cfg(feature = "hot_reload_libs")]
+            libs: HotReloadLibs::new(_hot_reload_libs_folder),
+        }
+    }
+}
+
+#[cfg(not(feature = "hot_reload_libs"))]
+impl eframe::App for Application {
     fn update(&mut self, ctx: &eframe::egui::Context, _frame: &mut eframe::Frame) {
-        // Top bar
-        TopBottomPanel::top("top-bar").show(ctx, |ui| {
-            ui.horizontal(|ui| {
-                ui.add_visible(
-                    self.materials_loaded,
-                    egui::TextEdit::singleline(&mut self.search_input).hint_text("Search"),
-                );
-                ui.add_visible(
-                    self.materials_loaded,
-                    egui::Button::new("Switch visualization"),
-                );
-            })
-        });
-        // Bottom bar
-        TopBottomPanel::bottom("bottom-bar").show(ctx, |ui| {
-            ui.horizontal(|ui| {
-                egui::global_dark_light_mode_switch(ui);
-                ui.label(format!("{} materials", self.materials.len()));
-            })
-        });
-        // Main panel
-        CentralPanel::default().show(ctx, |ui| {
-            if !self.materials_loaded {
-                if ui.button("Load materials").clicked() {
-                    self.load_materials();
-                    self.materials_loaded = true;
-                }
-            }
-            ui.add_space(4.);
-            ScrollArea::vertical()
-                .auto_shrink([false; 2])
-                .show(ui, |ui| {
-                    self.render_material_cards(ui, &self.search_input.to_lowercase());
-                });
-        });
+        view::update_view(&mut self.state, ctx, _frame);
     }
 }
 
-#[derive(Clone)]
-struct MaterialsData {
-    title: String,
-    gwp: String,
-    // img_url: String,
-    country: String,
-    category: String,
+#[cfg(feature = "hot_reload_libs")]
+impl eframe::App for Application {
+    fn update(&mut self, ctx: &eframe::egui::Context, _frame: &mut eframe::Frame) {
+        self.libs
+            .view
+            .load_symbol::<fn(&shared::State, &eframe::egui::Context, &mut eframe::Frame)>(
+                "update_view",
+            )(&self.state, ctx, _frame);
+    }
 }
 
 fn main() -> Result<(), eframe::Error> {
+    let libraries_path = "target/debug";
+
+    // read environment
+    dotenv::dotenv().expect("No .env file found!");
+    let api_key = env::var("API_KEY").expect("API Key missing!");
+
     // init egui
     env_logger::init();
     let win_options = eframe::NativeOptions {
@@ -141,7 +95,7 @@ fn main() -> Result<(), eframe::Error> {
     eframe::run_native(
         "Materials",
         win_options,
-        Box::new(|cc| Box::new(MaterialWindow::new(cc))),
+        Box::new(|cc| Box::new(Application::new(cc, libraries_path, api_key))),
     )
 }
 

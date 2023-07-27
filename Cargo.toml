@@ -2,4 +2,7 @@
 members = [
   "carbon_app",
   "ec3api",
+  "hot_reload_lib",
+  "view",
+  "shared",
 ]
