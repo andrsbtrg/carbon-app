@@ -44,8 +44,7 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
         ui.horizontal(|ui| {
             egui::global_dark_light_mode_switch(ui);
             ui.label(format!("{} materials", state.materials.len()));
-            ui.label("hot reloaded again");
-        })
+        });
     });
     // Main panel
     CentralPanel::default().show(ctx, |ui| {

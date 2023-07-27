@@ -65,9 +65,17 @@ impl eframe::App for Application {
     }
 }
 
+// TODO: try this example https://github.com/rksm/hot-lib-reloader-rs/blob/master/examples/hot-egui/Cargo.toml
+
 #[cfg(feature = "hot_reload_libs")]
 impl eframe::App for Application {
     fn update(&mut self, ctx: &eframe::egui::Context, _frame: &mut eframe::Frame) {
+        ctx.input(|input_state| {
+            if input_state.key_down(egui::Key::R) {
+                self.libs.update_libs();
+            }
+        });
+
         self.libs
             .view
             .load_symbol::<fn(&shared::State, &eframe::egui::Context, &mut eframe::Frame)>(
