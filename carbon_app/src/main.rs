@@ -1,4 +1,4 @@
-use ec3api;
+pub(crate) use ec3api;
 use eframe::{
     egui::{self, CentralPanel, ScrollArea, TopBottomPanel},
     epaint::Vec2,
@@ -154,7 +154,7 @@ fn setup_custom_fonts(ctx: &eframe::egui::Context) {
     fonts.font_data.insert(
         "my_font".to_owned(),
         egui::FontData::from_static(include_bytes!(
-            "../fonts/JetBrainsMonoNerdFontMono-BoldItalic.ttf"
+            "../../fonts/JetBrainsMonoNerdFontMono-BoldItalic.ttf"
         )),
     );
 
