@@ -1,6 +1,6 @@
 use ec3api;
 use eframe::{
-    egui::{self, CentralPanel, ScrollArea},
+    egui::{self, CentralPanel, ScrollArea, TopBottomPanel},
     epaint::Vec2,
 };
 
@@ -81,6 +81,27 @@ impl MaterialWindow {
 
 impl eframe::App for MaterialWindow {
     fn update(&mut self, ctx: &eframe::egui::Context, _frame: &mut eframe::Frame) {
+        // Top bar
+        TopBottomPanel::top("top-bar").show(ctx, |ui| {
+            ui.horizontal(|ui| {
+                ui.add_visible(
+                    self.materials_loaded,
+                    egui::TextEdit::singleline(&mut self.search_input).hint_text("Search"),
+                );
+                ui.add_visible(
+                    self.materials_loaded,
+                    egui::Button::new("Switch visualization"),
+                );
+            })
+        });
+        // Bottom bar
+        TopBottomPanel::bottom("bottom-bar").show(ctx, |ui| {
+            ui.horizontal(|ui| {
+                egui::global_dark_light_mode_switch(ui);
+                ui.label(format!("{} materials", self.materials.len()));
+            })
+        });
+        // Main panel
         CentralPanel::default().show(ctx, |ui| {
             if !self.materials_loaded {
                 if ui.button("Load materials").clicked() {
@@ -88,10 +109,6 @@ impl eframe::App for MaterialWindow {
                     self.materials_loaded = true;
                 }
             }
-            ui.add_visible(
-                self.materials_loaded,
-                egui::TextEdit::singleline(&mut self.search_input).hint_text("Search"),
-            );
             ui.add_space(4.);
             ScrollArea::vertical()
                 .auto_shrink([false; 2])
