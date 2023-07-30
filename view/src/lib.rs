@@ -1,8 +1,13 @@
 extern crate shared;
-use eframe::egui::{self, CentralPanel, RichText, ScrollArea, TopBottomPanel};
-use shared::{SortBy, State};
+use eframe::egui::{
+    self,
+    plot::{Bar, BarChart, Plot},
+    CentralPanel, ScrollArea, TopBottomPanel,
+};
+use shared::{SortBy, State, Tabs};
 
 #[no_mangle]
+/// Renders the materials available in the [State] state as a list view
 fn render_material_cards(state: &State, ui: &mut eframe::egui::Ui, filter: &str) {
     for m in state
         .materials
@@ -32,31 +37,13 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
     TopBottomPanel::top("top-bar").show(ctx, |ui| {
         ui.add_visible_ui(state.materials_loaded, |ui| {
             ui.horizontal(|ui| {
-                ui.add(
-                    egui::TextEdit::singleline(&mut state.search_input)
-                        .hint_text("Search")
-                        .desired_width(150.0),
-                );
-                ui.add(egui::Button::new("Switch visualization"));
+                if ui.button("List").clicked() {
+                    state.active_tab = Tabs::List;
+                };
+                if ui.button("Chart").clicked() {
+                    state.active_tab = Tabs::Chart;
+                }
             });
-            ui.horizontal(|ui| {
-                ui.label("sort by: ");
-                if ui
-                    .add(egui::RadioButton::new(
-                        state.sort_by == SortBy::Name,
-                        "name",
-                    ))
-                    .clicked()
-                {
-                    state.sort_by(SortBy::Name);
-                }
-                if ui
-                    .add(egui::RadioButton::new(state.sort_by == SortBy::Gwp, "GWP"))
-                    .clicked()
-                {
-                    state.sort_by(SortBy::Gwp);
-                }
-            })
         });
     });
     // Bottom bar
@@ -68,17 +55,75 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
     });
     // Main panel
     CentralPanel::default().show(ctx, |ui| {
-        if !state.materials_loaded {
-            if ui.button("Load materials").clicked() {
-                state.load_materials();
-                state.materials_loaded = true;
+        add_view_options(ui, state);
+
+        ui.separator();
+
+        ui.add_space(4.);
+
+        match state.active_tab {
+            shared::Tabs::Chart => render_material_chart(state, ui),
+
+            shared::Tabs::List => {
+                if !state.materials_loaded {
+                    if ui.button("Load materials").clicked() {
+                        state.load_materials();
+                        state.materials_loaded = true;
+                    };
+                };
+                ScrollArea::vertical()
+                    .auto_shrink([false; 2])
+                    .show(ui, |ui| {
+                        render_material_cards(state, ui, &state.search_input.to_lowercase());
+                    });
             }
         }
-        ui.add_space(4.);
-        ScrollArea::vertical()
-            .auto_shrink([false; 2])
-            .show(ui, |ui| {
-                render_material_cards(state, ui, &state.search_input.to_lowercase());
-            });
+    });
+}
+
+/// Renders the materials available in the [State] state as a chart
+fn render_material_chart(state: &mut State, ui: &mut egui::Ui) {
+    let filter = &state.search_input;
+    let chart = BarChart::new(
+        state
+            .materials
+            .iter()
+            .filter(|mat| mat.name.to_lowercase().contains(filter))
+            .enumerate()
+            .map(|(i, mat)| Bar::new(i as f64, mat.gwp.value))
+            .collect(),
+    );
+
+    Plot::new("plot").show(ui, |plot_ui| {
+        plot_ui.bar_chart(chart);
+    });
+}
+
+/// Adds a search input and sorting options to the UI
+fn add_view_options(ui: &mut egui::Ui, state: &mut State) {
+    ui.horizontal(|ui| {
+        ui.add(
+            egui::TextEdit::singleline(&mut state.search_input)
+                .hint_text("Search")
+                .desired_width(200.0),
+        );
+    });
+    ui.horizontal(|ui| {
+        ui.label("sort by: ");
+        if ui
+            .add(egui::RadioButton::new(
+                state.sort_by == SortBy::Name,
+                "name",
+            ))
+            .clicked()
+        {
+            state.sort_by(SortBy::Name);
+        }
+        if ui
+            .add(egui::RadioButton::new(state.sort_by == SortBy::Gwp, "GWP"))
+            .clicked()
+        {
+            state.sort_by(SortBy::Gwp);
+        }
     });
 }

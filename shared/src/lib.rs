@@ -7,6 +7,7 @@ pub struct State {
     pub materials: Vec<Ec3Material>,
     pub search_input: String,
     pub sort_by: SortBy,
+    pub active_tab: Tabs,
     api_key: String,
 }
 
@@ -18,6 +19,7 @@ impl State {
             search_input: String::new(),
             api_key,
             sort_by: SortBy::Name,
+            active_tab: Tabs::List,
         }
     }
 
@@ -51,4 +53,9 @@ impl State {
 pub enum SortBy {
     Name,
     Gwp,
+}
+
+pub enum Tabs {
+    List,
+    Chart,
 }
