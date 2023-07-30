@@ -86,8 +86,8 @@ where
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Gwp {
-    value: f64,
-    unit: GwpUnits,
+    pub value: f64,
+    pub unit: GwpUnits,
 }
 
 impl Gwp {

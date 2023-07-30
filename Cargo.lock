@@ -468,7 +468,6 @@ name = "carbon_app"
 version = "0.1.0"
 dependencies = [
  "dotenv",
- "ec3api",
  "eframe",
  "env_logger",
  "hot_reload_lib",

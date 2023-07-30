@@ -1,23 +1,25 @@
-use eframe::egui::{self, CentralPanel, ScrollArea, TopBottomPanel};
-use shared::State;
+extern crate shared;
+use eframe::egui::{self, CentralPanel, RichText, ScrollArea, TopBottomPanel};
+use shared::{SortBy, State};
 
+#[no_mangle]
 fn render_material_cards(state: &State, ui: &mut eframe::egui::Ui, filter: &str) {
     for m in state
         .materials
         .iter()
-        .filter(|mat| mat.title.to_lowercase().contains(filter))
+        .filter(|mat| mat.name.to_lowercase().contains(filter))
     {
         ui.add_space(2.);
 
-        ui.label(&m.title);
-        ui.monospace(&m.gwp);
+        ui.label(&m.name);
+        ui.monospace(&m.gwp.as_str());
         // ui.label(RichText::from(&m.gwp).color(eframe::epaint::Color32::RED));
 
-        // ui.hyperlink(&m.img_url); // removed for now
-        ui.monospace(&m.country);
+        // ui.hyperlink(&m.img_url); // removed for nowlib
+        ui.monospace(&m.manufacturer.country);
         ui.add_space(2.);
 
-        ui.monospace(&m.category);
+        ui.monospace(&m.category.description);
         ui.add_space(2.);
 
         ui.separator();
@@ -28,16 +30,34 @@ fn render_material_cards(state: &State, ui: &mut eframe::egui::Ui, filter: &str)
 pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut eframe::Frame) {
     // Top bar
     TopBottomPanel::top("top-bar").show(ctx, |ui| {
-        ui.horizontal(|ui| {
-            ui.add_visible(
-                state.materials_loaded,
-                egui::TextEdit::singleline(&mut state.search_input).hint_text("Search"),
-            );
-            ui.add_visible(
-                state.materials_loaded,
-                egui::Button::new("Switch visualization"),
-            );
-        })
+        ui.add_visible_ui(state.materials_loaded, |ui| {
+            ui.horizontal(|ui| {
+                ui.add(
+                    egui::TextEdit::singleline(&mut state.search_input)
+                        .hint_text("Search")
+                        .desired_width(150.0),
+                );
+                ui.add(egui::Button::new("Switch visualization"));
+            });
+            ui.horizontal(|ui| {
+                ui.label("sort by: ");
+                if ui
+                    .add(egui::RadioButton::new(
+                        state.sort_by == SortBy::Name,
+                        "name",
+                    ))
+                    .clicked()
+                {
+                    state.sort_by(SortBy::Name);
+                }
+                if ui
+                    .add(egui::RadioButton::new(state.sort_by == SortBy::Gwp, "GWP"))
+                    .clicked()
+                {
+                    state.sort_by(SortBy::Gwp);
+                }
+            })
+        });
     });
     // Bottom bar
     TopBottomPanel::bottom("bottom-bar").show(ctx, |ui| {

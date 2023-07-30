@@ -1,9 +1,12 @@
+use ec3api::Ec3Material;
+
 extern crate ec3api;
 
 pub struct State {
     pub materials_loaded: bool,
-    pub materials: Vec<MaterialsData>,
+    pub materials: Vec<Ec3Material>,
     pub search_input: String,
+    pub sort_by: SortBy,
     api_key: String,
 }
 
@@ -14,6 +17,7 @@ impl State {
             materials: Vec::new(),
             search_input: String::new(),
             api_key,
+            sort_by: SortBy::Name,
         }
     }
 
@@ -28,29 +32,23 @@ impl State {
             .endpoint(ec3api::Endpoint::Materials)
             .fetch()
         {
-            let collection: Vec<MaterialsData> = materials
-                .iter()
-                .map(|m| {
-                    MaterialsData {
-                        title: m.name.as_str().to_owned(),
-                        gwp: m.gwp.as_str(),
-                        country: m.manufacturer.country.as_str().to_owned(),
-                        category: m.category.description.as_str().to_owned(),
-                        // img_url: m.image.to_owned().unwrap_or("<No image>".to_string()),
-                    }
-                })
-                .collect();
-
-            self.materials = collection;
+            self.materials = materials;
         }
+    }
+
+    pub fn sort_by(&mut self, op: SortBy) {
+        match op {
+            SortBy::Gwp => self
+                .materials
+                .sort_by(|a, b| a.gwp.value.total_cmp(&b.gwp.value)),
+            SortBy::Name => self.materials.sort_by(|a, b| a.name.cmp(&b.name)),
+        };
+        self.sort_by = op;
     }
 }
 
-#[derive(Clone)]
-pub struct MaterialsData {
-    pub title: String,
-    pub gwp: String,
-    // img_url: String,
-    pub country: String,
-    pub category: String,
+#[derive(PartialEq, Eq)]
+pub enum SortBy {
+    Name,
+    Gwp,
 }

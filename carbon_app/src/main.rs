@@ -3,7 +3,6 @@ extern crate shared;
 #[cfg(feature = "hot_reload_libs")]
 extern crate hot_reload_lib;
 
-extern crate ec3api;
 #[cfg(not(feature = "hot_reload_libs"))]
 extern crate view;
 
