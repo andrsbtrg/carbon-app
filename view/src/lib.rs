@@ -1,8 +1,11 @@
 extern crate shared;
-use eframe::egui::{
-    self,
-    plot::{Bar, BarChart, Plot},
-    CentralPanel, ScrollArea, TopBottomPanel,
+use eframe::{
+    egui::{
+        self,
+        plot::{Bar, BarChart, Plot},
+        CentralPanel, ScrollArea, TopBottomPanel,
+    },
+    epaint::Color32,
 };
 use shared::{SortBy, State, Tabs};
 
@@ -32,6 +35,7 @@ fn render_material_cards(state: &State, ui: &mut eframe::egui::Ui, filter: &str)
 }
 
 #[no_mangle]
+/// Renders the view
 pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut eframe::Frame) {
     // Top bar
     TopBottomPanel::top("top-bar").show(ctx, |ui| {
@@ -88,9 +92,18 @@ fn render_material_chart(state: &mut State, ui: &mut egui::Ui) {
         state
             .materials
             .iter()
-            .filter(|mat| mat.name.to_lowercase().contains(filter))
             .enumerate()
-            .map(|(i, mat)| Bar::new(i as f64, mat.gwp.value))
+            .map(|(i, mat)| {
+                if mat.name.to_lowercase().contains(filter) {
+                    Bar::new(i as f64, mat.gwp.value)
+                        .name(&mat.name)
+                        .fill(Color32::RED)
+                } else {
+                    Bar::new(i as f64, mat.gwp.value)
+                        .name(&mat.name)
+                        .fill(Color32::GRAY)
+                }
+            })
             .collect(),
     );
 
