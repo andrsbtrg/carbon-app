@@ -1,9 +1,11 @@
 extern crate shared;
+use std::collections::BTreeSet;
+
 use eframe::{
     egui::{
         self,
         plot::{Bar, BarChart, Plot},
-        CentralPanel, ScrollArea, TopBottomPanel,
+        CentralPanel, ComboBox, ScrollArea, TopBottomPanel,
     },
     epaint::Color32,
 };
@@ -16,6 +18,7 @@ fn render_material_cards(state: &State, ui: &mut eframe::egui::Ui, filter: &str)
         .materials
         .iter()
         .filter(|mat| mat.name.to_lowercase().contains(filter))
+        .filter(|mat| mat.category.description.contains(&state.selected_category))
     {
         ui.add_space(2.);
 
@@ -61,6 +64,8 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
     CentralPanel::default().show(ctx, |ui| {
         add_view_options(ui, state);
 
+        add_category_filter(ui, state);
+
         ui.separator();
 
         ui.add_space(4.);
@@ -85,6 +90,33 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
     });
 }
 
+fn add_category_filter(ui: &mut egui::Ui, state: &mut State) {
+    let categories = state
+        .materials
+        .iter()
+        .map(|mat| &mat.category.description)
+        .collect::<BTreeSet<_>>();
+    ui.horizontal(|ui| {
+        ComboBox::from_id_source("category")
+            // .wrap(true)
+            .width(200.0)
+            .selected_text(fit_to_width(&state.selected_category, 25))
+            .show_ui(ui, |ui| {
+                for cat in categories {
+                    if ui
+                        .selectable_label(state.selected_category == *cat, cat)
+                        .clicked()
+                    {
+                        state.selected_category = cat.to_string();
+                    }
+                }
+            });
+        if ui.small_button("Clear").clicked() {
+            state.selected_category = String::new();
+        }
+    });
+}
+
 /// Renders the materials available in the [State] state as a chart
 fn render_material_chart(state: &mut State, ui: &mut egui::Ui) {
     let filter = &state.search_input;
@@ -93,6 +125,7 @@ fn render_material_chart(state: &mut State, ui: &mut egui::Ui) {
             .materials
             .iter()
             .enumerate()
+            .filter(|(_, mat)| mat.category.description.contains(&state.selected_category))
             .map(|(i, mat)| {
                 if mat.name.to_lowercase().contains(filter) {
                     Bar::new(i as f64, mat.gwp.value)
@@ -139,4 +172,11 @@ fn add_view_options(ui: &mut egui::Ui, state: &mut State) {
             state.sort_by(SortBy::Gwp);
         }
     });
+}
+fn fit_to_width(input: &String, len: usize) -> &str {
+    if input.len() <= len {
+        input
+    } else {
+        &input[..len]
+    }
 }

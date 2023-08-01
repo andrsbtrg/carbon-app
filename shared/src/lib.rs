@@ -8,6 +8,7 @@ pub struct State {
     pub search_input: String,
     pub sort_by: SortBy,
     pub active_tab: Tabs,
+    pub selected_category: String,
     api_key: String,
 }
 
@@ -20,6 +21,7 @@ impl State {
             api_key,
             sort_by: SortBy::Name,
             active_tab: Tabs::List,
+            selected_category: String::new(),
         }
     }
 
