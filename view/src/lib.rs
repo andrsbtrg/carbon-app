@@ -44,10 +44,16 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
     TopBottomPanel::top("top-bar").show(ctx, |ui| {
         ui.add_visible_ui(state.materials_loaded, |ui| {
             ui.horizontal(|ui| {
-                if ui.button("List").clicked() {
+                if ui
+                    .selectable_label(state.active_tab == Tabs::List, "List")
+                    .clicked()
+                {
                     state.active_tab = Tabs::List;
                 };
-                if ui.button("Chart").clicked() {
+                if ui
+                    .selectable_label(state.active_tab == Tabs::Chart, "Chart")
+                    .clicked()
+                {
                     state.active_tab = Tabs::Chart;
                 }
             });

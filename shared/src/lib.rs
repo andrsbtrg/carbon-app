@@ -57,6 +57,7 @@ pub enum SortBy {
     Gwp,
 }
 
+#[derive(PartialEq, Eq)]
 pub enum Tabs {
     List,
     Chart,
