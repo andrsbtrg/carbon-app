@@ -1,6 +1,9 @@
 use serde::{de, Deserialize, Deserializer, Serialize};
 use serde_json::Value;
-use std::{fmt::Debug, str::FromStr};
+use std::{
+    fmt::{self, Debug, Display, Formatter},
+    str::FromStr,
+};
 use thiserror::Error;
 
 const BASE_PATH: &str = "https://buildingtransparency.org/api/";
@@ -11,23 +14,24 @@ pub enum Country {
     UK,
     None,
 }
-impl ToString for Country {
-    fn to_string(&self) -> String {
+impl Display for Country {
+    fn fmt(&self, f: &mut Formatter) -> fmt::Result {
         match &self {
-            Country::Us => "US".to_string(),
-            Country::Germany => "DE".to_string(),
-            Country::UK => "UK".to_string(),
-            Country::None => "".to_string(),
+            Country::Us => write!(f, "US"),
+            Country::Germany => write!(f, "DE"),
+            Country::UK => write!(f, "UK"),
+            Country::None => write!(f, ""),
         }
     }
 }
 pub enum Endpoint {
     Materials,
 }
-impl ToString for Endpoint {
-    fn to_string(&self) -> String {
-        match &self {
-            Endpoint::Materials => "materials".to_string(),
+
+impl Display for Endpoint {
+    fn fmt(&self, f: &mut Formatter) -> fmt::Result {
+        match *self {
+            Endpoint::Materials => write!(f, "materials"),
         }
     }
 }
@@ -110,10 +114,8 @@ impl FromStr for Gwp {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let (x, y) = s.split_once(' ').ok_or(ApiError::GwpError)?;
-        // dbg!(x,y);
         let value = x.parse::<f64>().map_err(|_| ApiError::GwpError)?;
         let unit = y.parse::<GwpUnits>().map_err(|_| ApiError::GwpError)?;
-        // dbg!(&value, &unit);
         Ok(Gwp { value, unit })
     }
 }
@@ -162,7 +164,6 @@ fn read_cache() -> Result<Vec<Ec3Material>, ApiError> {
         .ok_or(ApiError::EmptyArray())?
         .iter()
         .for_each(|m| {
-            // dbg!(m);
             let material = Ec3Material {
                 name: m["name"].as_str().unwrap_or_default().to_string(),
                 gwp: Gwp {
@@ -216,14 +217,14 @@ impl Ec3api {
 
         self
     }
-    fn prepare_url(&self) -> Result<String, ApiError> {
+    fn prepare_url(&self) -> String {
         let jurisdiction = match self.country {
             Country::None => "".to_owned(),
             _ => format!("?jurisdiction={}", self.country.to_string()),
         };
         let url = format!("{}{}{}", BASE_PATH, self.endpoint.to_string(), jurisdiction);
 
-        Ok(url)
+        url
     }
     pub fn fetch(&mut self) -> Result<Vec<Ec3Material>, ApiError> {
         if let Ok(ret) = read_cache() {
@@ -234,7 +235,7 @@ impl Ec3api {
 
         println!("Querying materials...");
 
-        let path = self.prepare_url().unwrap();
+        let path = self.prepare_url();
 
         let auth = format!("{} {}", "Bearer", self.api_key);
 
@@ -248,21 +249,10 @@ impl Ec3api {
 
         let mut materials: Vec<Ec3Material> = Vec::new();
 
-        // let val = &json.as_array().expect("not an array")[0];
-        // println!("{:?}", val);
-        // let mat: Ec3Material = serde_json::from_value(val.to_owned()).unwrap();
-        // dbg!(mat);
-
         json.as_array()
             .ok_or(ApiError::EmptyArray())?
             .iter()
             .for_each(|v| {
-                // let gwp = Gwp::from_str(v["gwp"].as_str().unwrap()).unwrap_or_default();
-                // let name: String = v.get("name").unwrap().to_string().replace("\"", "");
-                // let image = v.get("image").unwrap_or(&json!("".to_string())).as_str().unwrap_or("<No Image>").to_string();
-                // let country = v.get("country").unwrap_or.to_string();
-                // println!("{}", country);
-                dbg!(v);
                 let material: Ec3Material = serde_json::from_value(v.to_owned()).unwrap();
 
                 materials.push(material);
@@ -273,8 +263,6 @@ impl Ec3api {
                 eprint!("Error: could not write cache: {e:?}");
             }
         };
-
-        // dbg!(materials);
         Ok(materials)
     }
 }

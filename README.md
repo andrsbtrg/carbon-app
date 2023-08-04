@@ -10,7 +10,6 @@ To use the app you must have your own ec3 account, create a token and set it int
 For example:
 
 
-
 ```
 # .env in the root folder
 API_KEY="..."
@@ -25,6 +24,8 @@ API_KEY="..."
 
 ## TODO!
 - [x] Hot reloading. Implemented following the example of [rust-hot-reloading](https://github.com/irh/rust-hot-reloading/tree/main)
-- [ ] Visualization of the GWP per element and per category.
+- [x] Visualization of the GWP per element and per category.
 - [ ] Indexing and searching per keyword. Basically make it possible to find a related material with some keywords.
+- [x] Loading materials via API without blocking UI.
+- [ ] Searching new materials via API.
 

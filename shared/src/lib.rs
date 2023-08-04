@@ -1,3 +1,8 @@
+use std::{
+    sync::mpsc::{channel, Receiver},
+    thread,
+};
+
 use ec3api::Ec3Material;
 
 extern crate ec3api;
@@ -9,6 +14,7 @@ pub struct State {
     pub sort_by: SortBy,
     pub active_tab: Tabs,
     pub selected_category: String,
+    pub materials_rx: Option<Receiver<Vec<Ec3Material>>>,
     api_key: String,
 }
 
@@ -22,6 +28,7 @@ impl State {
             sort_by: SortBy::Name,
             active_tab: Tabs::List,
             selected_category: String::new(),
+            materials_rx: None,
         }
     }
 
@@ -31,12 +38,46 @@ impl State {
     ///
     /// Panics if .env is missing or incomplete.
     pub fn load_materials(&mut self) {
-        if let Ok(materials) = ec3api::Ec3api::new(&self.api_key)
-            // .country(ec3api::Country::Germany)
-            .endpoint(ec3api::Endpoint::Materials)
-            .fetch()
-        {
-            self.materials = materials;
+        let (materials_tx, materials_rx) = channel::<Vec<Ec3Material>>();
+
+        self.materials_rx = Some(materials_rx);
+
+        let api_key = self.api_key.to_owned();
+        thread::spawn(move || {
+            if let Ok(materials) = ec3api::Ec3api::new(&api_key)
+                .endpoint(ec3api::Endpoint::Materials)
+                .fetch()
+            {
+                // Send materials to the receiver
+                println!("Finished fetching materials.");
+                if let Err(e) = materials_tx.send(materials) {
+                    println!("ERROR: {:?}", e);
+                }
+            }
+        });
+    }
+
+    /// Tries receiving the materials from the Message receiver
+    /// and returns True while a message_receiver exists
+    /// and its trying to receive (aka when loading).
+    pub fn preload_data(&mut self) -> bool {
+        if self.materials_loaded {
+            return false;
+        }
+        if let Some(rx) = &self.materials_rx {
+            println!("Received materials");
+            match rx.try_recv() {
+                Ok(materials) => {
+                    self.materials = materials;
+                    self.materials_loaded = true;
+                    return false;
+                }
+                Err(_) => {
+                    return true;
+                }
+            }
+        } else {
+            false
         }
     }
 

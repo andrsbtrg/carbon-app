@@ -40,6 +40,7 @@ fn render_material_cards(state: &State, ui: &mut eframe::egui::Ui, filter: &str)
 #[no_mangle]
 /// Renders the view
 pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut eframe::Frame) {
+    let loading = state.preload_data();
     // Top bar
     TopBottomPanel::top("top-bar").show(ctx, |ui| {
         ui.add_visible_ui(state.materials_loaded, |ui| {
@@ -83,9 +84,12 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
                 if !state.materials_loaded {
                     if ui.button("Load materials").clicked() {
                         state.load_materials();
-                        state.materials_loaded = true;
+                        // state.materials_loaded = true;
                     };
                 };
+                if loading {
+                    ui.spinner();
+                }
                 ScrollArea::vertical()
                     .auto_shrink([false; 2])
                     .show(ui, |ui| {
