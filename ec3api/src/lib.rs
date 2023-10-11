@@ -1,3 +1,4 @@
+use material_filter::MaterialFilter;
 use serde::{de, Deserialize, Deserializer, Serialize};
 use serde_json::Value;
 use std::{
@@ -6,10 +7,14 @@ use std::{
 };
 use thiserror::Error;
 
+use crate::material_filter::convert;
+
 const BASE_PATH: &str = "https://buildingtransparency.org/api/";
 
+pub mod material_filter;
+
 pub enum Country {
-    Us,
+    US,
     Germany,
     UK,
     None,
@@ -17,7 +22,7 @@ pub enum Country {
 impl Display for Country {
     fn fmt(&self, f: &mut Formatter) -> fmt::Result {
         match &self {
-            Country::Us => write!(f, "US"),
+            Country::US => write!(f, "US"),
             Country::Germany => write!(f, "DE"),
             Country::UK => write!(f, "UK"),
             Country::None => write!(f, ""),
@@ -40,6 +45,7 @@ pub struct Ec3api {
     api_key: String,
     endpoint: Endpoint,
     country: Country,
+    mf: Option<MaterialFilter>,
 }
 #[derive(Error, Debug)]
 pub enum ApiError {
@@ -123,7 +129,7 @@ impl FromStr for Gwp {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Manufacturer {
     pub name: String,
-    pub country: String,
+    pub country: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -142,8 +148,8 @@ pub struct Category {
     pub description: String,
 }
 
-fn write_cache(json: String) {
-    match std::fs::write("cache.json", &json) {
+fn write_cache(json: String, filename: &str) {
+    match std::fs::write(format!("{}.json", filename), &json) {
         Ok(_) => {
             println!("Results cached")
         }
@@ -152,8 +158,8 @@ fn write_cache(json: String) {
         }
     };
 }
-fn read_cache() -> Result<Vec<Ec3Material>, ApiError> {
-    let contents = std::fs::read_to_string("cache.json")?;
+fn read_cache(category: &str) -> Result<Vec<Ec3Material>, ApiError> {
+    let contents = std::fs::read_to_string(format!("{}.json", category))?;
 
     let result: Value = serde_json::from_str(&contents).unwrap();
 
@@ -177,10 +183,12 @@ fn read_cache() -> Result<Vec<Ec3Material>, ApiError> {
                         .as_str()
                         .unwrap_or_default()
                         .to_string(),
-                    country: m["manufacturer"]["country"]
-                        .as_str()
-                        .unwrap_or_default()
-                        .to_string(),
+                    country: Some(
+                        m["manufacturer"]["country"]
+                            .as_str()
+                            .unwrap_or_default()
+                            .to_string(),
+                    ),
                 },
                 description: m["description"].as_str().unwrap_or("").to_string(),
                 category: Category {
@@ -203,12 +211,18 @@ impl Ec3api {
             api_key: api_key.to_string(),
             endpoint: Endpoint::Materials,
             country: Country::Germany,
+            mf: None,
         }
     }
 
     pub fn country(&mut self, country_code: Country) -> &mut Self {
         self.country = country_code;
 
+        self
+    }
+
+    pub fn material_filter(&mut self, mf: MaterialFilter) -> &mut Self {
+        self.mf = Some(mf);
         self
     }
 
@@ -227,7 +241,12 @@ impl Ec3api {
         url
     }
     pub fn fetch(&mut self) -> Result<Vec<Ec3Material>, ApiError> {
-        if let Ok(ret) = read_cache() {
+        let category = match &self.mf {
+            Some(mf) => mf.get_category(),
+            None => "cache".to_string(),
+        };
+
+        if let Ok(ret) = read_cache(&category) {
             return Ok(ret);
         } else {
             println!("no cache found");
@@ -237,11 +256,17 @@ impl Ec3api {
 
         let path = self.prepare_url();
 
-        let auth = format!("{} {}", "Bearer", self.api_key);
+        let auth = format!("Bearer {}", self.api_key);
+
+        let filter = if let Some(mf) = &self.mf {
+            convert(mf)
+        } else {
+            String::new()
+        };
 
         let response = ureq::get(&path)
             .set("Authorization", &auth)
-            // .set("X-Total-Count", "1")
+            .query("mf", &filter)
             .call()?
             .into_string()?;
 
@@ -257,8 +282,12 @@ impl Ec3api {
 
                 materials.push(material);
             });
+        let category = match &self.mf {
+            Some(mf) => mf.get_category(),
+            None => "cache".to_string(),
+        };
         match serde_json::to_string_pretty(&materials) {
-            Ok(json) => write_cache(json),
+            Ok(json) => write_cache(json, &category),
             Err(e) => {
                 eprint!("Error: could not write cache: {e:?}");
             }

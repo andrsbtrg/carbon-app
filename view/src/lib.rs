@@ -1,11 +1,11 @@
 extern crate shared;
 use std::collections::BTreeSet;
-
+const WHITE: Color32 = eframe::epaint::Color32::WHITE;
 use eframe::{
     egui::{
         self,
         plot::{Bar, BarChart, Plot},
-        CentralPanel, ComboBox, ScrollArea, TopBottomPanel,
+        CentralPanel, ComboBox, RichText, ScrollArea, TopBottomPanel,
     },
     epaint::Color32,
 };
@@ -22,12 +22,17 @@ fn render_material_cards(state: &State, ui: &mut eframe::egui::Ui, filter: &str)
     {
         ui.add_space(2.);
 
-        ui.label(&m.name);
+        if ui.style().visuals == egui::Visuals::dark() {
+            ui.label(RichText::from(&m.name).color(WHITE));
+        } else {
+            ui.label(RichText::from(&m.name).color(Color32::BLACK));
+        }
         ui.monospace(&m.gwp.as_str());
-        // ui.label(RichText::from(&m.gwp).color(eframe::epaint::Color32::RED));
 
         // ui.hyperlink(&m.img_url); // removed for nowlib
-        ui.monospace(&m.manufacturer.country);
+        if let Some(c) = &m.manufacturer.country {
+            ui.monospace(c);
+        }
         ui.add_space(2.);
 
         ui.monospace(&m.category.description);
@@ -69,6 +74,13 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
     });
     // Main panel
     CentralPanel::default().show(ctx, |ui| {
+        ui.horizontal(|ui| {
+            ui.text_edit_singleline(&mut state.fetch_input);
+            if ui.button("Search").clicked() {
+                state.search_materials();
+            }
+        });
+
         add_view_options(ui, state);
 
         add_category_filter(ui, state);
@@ -160,7 +172,7 @@ fn add_view_options(ui: &mut egui::Ui, state: &mut State) {
     ui.horizontal(|ui| {
         ui.add(
             egui::TextEdit::singleline(&mut state.search_input)
-                .hint_text("Search")
+                .hint_text("Filter")
                 .desired_width(200.0),
         );
     });

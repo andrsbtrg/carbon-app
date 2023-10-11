@@ -3,7 +3,7 @@ use std::{
     thread,
 };
 
-use ec3api::Ec3Material;
+use ec3api::{material_filter::MaterialFilter, Ec3Material};
 
 extern crate ec3api;
 
@@ -11,6 +11,7 @@ pub struct State {
     pub materials_loaded: bool,
     pub materials: Vec<Ec3Material>,
     pub search_input: String,
+    pub fetch_input: String,
     pub sort_by: SortBy,
     pub active_tab: Tabs,
     pub selected_category: String,
@@ -24,6 +25,7 @@ impl State {
             materials_loaded: false,
             materials: Vec::new(),
             search_input: String::new(),
+            fetch_input: String::new(),
             api_key,
             sort_by: SortBy::Name,
             active_tab: Tabs::List,
@@ -57,6 +59,31 @@ impl State {
         });
     }
 
+    pub fn search_materials(&mut self) {
+        let mut mf = MaterialFilter::of_category(&self.fetch_input);
+        self.materials_loaded = false;
+        mf.filter("jurisdiction", "in", vec!["150"]);
+
+        let (materials_tx, materials_rx) = channel::<Vec<Ec3Material>>();
+
+        self.materials_rx = Some(materials_rx);
+
+        let api_key = self.api_key.to_owned();
+        thread::spawn(move || {
+            if let Ok(materials) = ec3api::Ec3api::new(&api_key)
+                .endpoint(ec3api::Endpoint::Materials)
+                .material_filter(mf)
+                .fetch()
+            {
+                // Send materials to the receiver
+                println!("Finished fetching materials.");
+                if let Err(e) = materials_tx.send(materials) {
+                    println!("ERROR: {:?}", e);
+                }
+            }
+        });
+    }
+
     /// Tries receiving the materials from the Message receiver
     /// and returns True while a message_receiver exists
     /// and its trying to receive (aka when loading).
@@ -65,9 +92,9 @@ impl State {
             return false;
         }
         if let Some(rx) = &self.materials_rx {
-            println!("Received materials");
             match rx.try_recv() {
                 Ok(materials) => {
+                    println!("Received materials");
                     self.materials = materials;
                     self.materials_loaded = true;
                     return false;
