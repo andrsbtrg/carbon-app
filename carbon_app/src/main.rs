@@ -11,7 +11,7 @@ use eframe::{egui, epaint::Vec2};
 #[cfg(feature = "hot_reload_libs")]
 use hot_reload_lib::HotReloadLib;
 
-use std::env;
+use std::{env, path::Path};
 
 #[cfg(feature = "hot_reload_libs")]
 struct HotReloadLibs {
@@ -90,6 +90,9 @@ fn main() -> Result<(), eframe::Error> {
     dotenv::dotenv().expect("No .env file found!");
     let api_key = env::var("API_KEY").expect("API Key missing!");
 
+    // create cache dir
+    setup_cache();
+
     // init egui
     env_logger::init();
     let win_options = eframe::NativeOptions {
@@ -104,6 +107,16 @@ fn main() -> Result<(), eframe::Error> {
         win_options,
         Box::new(|cc| Box::new(Application::new(cc, libraries_path, api_key))),
     )
+}
+
+fn setup_cache() -> () {
+    let dir = Path::new(".cache");
+    if dir.exists() {
+        println!("Cache directory set")
+    } else {
+        std::fs::create_dir(dir).expect("Unable to create cache dir");
+        println!("Cache directory created")
+    }
 }
 
 fn setup_custom_fonts(ctx: &eframe::egui::Context) {

@@ -3,6 +3,7 @@ use serde::{de, Deserialize, Deserializer, Serialize};
 use serde_json::Value;
 use std::{
     fmt::{self, Debug, Display, Formatter},
+    path::Path,
     str::FromStr,
 };
 use thiserror::Error;
@@ -149,7 +150,15 @@ pub struct Category {
 }
 
 fn write_cache(json: String, filename: &str) {
-    match std::fs::write(format!("{}.json", filename), &json) {
+    let dir = Path::new(".cache");
+    if !dir.exists() {
+        println!("No cache folder, creating");
+        std::fs::create_dir(dir).expect("Unable to create cache dir");
+    }
+
+    let output = Path::join(dir, Path::new(format!("{}.json", filename).as_str()));
+
+    match std::fs::write(output, &json) {
         Ok(_) => {
             println!("Results cached")
         }
@@ -159,7 +168,11 @@ fn write_cache(json: String, filename: &str) {
     };
 }
 fn read_cache(category: &str) -> Result<Vec<Ec3Material>, ApiError> {
-    let contents = std::fs::read_to_string(format!("{}.json", category))?;
+    let dir = Path::new(".cache");
+
+    let output = Path::join(dir, Path::new(format!("{}.json", category).as_str()));
+
+    let contents = std::fs::read_to_string(output)?;
 
     let result: Value = serde_json::from_str(&contents).unwrap();
 
