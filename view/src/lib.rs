@@ -76,6 +76,18 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
     CentralPanel::default().show(ctx, |ui| {
         ui.horizontal(|ui| {
             ui.text_edit_singleline(&mut state.fetch_input);
+            // TODO: should implement a search history
+            // let response = ui.button("Open popup");
+            // let popup_id = ui.make_persistent_id("my_unique_id");
+            // if response.clicked() {
+            //     ui.memory_mut(|mem| mem.toggle_popup(popup_id));
+            // }
+            // let below = egui::AboveOrBelow::Below;
+            // egui::popup::popup_above_or_below_widget(ui, popup_id, &response, below, |ui| {
+            //     ui.set_min_width(200.0); // if you want to control the size
+            //     ui.label("Some more info, or things you can select:");
+            //     ui.label("…");
+            // });
             if ui.button("Search").clicked() {
                 state.search_materials();
             }

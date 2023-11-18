@@ -2,8 +2,16 @@
 resolver = "2"
 members = [
   "carbon_app",
-  "ec3api",
   "hot_reload_lib",
   "view",
   "shared",
 ]
+
+[profile.release]
+debug = 1
+incremental = true
+lto = "thin"
+
+[profile.dev]
+lto = "off"
+
