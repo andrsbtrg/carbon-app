@@ -3,7 +3,8 @@ use std::{
     thread,
 };
 
-use ec3api::{material_filter::MaterialFilter, Ec3Material};
+use ec3api::material_filter::MaterialFilter;
+use ec3api::models::Ec3Material;
 
 extern crate ec3api;
 
@@ -62,7 +63,7 @@ impl State {
     pub fn search_materials(&mut self) {
         let mut mf = MaterialFilter::of_category(&self.fetch_input);
         self.materials_loaded = false;
-        mf.filter("jurisdiction", "in", vec!["150"]);
+        mf.add_filter("jurisdiction", "in", vec!["150"]);
 
         let (materials_tx, materials_rx) = channel::<Vec<Ec3Material>>();
 
