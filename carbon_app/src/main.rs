@@ -6,7 +6,10 @@ extern crate hot_reload_lib;
 #[cfg(not(feature = "hot_reload_libs"))]
 extern crate view;
 
-use eframe::{egui, epaint::Vec2};
+use eframe::{
+    egui::{self, ViewportBuilder},
+    epaint::Vec2,
+};
 
 #[cfg(feature = "hot_reload_libs")]
 use hot_reload_lib::HotReloadLib;
@@ -95,9 +98,12 @@ fn main() -> Result<(), eframe::Error> {
 
     // init egui
     env_logger::init();
+    let viewport = ViewportBuilder::default()
+        .with_max_inner_size(Vec2::new(540., 800.))
+        .with_resizable(true);
+
     let win_options = eframe::NativeOptions {
-        initial_window_size: Some(Vec2::new(540., 800.)),
-        resizable: false,
+        viewport,
         follow_system_theme: true,
         ..Default::default()
     };

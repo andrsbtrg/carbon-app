@@ -1,12 +1,9 @@
 extern crate shared;
+use egui_plot::{Bar, BarChart, Plot};
 use std::collections::BTreeSet;
 const WHITE: Color32 = eframe::epaint::Color32::WHITE;
 use eframe::{
-    egui::{
-        self,
-        plot::{Bar, BarChart, Plot},
-        CentralPanel, ComboBox, RichText, ScrollArea, TopBottomPanel,
-    },
+    egui::{self, CentralPanel, ComboBox, RichText, ScrollArea, TopBottomPanel},
     epaint::Color32,
 };
 use shared::{SortBy, State, Tabs};
