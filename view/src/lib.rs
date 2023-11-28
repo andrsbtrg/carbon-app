@@ -1,12 +1,13 @@
 extern crate shared;
-use egui_plot::{Bar, BarChart, Plot};
-use std::collections::BTreeSet;
-const WHITE: Color32 = eframe::epaint::Color32::WHITE;
 use eframe::{
     egui::{self, CentralPanel, ComboBox, RichText, ScrollArea, TopBottomPanel},
     epaint::Color32,
 };
+use egui_plot::{Bar, BarChart, Plot};
 use shared::{SortBy, State, Tabs};
+use std::collections::BTreeSet;
+
+const WHITE: Color32 = eframe::epaint::Color32::WHITE;
 
 #[no_mangle]
 /// Renders the materials available in the [State] state as a list view
@@ -15,7 +16,7 @@ fn render_material_cards(state: &State, ui: &mut eframe::egui::Ui, filter: &str)
         .materials
         .iter()
         .filter(|mat| mat.name.to_lowercase().contains(filter))
-        .filter(|mat| mat.category.description.contains(&state.selected_category))
+        .filter(|mat| mat.category.name.contains(&state.selected_category))
     {
         ui.add_space(2.);
 
@@ -47,18 +48,8 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
     TopBottomPanel::top("top-bar").show(ctx, |ui| {
         ui.add_visible_ui(state.materials_loaded, |ui| {
             ui.horizontal(|ui| {
-                if ui
-                    .selectable_label(state.active_tab == Tabs::List, "List")
-                    .clicked()
-                {
-                    state.active_tab = Tabs::List;
-                };
-                if ui
-                    .selectable_label(state.active_tab == Tabs::Chart, "Chart")
-                    .clicked()
-                {
-                    state.active_tab = Tabs::Chart;
-                }
+                add_tab(ui, state, Tabs::List);
+                add_tab(ui, state, Tabs::Chart)
             });
         });
     });
@@ -90,6 +81,14 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
             }
         });
 
+        ui.collapsing("Advance search", |ui| {
+            ui.label("Country:");
+            ui.text_edit_singleline(&mut state.country);
+            if ui.button("Advanced search").clicked() {
+                // do something
+                println!("Advance material search.");
+            }
+        });
         add_view_options(ui, state);
 
         add_category_filter(ui, state);
@@ -102,12 +101,12 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
             shared::Tabs::Chart => render_material_chart(state, ui),
 
             shared::Tabs::List => {
-                if !state.materials_loaded {
-                    if ui.button("Load materials").clicked() {
-                        state.load_materials();
-                        // state.materials_loaded = true;
-                    };
-                };
+                // if !state.materials_loaded {
+                //     if ui.button("Load materials").clicked() {
+                //         state.load_materials();
+                //         // state.materials_loaded = true;
+                //     };
+                // };
                 if loading {
                     ui.spinner();
                 }
@@ -121,11 +120,23 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
     });
 }
 
+fn add_tab(ui: &mut egui::Ui, state: &mut State, tab: Tabs) -> () {
+    if ui
+        .selectable_label(state.active_tab == tab, tab.to_string())
+        .clicked()
+    {
+        state.active_tab = tab;
+    };
+}
+
 fn add_category_filter(ui: &mut egui::Ui, state: &mut State) {
+    if !state.materials_loaded {
+        return;
+    }
     let categories = state
         .materials
         .iter()
-        .map(|mat| &mat.category.description)
+        .map(|mat| &mat.category.name)
         .collect::<BTreeSet<_>>();
     ui.horizontal(|ui| {
         ComboBox::from_id_source("category")
@@ -156,7 +167,7 @@ fn render_material_chart(state: &mut State, ui: &mut egui::Ui) {
             .materials
             .iter()
             .enumerate()
-            .filter(|(_, mat)| mat.category.description.contains(&state.selected_category))
+            .filter(|(_, mat)| mat.category.name.contains(&state.selected_category))
             .map(|(i, mat)| {
                 if mat.name.to_lowercase().contains(filter) {
                     Bar::new(i as f64, mat.gwp.value)
@@ -178,30 +189,35 @@ fn render_material_chart(state: &mut State, ui: &mut egui::Ui) {
 
 /// Adds a search input and sorting options to the UI
 fn add_view_options(ui: &mut egui::Ui, state: &mut State) {
-    ui.horizontal(|ui| {
-        ui.add(
-            egui::TextEdit::singleline(&mut state.search_input)
-                .hint_text("Filter")
-                .desired_width(200.0),
-        );
-    });
-    ui.horizontal(|ui| {
-        ui.label("sort by: ");
-        if ui
-            .add(egui::RadioButton::new(
-                state.sort_by == SortBy::Name,
-                "name",
-            ))
-            .clicked()
-        {
-            state.sort_by(SortBy::Name);
-        }
-        if ui
-            .add(egui::RadioButton::new(state.sort_by == SortBy::Gwp, "GWP"))
-            .clicked()
-        {
-            state.sort_by(SortBy::Gwp);
-        }
+    if !state.materials_loaded {
+        return;
+    }
+    ui.collapsing("View", |ui| {
+        ui.horizontal(|ui| {
+            ui.add(
+                egui::TextEdit::singleline(&mut state.search_input)
+                    .hint_text("'material name'")
+                    .desired_width(200.0),
+            );
+        });
+        ui.horizontal(|ui| {
+            ui.label("sort by: ");
+            if ui
+                .add(egui::RadioButton::new(
+                    state.sort_by == SortBy::Name,
+                    "name",
+                ))
+                .clicked()
+            {
+                state.sort_by(SortBy::Name);
+            }
+            if ui
+                .add(egui::RadioButton::new(state.sort_by == SortBy::Gwp, "GWP"))
+                .clicked()
+            {
+                state.sort_by(SortBy::Gwp);
+            }
+        });
     });
 }
 fn fit_to_width(input: &String, len: usize) -> &str {

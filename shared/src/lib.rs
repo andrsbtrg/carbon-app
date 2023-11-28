@@ -1,4 +1,5 @@
 use std::{
+    fmt::Display,
     sync::mpsc::{channel, Receiver},
     thread,
 };
@@ -13,6 +14,7 @@ pub struct State {
     pub materials: Vec<Ec3Material>,
     pub search_input: String,
     pub fetch_input: String,
+    pub country: String,
     pub sort_by: SortBy,
     pub active_tab: Tabs,
     pub selected_category: String,
@@ -32,22 +34,24 @@ impl State {
             active_tab: Tabs::List,
             selected_category: String::new(),
             materials_rx: None,
+            country: String::new(),
         }
     }
 
     /// Fetches materials for [`MaterialWindow`].
-    ///
     /// # Panics
-    ///
     /// Panics if .env is missing or incomplete.
     pub fn load_materials(&mut self) {
         let (materials_tx, materials_rx) = channel::<Vec<Ec3Material>>();
 
+        let mut mf = MaterialFilter::of_category("Wood");
         self.materials_rx = Some(materials_rx);
+        mf.add_filter("jurisdiction", "in", vec!["150"]);
 
         let api_key = self.api_key.to_owned();
         thread::spawn(move || {
             if let Ok(materials) = ec3api::Ec3api::new(&api_key)
+                .material_filter(mf)
                 .endpoint(ec3api::Endpoint::Materials)
                 .fetch()
             {
@@ -130,4 +134,13 @@ pub enum SortBy {
 pub enum Tabs {
     List,
     Chart,
+}
+
+impl Display for Tabs {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Tabs::List => write!(f, "List"),
+            Tabs::Chart => write!(f, "Chart"),
+        }
+    }
 }

@@ -100,6 +100,9 @@ fn main() -> Result<(), eframe::Error> {
     env_logger::init();
     let viewport = ViewportBuilder::default()
         .with_max_inner_size(Vec2::new(540., 800.))
+        .with_decorations(true)
+        .with_titlebar_shown(false)
+        .with_titlebar_buttons_shown(false)
         .with_resizable(true);
 
     let win_options = eframe::NativeOptions {
