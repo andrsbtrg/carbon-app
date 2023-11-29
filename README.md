@@ -46,4 +46,8 @@ Sample response:
 - [ ] Indexing and searching per keyword. Basically make it possible to find a related material with some keywords.
 - [x] Loading materials via API without blocking UI.
 - [x] Searching new materials via API.
+- [ ] Add the material id from the api, to avoid clashes between materials
+- [ ] Add a list of categories to make searching easier
+- [ ] Add a graph of material categories to visualize 
+
 

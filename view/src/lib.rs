@@ -1,6 +1,6 @@
 extern crate shared;
 use eframe::{
-    egui::{self, CentralPanel, ComboBox, RichText, ScrollArea, TopBottomPanel},
+    egui::{self, CentralPanel, CollapsingHeader, ComboBox, RichText, ScrollArea, TopBottomPanel},
     epaint::Color32,
 };
 use egui_plot::{Bar, BarChart, Plot};
@@ -8,37 +8,6 @@ use shared::{SortBy, State, Tabs};
 use std::collections::BTreeSet;
 
 const WHITE: Color32 = eframe::epaint::Color32::WHITE;
-
-#[no_mangle]
-/// Renders the materials available in the [State] state as a list view
-fn render_material_cards(state: &State, ui: &mut eframe::egui::Ui, filter: &str) {
-    for m in state
-        .materials
-        .iter()
-        .filter(|mat| mat.name.to_lowercase().contains(filter))
-        .filter(|mat| mat.category.name.contains(&state.selected_category))
-    {
-        ui.add_space(2.);
-
-        if ui.style().visuals == egui::Visuals::dark() {
-            ui.label(RichText::from(&m.name).color(WHITE));
-        } else {
-            ui.label(RichText::from(&m.name).color(Color32::BLACK));
-        }
-        ui.monospace(&m.gwp.as_str());
-
-        // ui.hyperlink(&m.img_url); // removed for nowlib
-        if let Some(c) = &m.manufacturer.country {
-            ui.monospace(c);
-        }
-        ui.add_space(2.);
-
-        ui.monospace(&m.category.description);
-        ui.add_space(2.);
-
-        ui.separator();
-    }
-}
 
 #[no_mangle]
 /// Renders the view
@@ -101,12 +70,6 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
             shared::Tabs::Chart => render_material_chart(state, ui),
 
             shared::Tabs::List => {
-                // if !state.materials_loaded {
-                //     if ui.button("Load materials").clicked() {
-                //         state.load_materials();
-                //         // state.materials_loaded = true;
-                //     };
-                // };
                 if loading {
                     ui.spinner();
                 }
@@ -120,6 +83,42 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
     });
 }
 
+#[no_mangle]
+/// Renders the materials available in the [State] state as a list view
+fn render_material_cards(state: &State, ui: &mut eframe::egui::Ui, filter: &str) {
+    for m in state
+        .materials
+        .iter()
+        .filter(|mat| mat.name.to_lowercase().contains(filter))
+        .filter(|mat| mat.category.name.contains(&state.selected_category))
+    {
+        ui.add_space(2.);
+
+        let text_color = match ui.style().visuals == egui::Visuals::dark() {
+            true => WHITE,
+            false => Color32::BLACK,
+        };
+
+        ui.label(RichText::from(&m.name).color(text_color));
+        ui.monospace(&m.gwp.as_str());
+
+        // ui.hyperlink(&m.img_url); // removed for now
+        if let Some(c) = &m.manufacturer.country {
+            ui.monospace(c);
+        }
+        ui.add_space(2.);
+
+        let coll = CollapsingHeader::new(&m.category.name).id_source(&m.id);
+        coll.show(ui, |ui| {
+            ui.monospace(&m.category.description);
+        });
+        ui.add_space(2.);
+
+        ui.separator();
+    }
+}
+
+/// Short way of adding a tab that is connected to a [Tabs] enum in [State]
 fn add_tab(ui: &mut egui::Ui, state: &mut State, tab: Tabs) -> () {
     if ui
         .selectable_label(state.active_tab == tab, tab.to_string())
