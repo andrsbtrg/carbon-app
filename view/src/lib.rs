@@ -89,40 +89,40 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
     });
 }
 
-fn render_tree(ui: &mut egui::Ui, tree: shared::CategoriesTree) {
-    if let Some(subcategories) = tree.children {
-        for v in subcategories {
-            let name = &v.value.name.clone();
-            ui.collapsing(name, |ui| {
-                render_tree(ui, v);
-            });
+/// Render recursively nodes in [shared::CategoriesTree]
+fn render_tree(ui: &mut egui::Ui, tree: &shared::CategoriesTree) {
+    if let Some(subcategories) = &tree.children {
+        if subcategories.len() == 0 {
+            ui.label(&tree.value.name);
+        } else {
+            for v in subcategories {
+                let name = &v.value.name.clone();
+                ui.collapsing(name, |ui| {
+                    render_tree(ui, &v);
+                });
+            }
         }
     }
 }
 
+/// Lazy loads and renders [shared::CategoriesTree]
 fn render_categories_tab(state: &mut State, ui: &mut egui::Ui) {
-    if let Some(categories) = &state.categories {
-        ui.collapsing(&categories.value.name, |ui| {
-            for v in categories.children.as_ref().unwrap() {
-                let name = &v.value.name.clone();
-                ui.collapsing(name, |ui| {
-                    if let Some(subc) = &v.children {
-                        // repeat
-                    }
-                });
-            }
-        });
-    } else {
-        if ui.button("Load categories").clicked() {
-            state.load_categories();
-        }
-    }
     if state.preload_categories() {
         ui.vertical_centered_justified(|ui| {
             ui.label("Loading...");
             ui.spinner();
         });
         return;
+    }
+
+    if let Some(categories) = &state.categories {
+        ScrollArea::vertical()
+            .auto_shrink([false; 2])
+            .show(ui, |ui| {
+                render_tree(ui, categories);
+            });
+    } else {
+        state.load_categories();
     }
 }
 
