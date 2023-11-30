@@ -4,14 +4,20 @@ use std::{
     thread,
 };
 
-use ec3api::material_filter::MaterialFilter;
-use ec3api::models::Ec3Material;
+use ec3api::{
+    material_filter::MaterialFilter,
+    models::{Ec3Category, Ec3Material, Node},
+    Ec3Result,
+};
 
 extern crate ec3api;
+
+pub type CategoriesTree = ec3api::models::Node<ec3api::models::Ec3Category>;
 
 pub struct State {
     pub materials_loaded: bool,
     pub materials: Vec<Ec3Material>,
+    pub categories: Option<Node<Ec3Category>>,
     pub search_input: String,
     pub fetch_input: String,
     pub country: String,
@@ -19,6 +25,7 @@ pub struct State {
     pub active_tab: Tabs,
     pub selected_category: String,
     pub materials_rx: Option<Receiver<Vec<Ec3Material>>>,
+    pub categories_rx: Option<Receiver<Node<Ec3Category>>>,
     api_key: String,
 }
 
@@ -27,6 +34,7 @@ impl State {
         State {
             materials_loaded: false,
             materials: Vec::new(),
+            categories: None,
             search_input: String::new(),
             fetch_input: String::new(),
             api_key,
@@ -34,31 +42,31 @@ impl State {
             active_tab: Tabs::List,
             selected_category: String::new(),
             materials_rx: None,
+            categories_rx: None,
             country: String::new(),
         }
     }
 
-    /// Fetches materials for [`MaterialWindow`].
+    /// Loads Categories
     /// # Panics
     /// Panics if .env is missing or incomplete.
-    pub fn load_materials(&mut self) {
-        let (materials_tx, materials_rx) = channel::<Vec<Ec3Material>>();
+    pub fn load_categories(&mut self) {
+        let (categories_tx, categories_rx) = channel::<Node<Ec3Category>>();
 
-        let mut mf = MaterialFilter::of_category("Wood");
-        self.materials_rx = Some(materials_rx);
-        mf.add_filter("jurisdiction", "in", vec!["150"]);
+        self.categories_rx = Some(categories_rx);
 
         let api_key = self.api_key.to_owned();
         thread::spawn(move || {
-            if let Ok(materials) = ec3api::Ec3api::new(&api_key)
-                .material_filter(mf)
-                .endpoint(ec3api::Endpoint::Materials)
-                .fetch()
+            if let Ok(result) = ec3api::Ec3api::new(&api_key)
+                .endpoint(ec3api::Endpoint::Categories)
+                .fetch_all()
             {
                 // Send materials to the receiver
-                println!("Finished fetching materials.");
-                if let Err(e) = materials_tx.send(materials) {
-                    println!("ERROR: {:?}", e);
+                println!("Finished fetching categories.");
+                if let Ec3Result::Categories(categories) = result {
+                    if let Err(e) = categories_tx.send(categories) {
+                        println!("ERROR: {:?}", e);
+                    }
                 }
             }
         });
@@ -111,6 +119,28 @@ impl State {
         } else {
             false
         }
+    }
+
+    /// Tries receiving the categories from the Message receiver
+    /// and returns True while a message_receiver exists
+    /// and its trying to receive (aka when loading).
+    pub fn preload_categories(&mut self) -> bool {
+        if let Some(_categories) = &self.categories {
+            return false;
+        }
+        if let Some(rx) = &self.categories_rx {
+            match rx.try_recv() {
+                Ok(categories) => {
+                    println!("Received categories");
+                    self.categories = Some(categories);
+                    return false;
+                }
+                Err(_) => {
+                    return true;
+                }
+            }
+        }
+        false
     }
 
     pub fn sort_by(&mut self, op: SortBy) {

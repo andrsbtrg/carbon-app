@@ -84,13 +84,46 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
                         render_material_cards(state, ui, &state.search_input.to_lowercase());
                     });
             }
-            Tabs::Categories => render_categories(state, ui),
+            Tabs::Categories => render_categories_tab(state, ui),
         }
     });
 }
 
-fn render_categories(state: &mut State, ui: &mut egui::Ui) {
-    todo!()
+fn render_tree(ui: &mut egui::Ui, tree: shared::CategoriesTree) {
+    if let Some(subcategories) = tree.children {
+        for v in subcategories {
+            let name = &v.value.name.clone();
+            ui.collapsing(name, |ui| {
+                render_tree(ui, v);
+            });
+        }
+    }
+}
+
+fn render_categories_tab(state: &mut State, ui: &mut egui::Ui) {
+    if let Some(categories) = &state.categories {
+        ui.collapsing(&categories.value.name, |ui| {
+            for v in categories.children.as_ref().unwrap() {
+                let name = &v.value.name.clone();
+                ui.collapsing(name, |ui| {
+                    if let Some(subc) = &v.children {
+                        // repeat
+                    }
+                });
+            }
+        });
+    } else {
+        if ui.button("Load categories").clicked() {
+            state.load_categories();
+        }
+    }
+    if state.preload_categories() {
+        ui.vertical_centered_justified(|ui| {
+            ui.label("Loading...");
+            ui.spinner();
+        });
+        return;
+    }
 }
 
 #[no_mangle]

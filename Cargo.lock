@@ -786,7 +786,7 @@ checksum = "9ea835d29036a4087793836fa931b08837ad5e957da9e23886b29586fb9b6650"
 [[package]]
 name = "ec3api"
 version = "0.1.0"
-source = "git+https://github.com/andrsbtrg/ec3.git#123d0251d1224fd2beca0d9665adda6bb7d66921"
+source = "git+https://github.com/andrsbtrg/ec3.git#5097afbfc478d74dd258a80742f5cdea159338bf"
 dependencies = [
  "serde",
  "serde_json",
