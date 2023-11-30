@@ -134,6 +134,7 @@ pub enum SortBy {
 pub enum Tabs {
     List,
     Chart,
+    Categories,
 }
 
 impl Display for Tabs {
@@ -141,6 +142,7 @@ impl Display for Tabs {
         match self {
             Tabs::List => write!(f, "List"),
             Tabs::Chart => write!(f, "Chart"),
+            Tabs::Categories => write!(f, "Categories"),
         }
     }
 }

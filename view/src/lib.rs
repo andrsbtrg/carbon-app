@@ -18,7 +18,8 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
         ui.add_visible_ui(state.materials_loaded, |ui| {
             ui.horizontal(|ui| {
                 add_tab(ui, state, Tabs::List);
-                add_tab(ui, state, Tabs::Chart)
+                add_tab(ui, state, Tabs::Chart);
+                add_tab(ui, state, Tabs::Categories);
             });
         });
     });
@@ -71,7 +72,11 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
 
             shared::Tabs::List => {
                 if loading {
-                    ui.spinner();
+                    ui.vertical_centered_justified(|ui| {
+                        ui.label("Loading...");
+                        ui.spinner();
+                    });
+                    return;
                 }
                 ScrollArea::vertical()
                     .auto_shrink([false; 2])
@@ -79,8 +84,13 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
                         render_material_cards(state, ui, &state.search_input.to_lowercase());
                     });
             }
+            Tabs::Categories => render_categories(state, ui),
         }
     });
+}
+
+fn render_categories(state: &mut State, ui: &mut egui::Ui) {
+    todo!()
 }
 
 #[no_mangle]
