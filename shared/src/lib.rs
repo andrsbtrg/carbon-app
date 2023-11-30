@@ -1,4 +1,5 @@
 use std::{
+    collections::HashSet,
     fmt::Display,
     sync::mpsc::{channel, Receiver},
     thread,
@@ -108,7 +109,14 @@ impl State {
             match rx.try_recv() {
                 Ok(materials) => {
                     println!("Received materials");
-                    self.materials = materials;
+                    let mut seen: HashSet<String> = HashSet::new();
+                    let mut filtered = Vec::from(materials);
+
+                    filtered.retain(|x| {
+                        let id = x.id.clone();
+                        seen.insert(id)
+                    });
+                    self.materials = filtered;
                     self.materials_loaded = true;
                     return false;
                 }
