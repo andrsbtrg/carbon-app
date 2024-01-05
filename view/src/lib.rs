@@ -15,12 +15,18 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
     let loading = state.preload_data();
     // Top bar
     TopBottomPanel::top("top-bar").show(ctx, |ui| {
-        ui.add_visible_ui(state.materials_loaded, |ui| {
-            ui.horizontal(|ui| {
-                add_tab(ui, state, Tabs::List);
-                add_tab(ui, state, Tabs::Chart);
-                add_tab(ui, state, Tabs::Categories);
-            });
+        let button_height = 18.0;
+
+        let close_response = ui
+            .add(egui::Button::new(RichText::new("❌").size(button_height)))
+            .on_hover_text("Close the window");
+        if close_response.clicked() {
+            ui.ctx().send_viewport_cmd(egui::ViewportCommand::Close);
+        }
+        ui.horizontal(|ui| {
+            add_tab(ui, state, Tabs::List);
+            add_tab(ui, state, Tabs::Chart);
+            add_tab(ui, state, Tabs::Categories);
         });
     });
     // Bottom bar
@@ -46,7 +52,11 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
             //     ui.label("Some more info, or things you can select:");
             //     ui.label("…");
             // });
-            if ui.button("Search").clicked() {
+            if ui
+                .button("Search")
+                .on_hover_text("Type a material category to search in EC3")
+                .clicked()
+            {
                 state.search_materials();
             }
         });
@@ -136,13 +146,11 @@ fn render_material_cards(state: &State, ui: &mut eframe::egui::Ui, filter: &str)
         .filter(|mat| mat.category.name.contains(&state.selected_category))
     {
         ui.add_space(2.);
-
-        let text_color = match ui.style().visuals == egui::Visuals::dark() {
-            true => WHITE,
-            false => Color32::BLACK,
-        };
-
-        ui.label(RichText::from(&m.name).color(text_color));
+        // let text_color = match ui.style().visuals == egui::Visuals::dark() {
+        //     true => WHITE,
+        //     false => Color32::BLACK,
+        // };
+        ui.label(RichText::new(&m.name).heading().color(WHITE));
         ui.monospace(&m.gwp.as_str());
 
         // ui.hyperlink(&m.img_url); // removed for now
@@ -164,7 +172,7 @@ fn render_material_cards(state: &State, ui: &mut eframe::egui::Ui, filter: &str)
 /// Short way of adding a tab that is connected to a [Tabs] enum in [State]
 fn add_tab(ui: &mut egui::Ui, state: &mut State, tab: Tabs) -> () {
     if ui
-        .selectable_label(state.active_tab == tab, tab.to_string())
+        .selectable_label(state.active_tab == tab, format!("   {tab}   "))
         .clicked()
     {
         state.active_tab = tab;
