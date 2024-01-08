@@ -17,9 +17,14 @@ API_KEY="..."
 
 ## Screenshots
 
-![Screenshot from 2023-07-26 19-40-27](https://github.com/andrsbtrg/carbon-app/assets/63083862/60e30e08-bb30-4463-ad84-67c0bd5d24c5)
+![image](https://github.com/andrsbtrg/carbon-app/assets/63083862/7c3e8791-b10c-4f1b-8f1e-d8752b3cf2ec)
+  
+![image](https://github.com/andrsbtrg/carbon-app/assets/63083862/bcbb8500-2886-41ce-87e9-4874a609cebd)
 
-![output](https://github.com/andrsbtrg/carbon-app/assets/63083862/4b18a75f-d9e1-4dbf-a988-bfa1e77dbe27)
+![image](https://github.com/andrsbtrg/carbon-app/assets/63083862/07a26486-619a-4b8b-9393-0d45f11193b6)
+
+![image](https://github.com/andrsbtrg/carbon-app/assets/63083862/5a3b2900-8405-4da9-bdc2-5562fee4fbe8)
+
 
 ## EC3 API
 
