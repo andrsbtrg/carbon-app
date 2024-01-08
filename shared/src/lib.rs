@@ -1,5 +1,5 @@
 use std::{
-    collections::HashSet,
+    collections::{BTreeSet, HashSet},
     fmt::Display,
     sync::mpsc::{channel, Receiver},
     thread,
@@ -15,10 +15,13 @@ extern crate ec3api;
 
 pub type CategoriesTree = ec3api::models::Node<ec3api::models::Ec3Category>;
 
+pub type Material = ec3api::models::Ec3Material;
+
 pub struct State {
     pub materials_loaded: bool,
     pub materials: Vec<Ec3Material>,
     pub categories: Option<Node<Ec3Category>>,
+    pub loaded_categories: BTreeSet<String>,
     pub search_input: String,
     pub fetch_input: String,
     pub country: String,
@@ -27,6 +30,7 @@ pub struct State {
     pub selected_category: String,
     pub materials_rx: Option<Receiver<Vec<Ec3Material>>>,
     pub categories_rx: Option<Receiver<Node<Ec3Category>>>,
+    pub selected: Option<Ec3Material>,
     api_key: String,
 }
 
@@ -35,17 +39,24 @@ impl State {
         State {
             materials_loaded: false,
             materials: Vec::new(),
+            loaded_categories: BTreeSet::new(),
             categories: None,
             search_input: String::new(),
             fetch_input: String::new(),
             api_key,
             sort_by: SortBy::Name,
-            active_tab: Tabs::List,
+            active_tab: Tabs::Search, // the initial tab
             selected_category: String::new(),
             materials_rx: None,
             categories_rx: None,
             country: String::new(),
+            selected: None,
         }
+    }
+
+    /// Fetch materials of a given parameter field
+    pub fn search(&mut self, field: &str) {
+        self._fetch_materials(field)
     }
 
     /// Loads Categories
@@ -74,7 +85,13 @@ impl State {
     }
 
     pub fn search_materials(&mut self) {
-        let mut mf = MaterialFilter::of_category(&self.fetch_input);
+        let category = self.fetch_input.clone();
+        dbg!(&category);
+        self._fetch_materials(&category);
+    }
+
+    fn _fetch_materials(&mut self, category: &str) {
+        let mut mf = MaterialFilter::of_category(&category);
         self.materials_loaded = false;
         mf.add_filter("jurisdiction", "in", vec!["150"]);
 
@@ -116,6 +133,11 @@ impl State {
                         let id = x.id.clone();
                         seen.insert(id)
                     });
+
+                    self.loaded_categories = filtered
+                        .iter()
+                        .map(|mat| mat.category.name.clone())
+                        .collect::<BTreeSet<_>>();
                     self.materials = filtered;
                     self.materials_loaded = true;
                     return false;
@@ -170,6 +192,7 @@ pub enum SortBy {
 
 #[derive(PartialEq, Eq)]
 pub enum Tabs {
+    Search,
     List,
     Chart,
     Categories,
@@ -181,6 +204,7 @@ impl Display for Tabs {
             Tabs::List => write!(f, "List"),
             Tabs::Chart => write!(f, "Chart"),
             Tabs::Categories => write!(f, "Categories"),
+            Tabs::Search => write!(f, "Search"),
         }
     }
 }

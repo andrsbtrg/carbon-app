@@ -7,11 +7,3 @@ members = [
   "shared",
 ]
 
-[profile.release]
-debug = 1
-incremental = true
-lto = "thin"
-
-[profile.dev]
-lto = "off"
-
