@@ -1,4 +1,5 @@
 extern crate shared;
+mod settings;
 
 #[cfg(feature = "hot_reload_libs")]
 extern crate hot_reload_lib;
@@ -14,7 +15,7 @@ use eframe::{
 #[cfg(feature = "hot_reload_libs")]
 use hot_reload_lib::HotReloadLib;
 
-use std::{env, path::Path};
+use std::env;
 
 #[cfg(feature = "hot_reload_libs")]
 struct HotReloadLibs {
@@ -114,12 +115,13 @@ fn main() -> Result<(), eframe::Error> {
     )
 }
 
+/// Creates .cache directory to store materials
 fn setup_cache() -> () {
-    let dir = Path::new(".cache");
+    let dir = settings::SettingsProvider::cache_dir();
     if dir.exists() {
         println!("Cache directory set")
     } else {
-        std::fs::create_dir(dir).expect("Unable to create cache dir");
+        std::fs::create_dir_all(dir).expect("Unable to create cache dir");
         println!("Cache directory created")
     }
 }
