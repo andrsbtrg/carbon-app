@@ -1,5 +1,4 @@
 extern crate shared;
-mod settings;
 
 #[cfg(feature = "hot_reload_libs")]
 extern crate hot_reload_lib;
@@ -117,7 +116,7 @@ fn main() -> Result<(), eframe::Error> {
 
 /// Creates .cache directory to store materials
 fn setup_cache() -> () {
-    let dir = settings::SettingsProvider::cache_dir();
+    let dir = shared::settings::SettingsProvider::cache_dir();
     if dir.exists() {
         println!("Cache directory set")
     } else {

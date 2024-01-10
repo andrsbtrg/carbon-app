@@ -114,7 +114,7 @@ fn search_page(state: &mut State, ui: &mut egui::Ui) {
             .clicked()
         {
             state.active_tab = shared::Tabs::List;
-            state.search_materials();
+            state.fetch_materials_from_input();
         }
     });
     ui.collapsing("More options", |ui| {
@@ -139,7 +139,7 @@ fn render_tree(ui: &mut egui::Ui, tree: &shared::CategoriesTree, state: &mut Sta
                     .clicked()
                 {
                     // use the callback function here
-                    state.search(&tree.value.name);
+                    state.search_materials(&tree.value.name);
                     state.active_tab = shared::Tabs::List;
                 };
             });
@@ -157,7 +157,7 @@ fn render_tree(ui: &mut egui::Ui, tree: &shared::CategoriesTree, state: &mut Sta
                             .clicked()
                         {
                             // use the callback function here
-                            state.search(name);
+                            state.search_materials(name);
                             state.active_tab = shared::Tabs::List;
                         }
                     }

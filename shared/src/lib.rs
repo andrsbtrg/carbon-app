@@ -1,3 +1,4 @@
+pub mod settings;
 use std::{
     collections::{BTreeSet, HashSet},
     fmt::Display,
@@ -54,9 +55,9 @@ impl State {
         }
     }
 
-    /// Fetch materials of a given parameter field
-    pub fn search(&mut self, field: &str) {
-        self._fetch_materials(field)
+    /// Fetch materials of a given input
+    pub fn search_materials(&mut self, category: &str) {
+        self.fetch_materials(category)
     }
 
     /// Loads Categories
@@ -84,13 +85,14 @@ impl State {
         });
     }
 
-    pub fn search_materials(&mut self) {
+    /// Search materials by the input field given in [self]
+    pub fn fetch_materials_from_input(&mut self) {
         let category = self.fetch_input.clone();
-        dbg!(&category);
-        self._fetch_materials(&category);
+        self.fetch_materials(&category);
     }
 
-    fn _fetch_materials(&mut self, category: &str) {
+    /// Spawns thread to fetch materials
+    fn fetch_materials(&mut self, category: &str) {
         let mut mf = MaterialFilter::of_category(&category);
         self.materials_loaded = false;
         mf.add_filter("jurisdiction", "in", vec!["150"]);
@@ -103,6 +105,7 @@ impl State {
         thread::spawn(move || {
             if let Ok(materials) = ec3api::Ec3api::new(&api_key)
                 .endpoint(ec3api::Endpoint::Materials)
+                .cache_dir(settings::SettingsProvider::cache_dir())
                 .material_filter(mf)
                 .fetch()
             {
