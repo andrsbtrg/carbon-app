@@ -17,13 +17,13 @@ pub fn load_category(category: &str) -> Result<Vec<Material>> {
         "
     )?;
 
-    let mut names = Vec::new();
+    let mut materials = Vec::new();
     let rows = stmt.query_map([category], f)?;
 
     for row in rows {
-        names.push(row?);
+        materials.push(row?);
     }
-    Ok(names)
+    Ok(materials)
 }
 
 fn f(row: &rusqlite::Row<'_>) -> Result<Material> {

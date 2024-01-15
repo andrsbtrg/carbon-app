@@ -1,3 +1,4 @@
+pub mod jobs;
 pub mod material_db;
 pub mod settings;
 use std::{
@@ -30,10 +31,10 @@ pub struct State {
     pub sort_by: SortBy,
     pub active_tab: Tabs,
     pub selected_category: String,
-    pub materials_rx: Option<Receiver<Vec<Ec3Material>>>,
-    pub categories_rx: Option<Receiver<Node<Ec3Category>>>,
+    materials_rx: Option<Receiver<Vec<Ec3Material>>>,
+    categories_rx: Option<Receiver<Node<Ec3Category>>>,
     pub selected: Option<Ec3Material>,
-    api_key: String,
+    pub api_key: String,
 }
 
 impl State {
@@ -58,6 +59,7 @@ impl State {
 
     /// Fetch materials of a given input
     pub fn search_materials(&mut self, category: &str) {
+        // deprecated
         self.fetch_materials(category)
     }
 
@@ -89,7 +91,9 @@ impl State {
     /// Search materials by the input field given in [self]
     pub fn fetch_materials_from_input(&mut self) {
         let category = self.fetch_input.clone();
-        self.fetch_materials(&category);
+        // deprecated
+        // self.fetch_materials(&category);
+        self.load_from_db(&category);
     }
 
     /// Spawns thread to fetch materials
@@ -181,12 +185,13 @@ impl State {
         let _ = material_db::write(&self.materials).map_err(|e| eprintln!("ERROR: {}", e));
     }
 
-    pub fn load_from_db(&mut self) {
-        let result = material_db::load_category("wood");
+    /// Loads a Vec<Material> from the db into state from a given category
+    pub fn load_from_db(&mut self, category: &str) {
+        let result = material_db::load_category(category);
         match result {
-            Ok(materials) => {
-                dbg!(materials);
-                ()
+            Ok(_materials) => {
+                self.materials = _materials;
+                self.materials_loaded = true;
             }
             Err(e) => eprintln!("ERROR: {}", e),
         }

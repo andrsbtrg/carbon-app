@@ -106,7 +106,8 @@ fn main() -> Result<(), eframe::Error> {
         viewport,
         ..Default::default()
     };
-
+    // let _ = shared::jobs::Runner::update_db(&api_key); // uncomment to update the db on every
+    // startup
     eframe::run_native(
         "Materials",
         win_options,

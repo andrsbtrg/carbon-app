@@ -127,12 +127,15 @@ fn search_page(state: &mut State, ui: &mut egui::Ui) {
     });
 
     // Just for debug purposes
-    if ui.button("Save to db").clicked() {
-        state.save_materials();
+    if ui.button("Update db").clicked() {
+        // TODO: Make async
+        let _ = shared::jobs::Runner::update_db(&state.api_key);
     }
-    if ui.button("Load from db").clicked() {
-        state.load_from_db();
-    }
+    // if ui.button("Load from db").clicked() {
+    //     let search_query = state.fetch_input.clone();
+    //
+    //     state.load_from_db(&search_query);
+    // }
 }
 
 /// Render recursively nodes in [shared::CategoriesTree]
