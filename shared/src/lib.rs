@@ -1,3 +1,4 @@
+pub mod material_db;
 pub mod settings;
 use std::{
     collections::{BTreeSet, HashSet},
@@ -174,6 +175,21 @@ impl State {
             }
         }
         false
+    }
+
+    pub fn save_materials(&mut self) {
+        let _ = material_db::write(&self.materials).map_err(|e| eprintln!("ERROR: {}", e));
+    }
+
+    pub fn load_from_db(&mut self) {
+        let result = material_db::load_category("wood");
+        match result {
+            Ok(materials) => {
+                dbg!(materials);
+                ()
+            }
+            Err(e) => eprintln!("ERROR: {}", e),
+        }
     }
 
     pub fn sort_by(&mut self, op: SortBy) {

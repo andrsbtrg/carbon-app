@@ -125,6 +125,14 @@ fn search_page(state: &mut State, ui: &mut egui::Ui) {
             println!("Advance material search.");
         }
     });
+
+    // Just for debug purposes
+    if ui.button("Save to db").clicked() {
+        state.save_materials();
+    }
+    if ui.button("Load from db").clicked() {
+        state.load_from_db();
+    }
 }
 
 /// Render recursively nodes in [shared::CategoriesTree]
