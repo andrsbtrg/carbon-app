@@ -48,7 +48,6 @@ impl Runner {
         println!("Starting to fetch categories...");
         let (categories_tx, categories_rx) = channel::<Node<Ec3Category>>();
 
-        dbg!(api_key);
         let api_key = api_key.to_string();
         self.categories_rx = Some(categories_rx);
 

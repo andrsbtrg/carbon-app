@@ -173,7 +173,7 @@ pub fn write(materials: &Vec<Material>, parent: &str) -> Result<()> {
                 &material.description,
                 &material.category.id,
                 &material.gwp.value.to_string(),
-                &format!("{:?}", &material.gwp.value),
+                &format!("{:?}", &material.gwp.unit),
                 &material.manufacturer.name,
             ])
             .map_err(|e| {
