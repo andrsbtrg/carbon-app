@@ -8,6 +8,8 @@ use std::{
     thread,
 };
 
+use egui_notify::{Anchor, Toasts};
+
 use ec3api::{
     material_filter::MaterialFilter,
     models::{Ec3Category, Ec3Material, Node},
@@ -35,6 +37,7 @@ pub struct State {
     categories_rx: Option<Receiver<Node<Ec3Category>>>,
     pub selected: Option<Ec3Material>,
     pub api_key: String,
+    pub toasts: Toasts,
 }
 
 impl State {
@@ -54,6 +57,7 @@ impl State {
             categories_rx: None,
             country: String::new(),
             selected: None,
+            toasts: Toasts::default().with_anchor(Anchor::BottomRight),
         }
     }
 

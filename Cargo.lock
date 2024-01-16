@@ -852,6 +852,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "egui-notify"
+version = "0.11.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bedb26510c661d5d69958aae802d768aa1c344673e9029a20b356fa7f8a4a8e1"
+dependencies = [
+ "egui",
+]
+
+[[package]]
 name = "egui-winit"
 version = "0.24.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2420,6 +2429,7 @@ name = "shared"
 version = "0.1.0"
 dependencies = [
  "ec3api",
+ "egui-notify",
  "rusqlite",
 ]
 
@@ -2775,8 +2785,8 @@ checksum = "49874b5167b65d7193b8aba1567f5c7d93d001cafc34600cee003eda787e483f"
 name = "view"
 version = "0.1.0"
 dependencies = [
- "dotenv",
  "eframe",
+ "egui-notify",
  "egui_plot",
  "shared",
 ]

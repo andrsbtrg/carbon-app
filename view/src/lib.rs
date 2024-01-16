@@ -1,8 +1,11 @@
 extern crate shared;
+use std::time::Duration;
+
 use eframe::{
     egui::{self, CentralPanel, ComboBox, RichText, ScrollArea, TopBottomPanel},
     epaint::Color32,
 };
+use egui_notify::Toast;
 use egui_plot::{Bar, BarChart, Plot};
 use shared::{SortBy, State, Tabs};
 
@@ -45,6 +48,7 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
             shared::Tabs::Categories => (),
         }
     });
+    state.toasts.show(ctx);
 }
 
 fn list_page(state: &mut State, ui: &mut egui::Ui, loading: bool) {
@@ -105,6 +109,11 @@ fn add_filtering(ui: &mut egui::Ui, state: &mut State) {
 }
 
 fn search_page(state: &mut State, ui: &mut egui::Ui) {
+    let cb = |t: &mut Toast| {
+        //Callback for the toast
+        t.set_closable(true)
+            .set_duration(Some(Duration::from_millis((1000. * 3.5) as u64)));
+    };
     egui::SidePanel::right("category-tree")
         .default_width(400.)
         .max_width(450.)
@@ -135,8 +144,8 @@ fn search_page(state: &mut State, ui: &mut egui::Ui) {
             println!("Advance material search.");
         }
         if ui.button("Update db").clicked() {
-            // TODO: Make async
-            let _ = shared::jobs::Runner::update_db(&state.api_key);
+            // let _ = shared::jobs::Runner::update_db(&state.api_key);
+            cb(state.toasts.basic("Updating db"));
         }
     });
 }
