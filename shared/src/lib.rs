@@ -90,11 +90,11 @@ impl State {
 
     /// Search materials by the input field given in [self]
     pub fn fetch_materials_from_input(&mut self) {
-        let category = self.fetch_input.clone();
+        let input = self.fetch_input.clone();
         // deprecated
         // self.fetch_materials(&category);
         // self.load_by_category(&category);
-        self.search_by_name(&category);
+        self.search_by_name(&input);
     }
 
     /// Spawns thread to fetch materials
@@ -209,9 +209,17 @@ impl State {
     }
 
     fn search_by_name(&mut self, input: &str) -> () {
+        if input.is_empty() {
+            return ();
+        }
         let result = material_db::query_material_name(input);
         match result {
             Ok(_materials) => {
+                self.loaded_categories = _materials
+                    .iter()
+                    .map(|mat| mat.category.name.clone())
+                    .collect::<BTreeSet<_>>();
+
                 self.materials = _materials;
                 self.materials_loaded = true;
             }

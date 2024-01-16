@@ -105,16 +105,18 @@ fn add_filtering(ui: &mut egui::Ui, state: &mut State) {
 }
 
 fn search_page(state: &mut State, ui: &mut egui::Ui) {
-    ui.heading("Type a Category to search the EC3 Database");
+    ui.heading("Search the EC3 Database");
     ui.horizontal(|ui| {
         ui.text_edit_singleline(&mut state.fetch_input);
         if ui
             .button("Search")
-            .on_hover_text("Type a material category to search in EC3")
+            .on_hover_text("Type a material name to search in EC3")
             .clicked()
         {
-            state.active_tab = shared::Tabs::List;
-            state.fetch_materials_from_input();
+            if !state.fetch_input.is_empty() {
+                state.fetch_materials_from_input();
+                state.active_tab = shared::Tabs::List;
+            }
         }
     });
     ui.collapsing("More options", |ui| {
