@@ -16,7 +16,7 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
             add_tab(ui, state, Tabs::Search);
             add_tab(ui, state, Tabs::List);
             add_tab(ui, state, Tabs::Chart);
-            add_tab(ui, state, Tabs::Categories);
+            // add_tab(ui, state, Tabs::Categories);
         });
     });
     // Bottom bar
@@ -42,7 +42,7 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
             shared::Tabs::Search => search_page(state, ui),
             shared::Tabs::Chart => chart_page(state, ui),
             shared::Tabs::List => list_page(state, ui, loading),
-            shared::Tabs::Categories => categories_page(state, ui),
+            shared::Tabs::Categories => (),
         }
     });
 }
@@ -105,6 +105,14 @@ fn add_filtering(ui: &mut egui::Ui, state: &mut State) {
 }
 
 fn search_page(state: &mut State, ui: &mut egui::Ui) {
+    egui::SidePanel::right("category-tree")
+        .default_width(400.)
+        .max_width(450.)
+        .resizable(true)
+        .show_inside(ui, |ui| {
+            ui.label("Search materials from a category");
+            categories_page(state, ui)
+        });
     ui.heading("Search the EC3 Database");
     ui.horizontal(|ui| {
         ui.text_edit_singleline(&mut state.fetch_input);
@@ -126,18 +134,11 @@ fn search_page(state: &mut State, ui: &mut egui::Ui) {
             // do something
             println!("Advance material search.");
         }
+        if ui.button("Update db").clicked() {
+            // TODO: Make async
+            let _ = shared::jobs::Runner::update_db(&state.api_key);
+        }
     });
-
-    // Just for debug purposes
-    if ui.button("Update db").clicked() {
-        // TODO: Make async
-        let _ = shared::jobs::Runner::update_db(&state.api_key);
-    }
-    // if ui.button("Load from db").clicked() {
-    //     let search_query = state.fetch_input.clone();
-    //
-    //     state.load_from_db(&search_query);
-    // }
 }
 
 /// Render recursively nodes in [shared::CategoriesTree]
