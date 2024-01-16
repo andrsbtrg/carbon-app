@@ -4,7 +4,10 @@ use ec3api::models::Gwp;
 use rusqlite::{Connection, Result};
 
 use crate::{settings, Material};
-
+pub fn connection() -> Connection {
+    let conn = Connection::open(settings::SettingsProvider::cache_dir().join("carbon.db")).unwrap();
+    conn
+}
 pub fn load_category(category: &str) -> Result<Vec<Material>> {
     let conn = Connection::open(settings::SettingsProvider::cache_dir().join("carbon.db"))?;
 
@@ -13,7 +16,8 @@ pub fn load_category(category: &str) -> Result<Vec<Material>> {
             materials.id, materials.name, materials.description, materials.gwp, materials.gwp_unit, categories.name, categories.display_name, categories.id, categories.description, manufacturers.name, manufacturers.country FROM materials
         JOIN categories ON materials.category_id = categories.id
         LEFT JOIN manufacturers ON materials.manufacturer_name = manufacturers.name
-        WHERE categories.name = (?1);
+        WHERE categories.name = (?1)
+        OR categories.parent_id = (?1);
         "
     )?;
 
@@ -63,17 +67,16 @@ fn f(row: &rusqlite::Row<'_>) -> Result<Material> {
         id,
     })
 }
-
-pub fn write(materials: &Vec<Material>) -> Result<()> {
+pub fn migrate() -> Result<()> {
     let conn = Connection::open(settings::SettingsProvider::cache_dir().join("carbon.db"))?;
-
     conn.execute(
         r"
         CREATE TABLE IF NOT EXISTS categories (
             id TEXT PRIMARY KEY,
             name TEXT NOT NULL,
             display_name TEXT,
-            description TEXT
+            description TEXT,
+            parent_id TEXT
 );",
         (),
     )?;
@@ -101,6 +104,11 @@ pub fn write(materials: &Vec<Material>) -> Result<()> {
         (), // empty list of parameters.
     )?;
 
+    Ok(())
+}
+pub fn write(materials: &Vec<Material>, parent: &str) -> Result<()> {
+    let conn = Connection::open(settings::SettingsProvider::cache_dir().join("carbon.db"))?;
+
     // create a set of categories
     let categories: Vec<&ec3api::models::Category> = materials
         .iter()
@@ -110,14 +118,22 @@ pub fn write(materials: &Vec<Material>) -> Result<()> {
         .collect();
 
     let mut stmt = conn.prepare(
-        "INSERT INTO categories (id, name, display_name, description) VALUES (?1, ?2, ?3, ?4);",
+        "INSERT INTO categories (id, name, display_name, description, parent_id) VALUES (?1, ?2, ?3, ?4, ?5);",
     )?;
     for any in categories {
-        match stmt.execute([&any.id, &any.name, &any.display_name, &any.description]) {
+        match stmt.execute([
+            &any.id,
+            &any.name,
+            &any.display_name,
+            &any.description,
+            parent,
+        ]) {
             Ok(_) => {}
             Err(e) => {
-                eprintln!("{e}");
-                eprintln!("  Not possible to write category {:?} to db.", &any);
+                eprintln!(
+                    "WARNING: Not possible to write category {:?} to db. {e}",
+                    &any
+                );
             }
         };
     }
@@ -137,26 +153,62 @@ pub fn write(materials: &Vec<Material>) -> Result<()> {
         match stmt.execute([&manu.name, &country]) {
             Ok(_) => {}
             Err(e) => {
-                eprintln!("{e}");
-                eprintln!("  Not possible to write manufacturer {:?} to db.", &manu);
+                eprintln!(
+                    "WARNING: Not possible to write manufacturer {:?} to db. {}",
+                    &manu, e
+                );
             }
         };
     }
+    println!("Inserting materials");
 
     let mut stmt = conn.prepare(
             "INSERT INTO materials (id, name, description, category_id, gwp, gwp_unit, manufacturer_name) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)",
     )?;
     for material in materials {
-        stmt.execute([
-            &material.id,
-            &material.name,
-            &material.description,
-            &material.category.id,
-            &material.gwp.value.to_string(),
-            &format!("{:?}", &material.gwp.value),
-            &material.manufacturer.name,
-        ])?;
+        let _ = stmt
+            .execute([
+                &material.id,
+                &material.name,
+                &material.description,
+                &material.category.id,
+                &material.gwp.value.to_string(),
+                &format!("{:?}", &material.gwp.value),
+                &material.manufacturer.name,
+            ])
+            .map_err(|e| {
+                eprintln!(
+                    "WARNING: Not possible to write material {:?} into db. {e}",
+                    material.name
+                )
+            });
     }
 
     Ok(())
+}
+
+pub fn query_material_name(input: &str) -> Result<Vec<ec3api::models::Ec3Material>> {
+    let conn = Connection::open(settings::SettingsProvider::cache_dir().join("carbon.db"))?;
+
+    let mut query = String::from(input);
+    query.insert(0, '%');
+    query.push('%');
+
+    let mut stmt = conn.prepare(
+        r"SELECT 
+            materials.id, materials.name, materials.description, materials.gwp, materials.gwp_unit, categories.name, categories.display_name, categories.id, categories.description, manufacturers.name, manufacturers.country FROM materials
+        JOIN categories ON materials.category_id = categories.id
+        LEFT JOIN manufacturers ON materials.manufacturer_name = manufacturers.name
+        WHERE materials.name LIKE (?1)
+        LIMIT 200;
+        "
+    )?;
+
+    let mut materials = Vec::new();
+    let rows = stmt.query_map([&query], f)?;
+
+    for row in rows {
+        materials.push(row?);
+    }
+    Ok(materials)
 }

@@ -93,7 +93,8 @@ impl State {
         let category = self.fetch_input.clone();
         // deprecated
         // self.fetch_materials(&category);
-        self.load_from_db(&category);
+        // self.load_by_category(&category);
+        self.search_by_name(&category);
     }
 
     /// Spawns thread to fetch materials
@@ -182,11 +183,11 @@ impl State {
     }
 
     pub fn save_materials(&mut self) {
-        let _ = material_db::write(&self.materials).map_err(|e| eprintln!("ERROR: {}", e));
+        let _ = material_db::write(&self.materials, "").map_err(|e| eprintln!("ERROR: {}", e));
     }
 
     /// Loads a Vec<Material> from the db into state from a given category
-    pub fn load_from_db(&mut self, category: &str) {
+    pub fn load_by_category(&mut self, category: &str) {
         let result = material_db::load_category(category);
         match result {
             Ok(_materials) => {
@@ -205,6 +206,17 @@ impl State {
             SortBy::Name => self.materials.sort_by(|a, b| a.name.cmp(&b.name)),
         };
         self.sort_by = op;
+    }
+
+    fn search_by_name(&mut self, input: &str) -> () {
+        let result = material_db::query_material_name(input);
+        match result {
+            Ok(_materials) => {
+                self.materials = _materials;
+                self.materials_loaded = true;
+            }
+            Err(e) => eprintln!("ERROR: {}", e),
+        }
     }
 }
 

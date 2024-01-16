@@ -8,7 +8,10 @@ use ec3api::{
     Ec3Result,
 };
 
-use crate::{material_db::write, settings};
+use crate::{
+    material_db::{migrate, write},
+    settings,
+};
 
 pub enum CError {
     FromApi,
@@ -65,6 +68,10 @@ impl Runner {
         });
     }
     pub fn update_db(api_key: &str) -> Result<()> {
+        migrate().map_err(|e| {
+            eprintln!("ERROR: Not possible to migrate - {:?}", e);
+            CError::FromDb
+        })?;
         println!("Updating DB...");
         // load categories
         let mut runner = Runner {
@@ -80,8 +87,8 @@ impl Runner {
         // for each high level category
         if let Some(categories) = runner.categories {
             if let Some(children) = categories.children {
-                for cat in children {
-                    let query = cat.value.name;
+                for cat in &children {
+                    let query = cat.value.name.clone();
                     let mut mf = ec3api::material_filter::MaterialFilter::of_category(&query);
                     mf.add_filter("jurisdiction", "in", vec!["150"]);
 
@@ -95,7 +102,7 @@ impl Runner {
                             CError::FromApi
                         })?;
                     println!("Finished fetching {}", &query);
-                    write(&materials).map_err(|e| {
+                    write(&materials, &query).map_err(|e| {
                         eprintln!("ERROR: while writing to db: {}", e);
                         CError::FromDb
                     })?;
