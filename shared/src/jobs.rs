@@ -67,51 +67,55 @@ impl Runner {
         });
     }
     pub fn update_db(api_key: &str) -> Result<()> {
-        migrate().map_err(|e| {
-            eprintln!("ERROR: Not possible to migrate - {:?}", e);
-            CError::FromDb
-        })?;
-        println!("Updating DB...");
-        // load categories
-        let mut runner = Runner {
-            categories_rx: None,
-            categories: None,
-        };
-        runner.fetch_categories(api_key);
-        loop {
-            if runner.categories_loaded() {
-                break;
-            }
-        }
-        // for each high level category
-        if let Some(categories) = runner.categories {
-            if let Some(children) = categories.children {
-                for cat in &children {
-                    let query = cat.value.name.clone();
-                    let mut mf = ec3api::material_filter::MaterialFilter::of_category(&query);
-                    mf.add_filter("jurisdiction", "in", vec!["150"]);
+        let api_key = api_key.to_string();
 
-                    let materials = ec3api::Ec3api::new(api_key)
-                        .endpoint(ec3api::Endpoint::Materials)
-                        .material_filter(mf)
-                        .cache_dir(settings::SettingsProvider::cache_dir())
-                        .fetch()
-                        .map_err(|e| {
-                            eprintln!("ERROR: {:?}", e);
-                            CError::FromApi
-                        })?;
-                    println!("Finished fetching {}", &query);
-                    write(&materials, &query).map_err(|e| {
-                        eprintln!("ERROR: while writing to db: {}", e);
-                        CError::FromDb
-                    })?;
+        thread::spawn(move || -> Result<()> {
+            migrate().map_err(|e| {
+                eprintln!("ERROR: Not possible to migrate - {:?}", e);
+                CError::FromDb
+            })?;
+            println!("Updating DB...");
+            // load categories
+            let mut runner = Runner {
+                categories_rx: None,
+                categories: None,
+            };
+            runner.fetch_categories(&api_key);
+            loop {
+                if runner.categories_loaded() {
+                    break;
                 }
-            } else {
-                eprintln!("Failed to fetch.")
             }
-        }
+            // for each high level category
+            if let Some(categories) = runner.categories {
+                if let Some(children) = categories.children {
+                    for cat in &children {
+                        let query = cat.value.name.clone();
+                        let mut mf = ec3api::material_filter::MaterialFilter::of_category(&query);
+                        mf.add_filter("jurisdiction", "in", vec!["150"]);
 
-        println!("Done updating DB!");
+                        let materials = ec3api::Ec3api::new(&api_key)
+                            .endpoint(ec3api::Endpoint::Materials)
+                            .material_filter(mf)
+                            .cache_dir(settings::SettingsProvider::cache_dir())
+                            .fetch()
+                            .map_err(|e| {
+                                eprintln!("ERROR: {:?}", e);
+                                CError::FromApi
+                            })?;
+                        println!("Finished fetching {}", &query);
+                        write(&materials, &query).map_err(|e| {
+                            eprintln!("ERROR: while writing to db: {}", e);
+                            CError::FromDb
+                        })?;
+                    }
+                } else {
+                    eprintln!("Failed to fetch.")
+                }
+            }
+            println!("Done updating DB!");
+            Ok(())
+        });
         Ok(())
     }
 }
