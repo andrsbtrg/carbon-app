@@ -58,8 +58,9 @@ fn list_page(state: &mut State, ui: &mut egui::Ui, loading: bool) {
     // render the material list to the left
     egui::SidePanel::left("list-materials")
         .resizable(true)
-        .default_width(350.0)
-        .max_width(400.0)
+        .default_width(350.)
+        .min_width(350.)
+        .max_width(400.)
         .show_inside(ui, |panel_ui| {
             if loading {
                 panel_ui.vertical_centered_justified(|ui| {
@@ -78,6 +79,37 @@ fn list_page(state: &mut State, ui: &mut egui::Ui, loading: bool) {
     if let Some(selected) = &state.selected {
         ui.vertical_centered(|ui| {
             ui.heading(&selected.name);
+        });
+        ui.add_space(2.0);
+        ui.indent("general-selected", |ui| {
+            ui.horizontal(|ui| {
+                ui.label("Category: ");
+                if ui
+                    .selectable_label(false, &selected.category.display_name)
+                    .on_hover_text(&selected.category.description)
+                    .clicked()
+                {
+                    // go to category tab
+                    state.toasts.info("Oops, let's forget about that");
+                }
+            });
+
+            let avg_stat = state.category_stats.unwrap_or(0.);
+            let cat_avg = RichText::new(format!(
+                "Category average: {avg_stat:.2} {unit:?}",
+                unit = selected.gwp.unit
+            ));
+            ui.label(cat_avg);
+            let gwp = RichText::new(format!(
+                "GWP: {gwp:.2} {unit:?}",
+                gwp = selected.gwp.value,
+                unit = selected.gwp.unit
+            ));
+            let color = match &avg_stat > &selected.gwp.value {
+                true => Color32::LIGHT_GREEN,
+                false => Color32::LIGHT_RED,
+            };
+            ui.label(gwp.color(color));
         });
         ui.separator();
         ScrollArea::vertical().show(ui, |ui| {
@@ -118,11 +150,8 @@ fn search_page(state: &mut State, ui: &mut egui::Ui) {
         .default_width(400.)
         .max_width(450.)
         .resizable(true)
-        .show_inside(ui, |ui| {
-            ui.label("Search materials from a category");
-            categories_page(state, ui)
-        });
-    ui.heading("Search the EC3 Database");
+        .show_inside(ui, |ui| categories_page(state, ui));
+    ui.label("Search material by term");
     ui.horizontal(|ui| {
         ui.text_edit_singleline(&mut state.fetch_input);
         if ui
@@ -145,14 +174,10 @@ fn search_page(state: &mut State, ui: &mut egui::Ui) {
         }
         if ui
             .button("Update db")
-            .on_hover_text("Downloads a new copy of EC3 materials locally for searching")
+            .on_hover_text("This is a lengthy operation which downloads a new copy of EC3 materials locally for searching")
             .clicked()
         {
             let _ = shared::jobs::Runner::update_db(&state.api_key);
-            cb(state.toasts.basic("Updating db"));
-        }
-        if ui.button("Save to db").clicked() {
-            state.save_materials();
             cb(state.toasts.basic("Updating db"));
         }
     });
@@ -209,6 +234,7 @@ fn categories_page(state: &mut State, ui: &mut egui::Ui) {
     }
 
     if let Some(categories) = state.categories.clone() {
+        ui.label("Search materials from a category");
         ScrollArea::vertical()
             .auto_shrink([false; 2])
             .show(ui, |ui| {
@@ -241,6 +267,8 @@ fn render_material_cards(state: &mut State, ui: &mut eframe::egui::Ui, filter: &
             )
             .clicked()
         {
+            // calculate category stats
+            state.category_stats = shared::material_db::get_category_stats(&m.category).ok();
             state.selected = Some(m.clone());
         }
         ui.monospace(&m.gwp.as_str());

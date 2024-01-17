@@ -215,3 +215,20 @@ pub fn query_materials(input: &str) -> Result<Vec<ec3api::models::Ec3Material>> 
     }
     Ok(materials)
 }
+
+pub fn get_category_stats(category: &ec3api::models::Category) -> Result<f64> {
+    let conn = connection();
+    let mut stmt = conn.prepare(
+        "
+SELECT avg(gwp) from materials
+WHERE category_id = (?1)
+",
+    )?;
+    let mut response = 0.;
+    let rows = stmt.query_map([&category.id], |row| row.get(0))?;
+    for row in rows {
+        response = row?;
+        break;
+    }
+    Ok(response)
+}

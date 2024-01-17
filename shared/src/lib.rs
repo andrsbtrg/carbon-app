@@ -38,6 +38,7 @@ pub struct State {
     pub selected: Option<Ec3Material>,
     pub api_key: String,
     pub toasts: Toasts,
+    pub category_stats: Option<f64>,
 }
 
 impl State {
@@ -58,13 +59,15 @@ impl State {
             country: String::new(),
             selected: None,
             toasts: Toasts::default().with_anchor(Anchor::BottomRight),
+            category_stats: None,
         }
     }
 
     /// Fetch materials of a given input
     pub fn search_materials(&mut self, category: &str) {
         // deprecated
-        self.fetch_materials(category)
+        // self.fetch_materials(category)
+        self.load_by_category(category)
     }
 
     /// Loads Categories
@@ -102,6 +105,8 @@ impl State {
     }
 
     /// Spawns thread to fetch materials
+    #[deprecated]
+    #[allow(dead_code)]
     fn fetch_materials(&mut self, category: &str) {
         let mut mf = MaterialFilter::of_category(&category);
         self.materials_loaded = false;
