@@ -4,7 +4,7 @@ use std::{
 };
 
 use ec3api::{
-    models::{Ec3Category, Node},
+    models::{Ec3Category, Ec3Material, Node},
     Ec3Result,
 };
 
@@ -13,6 +13,7 @@ use crate::{
     settings,
 };
 
+#[derive(Debug)]
 pub enum CError {
     FromApi,
     FromDb,
@@ -86,39 +87,79 @@ impl Runner {
                     break;
                 }
             }
-            // for each high level category
-            if let Some(categories) = runner.categories {
-                if let Some(children) = categories.children {
-                    for cat in &children {
-                        let query = cat.value.name.clone();
-                        let mut mf = ec3api::material_filter::MaterialFilter::of_category(&query);
-                        mf.add_filter("jurisdiction", "in", vec!["150"]);
+            let category_tree = runner.categories.ok_or_else(|| {
+                eprintln!("ERROR: received no category tree.");
+                CError::FromApi
+            })?;
 
-                        let materials = ec3api::Ec3api::new(&api_key)
-                            .endpoint(ec3api::Endpoint::Materials)
-                            .material_filter(mf)
-                            .cache_dir(settings::SettingsProvider::cache_dir())
-                            .fetch()
-                            .map_err(|e| {
-                                eprintln!("ERROR: {:?}", e);
-                                CError::FromApi
-                            })?;
-                        println!(
-                            "Received {count} materials from {query}",
-                            count = materials.len()
-                        );
-                        write(&materials, &query).map_err(|e| {
-                            eprintln!("ERROR: while writing to db: {}", e);
-                            CError::FromDb
-                        })?;
-                    }
-                } else {
-                    eprintln!("Failed to fetch.")
-                }
-            }
+            let categories = category_tree.children.ok_or_else(|| {
+                eprintln!("ERROR: category tree contains no children");
+                CError::FromApi
+            })?;
+
+            // for each high level category
+            traverse_fetch(&categories, &api_key);
+            // first_level_fetch(&categories, &api_key)?;
             println!("Done updating DB!");
             Ok(())
         });
         Ok(())
     }
+}
+
+#[allow(dead_code)]
+fn first_level_fetch(categories: &[Node<Ec3Category>], api_key: &str) -> Result<()> {
+    for cat in categories {
+        let category = cat.value.name.clone();
+        let materials: Vec<Ec3Material> = fetch_category(&api_key, &category)?;
+        println!(
+            "Received {count} materials from {category}",
+            count = materials.len()
+        );
+        write(&materials, &category).map_err(|e| {
+            eprintln!("ERROR: while writing to db: {}", e);
+            CError::FromDb
+        })?;
+    }
+    Ok(())
+}
+
+fn traverse_fetch(categories: &[Node<Ec3Category>], api_key: &str) -> () {
+    for cat in categories {
+        let category = cat.value.name.clone();
+        let materials: Vec<Ec3Material> = match fetch_category(&api_key, &category) {
+            Ok(mat) => mat,
+            Err(_) => return (),
+        };
+        println!(
+            "Received {count} materials from {category}",
+            count = materials.len()
+        );
+        let _ = write(&materials, &category).map_err(|e| {
+            eprintln!("ERROR: while writing to db: {}", e);
+            CError::FromDb
+        });
+        if cat.children.as_ref().is_some_and(|c| c.len() > 0) {
+            let children = &cat.children.as_ref().unwrap();
+            traverse_fetch(&children, api_key);
+        }
+    }
+}
+
+fn fetch_category(api_key: &str, query: &str) -> Result<Vec<Ec3Material>> {
+    let mut mf = ec3api::material_filter::MaterialFilter::of_category(&query);
+    mf.add_filter("jurisdiction", "in", vec!["150"]);
+
+    ec3api::Ec3api::new(&api_key)
+        .endpoint(ec3api::Endpoint::Materials)
+        .material_filter(mf)
+        .cache_dir(settings::SettingsProvider::cache_dir())
+        .fetch()
+        .map_err(|e| {
+            eprintln!(
+                "ERROR: while fetching materials from category {query} {:?}",
+                e
+            );
+            CError::FromApi
+        })
 }
