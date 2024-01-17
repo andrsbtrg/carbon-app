@@ -103,7 +103,10 @@ impl Runner {
                                 eprintln!("ERROR: {:?}", e);
                                 CError::FromApi
                             })?;
-                        println!("Finished fetching {}", &query);
+                        println!(
+                            "Received {count} materials from {query}",
+                            count = materials.len()
+                        );
                         write(&materials, &query).map_err(|e| {
                             eprintln!("ERROR: while writing to db: {}", e);
                             CError::FromDb

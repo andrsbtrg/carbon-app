@@ -187,7 +187,8 @@ impl State {
     }
 
     pub fn save_materials(&mut self) {
-        let _ = material_db::write(&self.materials, "").map_err(|e| eprintln!("ERROR: {}", e));
+        let _ = material_db::write(&self.materials, &self.fetch_input)
+            .map_err(|e| eprintln!("ERROR: {}", e));
     }
 
     /// Loads a Vec<Material> from the db into state from a given category
@@ -216,7 +217,7 @@ impl State {
         if input.is_empty() {
             return ();
         }
-        let result = material_db::query_material_name(input);
+        let result = material_db::query_materials(input);
         match result {
             Ok(_materials) => {
                 self.loaded_categories = _materials

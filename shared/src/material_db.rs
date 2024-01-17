@@ -187,7 +187,8 @@ pub fn write(materials: &Vec<Material>, parent: &str) -> Result<()> {
     Ok(())
 }
 
-pub fn query_material_name(input: &str) -> Result<Vec<ec3api::models::Ec3Material>> {
+/// Searches database for materials by name, category or parent category
+pub fn query_materials(input: &str) -> Result<Vec<ec3api::models::Ec3Material>> {
     let conn = Connection::open(settings::SettingsProvider::cache_dir().join("carbon.db"))?;
 
     let mut query = String::from(input);
@@ -200,6 +201,8 @@ pub fn query_material_name(input: &str) -> Result<Vec<ec3api::models::Ec3Materia
         JOIN categories ON materials.category_id = categories.id
         LEFT JOIN manufacturers ON materials.manufacturer_name = manufacturers.name
         WHERE materials.name LIKE (?1)
+        OR categories.parent_id LIKE (?1)
+        OR categories.name LIKE (?1)
         LIMIT 200;
         "
     )?;

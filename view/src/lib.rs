@@ -143,8 +143,16 @@ fn search_page(state: &mut State, ui: &mut egui::Ui) {
             // do something
             println!("Advance material search.");
         }
-        if ui.button("Update db").clicked() {
-            // let _ = shared::jobs::Runner::update_db(&state.api_key);
+        if ui
+            .button("Update db")
+            .on_hover_text("Downloads a new copy of EC3 materials locally for searching")
+            .clicked()
+        {
+            let _ = shared::jobs::Runner::update_db(&state.api_key);
+            cb(state.toasts.basic("Updating db"));
+        }
+        if ui.button("Save to db").clicked() {
+            state.save_materials();
             cb(state.toasts.basic("Updating db"));
         }
     });
