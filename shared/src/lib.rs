@@ -1,9 +1,14 @@
+pub mod jobs;
+pub mod material_db;
+pub mod settings;
 use std::{
     collections::{BTreeSet, HashSet},
     fmt::Display,
     sync::mpsc::{channel, Receiver},
     thread,
 };
+
+use egui_notify::{Anchor, Toasts};
 
 use ec3api::{
     material_filter::MaterialFilter,
@@ -28,10 +33,12 @@ pub struct State {
     pub sort_by: SortBy,
     pub active_tab: Tabs,
     pub selected_category: String,
-    pub materials_rx: Option<Receiver<Vec<Ec3Material>>>,
-    pub categories_rx: Option<Receiver<Node<Ec3Category>>>,
+    materials_rx: Option<Receiver<Vec<Ec3Material>>>,
+    categories_rx: Option<Receiver<Node<Ec3Category>>>,
     pub selected: Option<Ec3Material>,
-    api_key: String,
+    pub api_key: String,
+    pub toasts: Toasts,
+    pub category_stats: Option<f64>,
 }
 
 impl State {
@@ -51,12 +58,16 @@ impl State {
             categories_rx: None,
             country: String::new(),
             selected: None,
+            toasts: Toasts::default().with_anchor(Anchor::BottomRight),
+            category_stats: None,
         }
     }
 
-    /// Fetch materials of a given parameter field
-    pub fn search(&mut self, field: &str) {
-        self._fetch_materials(field)
+    /// Fetch materials of a given input
+    pub fn search_materials(&mut self, category: &str) {
+        // deprecated
+        // self.fetch_materials(category)
+        self.load_by_category(category)
     }
 
     /// Loads Categories
@@ -84,13 +95,19 @@ impl State {
         });
     }
 
-    pub fn search_materials(&mut self) {
-        let category = self.fetch_input.clone();
-        dbg!(&category);
-        self._fetch_materials(&category);
+    /// Search materials by the input field given in [self]
+    pub fn fetch_materials_from_input(&mut self) {
+        let input = self.fetch_input.clone();
+        // deprecated
+        // self.fetch_materials(&category);
+        // self.load_by_category(&category);
+        self.search_by_name(&input);
     }
 
-    fn _fetch_materials(&mut self, category: &str) {
+    /// Spawns thread to fetch materials
+    #[deprecated]
+    #[allow(dead_code)]
+    fn fetch_materials(&mut self, category: &str) {
         let mut mf = MaterialFilter::of_category(&category);
         self.materials_loaded = false;
         mf.add_filter("jurisdiction", "in", vec!["150"]);
@@ -103,6 +120,7 @@ impl State {
         thread::spawn(move || {
             if let Ok(materials) = ec3api::Ec3api::new(&api_key)
                 .endpoint(ec3api::Endpoint::Materials)
+                .cache_dir(settings::SettingsProvider::cache_dir())
                 .material_filter(mf)
                 .fetch()
             {
@@ -173,6 +191,23 @@ impl State {
         false
     }
 
+    pub fn save_materials(&mut self) {
+        let _ = material_db::write(&self.materials, &self.fetch_input)
+            .map_err(|e| eprintln!("ERROR: {}", e));
+    }
+
+    /// Loads a Vec<Material> from the db into state from a given category
+    pub fn load_by_category(&mut self, category: &str) {
+        let result = material_db::load_category(category);
+        match result {
+            Ok(_materials) => {
+                self.materials = _materials;
+                self.materials_loaded = true;
+            }
+            Err(e) => eprintln!("ERROR: {}", e),
+        }
+    }
+
     pub fn sort_by(&mut self, op: SortBy) {
         match op {
             SortBy::Gwp => self
@@ -181,6 +216,25 @@ impl State {
             SortBy::Name => self.materials.sort_by(|a, b| a.name.cmp(&b.name)),
         };
         self.sort_by = op;
+    }
+
+    fn search_by_name(&mut self, input: &str) -> () {
+        if input.is_empty() {
+            return ();
+        }
+        let result = material_db::query_materials(input);
+        match result {
+            Ok(_materials) => {
+                self.loaded_categories = _materials
+                    .iter()
+                    .map(|mat| mat.category.name.clone())
+                    .collect::<BTreeSet<_>>();
+
+                self.materials = _materials;
+                self.materials_loaded = true;
+            }
+            Err(e) => eprintln!("ERROR: {}", e),
+        }
     }
 }
 

@@ -53,7 +53,10 @@ Sample response:
 - [x] Searching new materials via API.
 - [x] Add the material id from the api, to avoid clashes between materials
 - [x] Add a list of categories to make searching easier
-- [ ] Add a graph of material categories to visualize 
+- [x] Add a graph of material categories to visualize 
 - [ ] Visualize GWP averages per category on graph view
+- [ ] Store and load materials from a local sqlite db 
+- [ ] Implement a basic quantities input specification
+- [ ] Implement advanced quantities reading from remote project (Speckle or APS)
 
 
