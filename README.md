@@ -48,14 +48,14 @@ Sample response:
 ## TODO!
 - [x] Hot reloading. Implemented following the example of [rust-hot-reloading](https://github.com/irh/rust-hot-reloading/tree/main)
 - [x] Visualization of the GWP per element and per category.
-- [ ] Indexing and searching per keyword. Basically make it possible to find a related material with some keywords.
+- [x] Indexing and searching per keyword. Basically make it possible to find a related material with some keywords.
 - [x] Loading materials via API without blocking UI.
 - [x] Searching new materials via API.
 - [x] Add the material id from the api, to avoid clashes between materials
 - [x] Add a list of categories to make searching easier
 - [x] Add a graph of material categories to visualize 
 - [ ] Visualize GWP averages per category on graph view
-- [ ] Store and load materials from a local sqlite db 
+- [x] Store and load materials from a local sqlite db 
 - [ ] Implement a basic quantities input specification
 - [ ] Implement advanced quantities reading from remote project (Speckle or APS)
 
