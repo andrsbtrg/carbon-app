@@ -2,12 +2,12 @@ extern crate shared;
 use std::time::Duration;
 
 use eframe::{
-    egui::{self, CentralPanel, ComboBox, RichText, ScrollArea, TopBottomPanel},
+    egui::{self, CentralPanel, ComboBox, DragValue, RichText, ScrollArea, TopBottomPanel},
     epaint::Color32,
 };
 use egui_notify::Toast;
 use egui_plot::{Bar, BarChart, Plot};
-use shared::{SortBy, State, Tabs};
+use shared::{project::Project, SortBy, State, Tabs};
 
 /// Renders the view
 #[no_mangle]
@@ -19,7 +19,8 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
             add_tab(ui, state, Tabs::Search);
             add_tab(ui, state, Tabs::List);
             add_tab(ui, state, Tabs::Chart);
-            // add_tab(ui, state, Tabs::Categories);
+            add_tab(ui, state, Tabs::Category);
+            add_tab(ui, state, Tabs::Calculate);
         });
     });
     // Bottom bar
@@ -45,10 +46,48 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
             shared::Tabs::Search => search_page(state, ui),
             shared::Tabs::Chart => chart_page(state, ui),
             shared::Tabs::List => list_page(state, ui, loading),
-            shared::Tabs::Categories => (),
+            shared::Tabs::Category => (),
+            shared::Tabs::Calculate => calculate_page(state, ui),
         }
     });
     state.toasts.show(ctx);
+}
+
+fn calculate_page(state: &mut State, ui: &mut egui::Ui) {
+    if state.project.is_none() {
+        ui.label("Wow, such emptyness here. Try to start by adding a material from the list or create a new project here.");
+        return;
+    }
+    egui::Grid::new("my_grid")
+        .num_columns(3)
+        .max_col_width(200.)
+        .min_row_height(40.)
+        .spacing([40.0, 4.0])
+        .striped(true)
+        .show(ui, |ui| {
+            ui.label("Material");
+            ui.label("Quantity");
+            ui.label("Unit");
+            ui.label("Total GWP");
+            ui.label("-");
+            ui.end_row();
+            let project = state.project.as_mut().unwrap();
+            for (_i, comp) in project.components.iter_mut().enumerate() {
+                ui.label(&comp.material.name);
+                let value = DragValue::new(&mut comp.quantity);
+                if ui.add(value).dragged() {
+                    comp.calculate();
+                }
+                ui.label(format!("{unit}", unit = &comp.material.unit));
+                ui.label(format!("{tots:.2}", tots = &comp.calculated));
+                let indicator = match &comp.category_avg > &comp.material.gwp.value {
+                    true => RichText::new("↑").color(Color32::LIGHT_GREEN),
+                    false => RichText::new("↓").color(Color32::LIGHT_RED),
+                };
+                ui.label(indicator);
+                ui.end_row();
+            }
+        });
 }
 
 fn list_page(state: &mut State, ui: &mut egui::Ui, loading: bool) {
@@ -72,13 +111,13 @@ fn list_page(state: &mut State, ui: &mut egui::Ui, loading: bool) {
             ScrollArea::vertical()
                 .auto_shrink([false; 2])
                 .show(panel_ui, |ui| {
-                    render_material_cards(state, ui, &state.search_input.to_lowercase());
+                    render_material_cards(state, ui, &state.filter_input.to_lowercase());
                 });
         });
     // render the selected material in the central panel
     if let Some(selected) = &state.selected {
         ui.vertical_centered(|ui| {
-            ui.heading(&selected.name);
+            ui.heading(RichText::new(&selected.name).color(Color32::WHITE));
         });
         ui.add_space(2.0);
         ui.indent("general-selected", |ui| {
@@ -110,6 +149,18 @@ fn list_page(state: &mut State, ui: &mut egui::Ui, loading: bool) {
                 false => Color32::LIGHT_RED,
             };
             ui.label(gwp.color(color));
+            if ui.button("Add to project →").clicked() {
+                state.active_tab = shared::Tabs::Calculate;
+
+                let copy = selected.clone();
+                if let Some(project) = state.project.as_mut() {
+                    project.add_component(copy, avg_stat);
+                } else {
+                    let mut p = Project::new();
+                    p.add_component(copy, avg_stat);
+                    state.project = Some(p);
+                }
+            }
         });
         ui.separator();
         ScrollArea::vertical().show(ui, |ui| {
@@ -195,7 +246,7 @@ fn render_tree(ui: &mut egui::Ui, tree: &shared::CategoriesTree, state: &mut Sta
                     .clicked()
                 {
                     // use the callback function here
-                    state.search_materials(&tree.value.name);
+                    state.load_by_category(&tree.value.name);
                     state.active_tab = shared::Tabs::List;
                 };
             });
@@ -213,7 +264,7 @@ fn render_tree(ui: &mut egui::Ui, tree: &shared::CategoriesTree, state: &mut Sta
                             .clicked()
                         {
                             // use the callback function here
-                            state.search_materials(name);
+                            state.load_by_category(name);
                             state.active_tab = shared::Tabs::List;
                         }
                     }
@@ -316,7 +367,7 @@ fn add_category_filter(ui: &mut egui::Ui, state: &mut State) {
 
 /// Renders the materials available in the [State] state as a chart
 fn render_material_chart(state: &mut State, ui: &mut egui::Ui) {
-    let filter = &state.search_input;
+    let filter = &state.filter_input;
     let primary = ui.visuals().selection.bg_fill;
     let chart = BarChart::new(
         state
@@ -346,7 +397,7 @@ fn render_material_chart(state: &mut State, ui: &mut egui::Ui) {
 /// Adds a search input and sorting options to the UI
 fn add_view_options(ui: &mut egui::Ui, state: &mut State) {
     ui.add(
-        egui::TextEdit::singleline(&mut state.search_input)
+        egui::TextEdit::singleline(&mut state.filter_input)
             .hint_text("filter by name")
             .desired_width(200.0),
     );

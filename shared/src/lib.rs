@@ -1,5 +1,6 @@
 pub mod jobs;
 pub mod material_db;
+pub mod project;
 pub mod settings;
 use std::{
     collections::{BTreeSet, HashSet},
@@ -27,7 +28,7 @@ pub struct State {
     pub materials: Vec<Ec3Material>,
     pub categories: Option<Node<Ec3Category>>,
     pub loaded_categories: BTreeSet<String>,
-    pub search_input: String,
+    pub filter_input: String,
     pub fetch_input: String,
     pub country: String,
     pub sort_by: SortBy,
@@ -39,6 +40,7 @@ pub struct State {
     pub api_key: String,
     pub toasts: Toasts,
     pub category_stats: Option<f64>,
+    pub project: Option<project::Project>,
 }
 
 impl State {
@@ -48,7 +50,7 @@ impl State {
             materials: Vec::new(),
             loaded_categories: BTreeSet::new(),
             categories: None,
-            search_input: String::new(),
+            filter_input: String::new(),
             fetch_input: String::new(),
             api_key,
             sort_by: SortBy::Name,
@@ -60,14 +62,8 @@ impl State {
             selected: None,
             toasts: Toasts::default().with_anchor(Anchor::BottomRight),
             category_stats: None,
+            project: None,
         }
-    }
-
-    /// Fetch materials of a given input
-    pub fn search_materials(&mut self, category: &str) {
-        // deprecated
-        // self.fetch_materials(category)
-        self.load_by_category(category)
     }
 
     /// Loads Categories
@@ -218,6 +214,7 @@ impl State {
         self.sort_by = op;
     }
 
+    /// Performs a search on the database by the given input, loading internally the returned vector of materials
     fn search_by_name(&mut self, input: &str) -> () {
         if input.is_empty() {
             return ();
@@ -249,7 +246,8 @@ pub enum Tabs {
     Search,
     List,
     Chart,
-    Categories,
+    Category,
+    Calculate,
 }
 
 impl Display for Tabs {
@@ -257,8 +255,9 @@ impl Display for Tabs {
         match self {
             Tabs::List => write!(f, "List"),
             Tabs::Chart => write!(f, "Chart"),
-            Tabs::Categories => write!(f, "Categories"),
+            Tabs::Category => write!(f, "Category"),
             Tabs::Search => write!(f, "Search"),
+            Tabs::Calculate => write!(f, "Calculate"),
         }
     }
 }
