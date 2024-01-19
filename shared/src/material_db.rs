@@ -232,11 +232,29 @@ pub fn get_category_stats(category: &ec3api::models::Category) -> Result<f64> {
     let mut stmt = conn.prepare(
         "
 SELECT avg(gwp) from materials
-WHERE category_id = (?1)
+WHERE category_id = (?1);
 ",
     )?;
     let mut response = 0.;
     let rows = stmt.query_map([&category.id], |row| row.get(0))?;
+    for row in rows {
+        response = row?;
+        break;
+    }
+    Ok(response)
+}
+
+pub fn get_category_by_name(category: &str) -> Result<f64> {
+    let conn = connection();
+    let mut stmt = conn.prepare(
+        "
+SELECT avg(gwp) from materials
+JOIN categories on categories.id = materials.category_id
+WHERE categories.name = (?1);
+",
+    )?;
+    let mut response = 0.;
+    let rows = stmt.query_map([category], |row| row.get(0))?;
     for row in rows {
         response = row?;
         break;
