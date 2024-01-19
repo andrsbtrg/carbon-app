@@ -7,7 +7,10 @@ use eframe::{
 };
 use egui_notify::Toast;
 use egui_plot::{Bar, BarChart, Plot};
-use shared::{project::Project, SortBy, State, Tabs};
+use shared::{
+    project::{CmpResult, Project},
+    SortBy, State, Tabs,
+};
 
 /// Renders the view
 #[no_mangle]
@@ -55,9 +58,11 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
 
 fn calculate_page(state: &mut State, ui: &mut egui::Ui) {
     if state.project.is_none() {
-        ui.label("Wow, such emptyness here. Try to start by adding a material from the list or create a new project here.");
+        ui.label("Wow, such emptiness here!\nTry to start by adding a material from the list");
         return;
     }
+    let mut grid_updated = false;
+    let project = state.project.as_mut().unwrap();
     egui::Grid::new("my_grid")
         .num_columns(3)
         .max_col_width(200.)
@@ -68,26 +73,51 @@ fn calculate_page(state: &mut State, ui: &mut egui::Ui) {
             ui.label("Material");
             ui.label("Quantity");
             ui.label("Unit");
-            ui.label("Total GWP");
+            ui.label("GWP (KgCO2e)");
             ui.label("-");
             ui.end_row();
-            let project = state.project.as_mut().unwrap();
             for (_i, comp) in project.components.iter_mut().enumerate() {
                 ui.label(&comp.material.name);
                 let value = DragValue::new(&mut comp.quantity);
-                if ui.add(value).dragged() {
+                if ui.add(value).changed() {
                     comp.calculate();
+                    grid_updated = true;
                 }
-                ui.label(format!("{unit}", unit = &comp.material.unit));
+                ui.label(format!(
+                    "{unit:?}",
+                    unit = &comp.material.declared_unit.unit
+                ));
                 ui.label(format!("{tots:.2}", tots = &comp.calculated));
-                let indicator = match &comp.category_avg > &comp.material.gwp.value {
-                    true => RichText::new("↑").color(Color32::LIGHT_GREEN),
-                    false => RichText::new("↓").color(Color32::LIGHT_RED),
+                match comp.cmp_to_average() {
+                    CmpResult::Smaller => ui
+                        .label(RichText::new("↑").color(Color32::LIGHT_GREEN))
+                        .on_hover_text(
+                            "This material has a smaller GWP than the category average!",
+                        ),
+                    CmpResult::Greater => ui
+                        .label(RichText::new("↓").color(Color32::LIGHT_RED))
+                        .on_hover_text(
+                            "This material has a greater GWP than the category average.",
+                        ),
+                    CmpResult::AlmostEqual => ui
+                        .label(RichText::new("=").color(Color32::LIGHT_YELLOW))
+                        .on_hover_text(
+                            "This material has about the same GWP as the category average.",
+                        ),
                 };
-                ui.label(indicator);
                 ui.end_row();
             }
         });
+    if grid_updated {
+        project.calculate();
+    };
+    ui.label(
+        RichText::new(format!(
+            "Total GWP: {total:.2} KgCO2e",
+            total = &project.calculated_gwp
+        ))
+        .color(Color32::WHITE),
+    );
 }
 
 fn list_page(state: &mut State, ui: &mut egui::Ui, loading: bool) {
@@ -221,7 +251,8 @@ fn search_page(state: &mut State, ui: &mut egui::Ui) {
         ui.text_edit_singleline(&mut state.country);
         if ui.button("Search").clicked() {
             // do something
-            println!("Advance material search.");
+            println!("Advanced material search.");
+            state.fetch_materials(&state.fetch_input.clone());
         }
         if ui
             .button("Update db")
@@ -231,6 +262,14 @@ fn search_page(state: &mut State, ui: &mut egui::Ui) {
             let _ = shared::jobs::Runner::update_db(&state.api_key);
             cb(state.toasts.basic("Updating db"));
         }
+        /*
+        if ui.button("Load wood from cache").clicked() {
+            &state.fetch_materials("Wood");
+        }
+        if ui.button("Save to db").clicked() {
+            state.save_materials();
+        }
+        */
     });
 }
 

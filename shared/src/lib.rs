@@ -103,7 +103,7 @@ impl State {
     /// Spawns thread to fetch materials
     #[deprecated]
     #[allow(dead_code)]
-    fn fetch_materials(&mut self, category: &str) {
+    pub fn fetch_materials(&mut self, category: &str) {
         let mut mf = MaterialFilter::of_category(&category);
         self.materials_loaded = false;
         mf.add_filter("jurisdiction", "in", vec!["150"]);

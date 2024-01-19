@@ -13,7 +13,7 @@ pub fn load_category(category: &str) -> Result<Vec<Material>> {
 
     let mut stmt = conn.prepare(
         r"SELECT 
-            materials.id, materials.name, materials.description, materials.gwp, materials.gwp_unit, categories.name, categories.display_name, categories.id, categories.description, manufacturers.name, manufacturers.country FROM materials
+            materials.id, materials.name, materials.description, materials.gwp, materials.gwp_unit, categories.name, categories.display_name, categories.id, categories.description, manufacturers.name, manufacturers.country, materials.declared_value, materials.declared_unit FROM materials
         JOIN categories ON materials.category_id = categories.id
         LEFT JOIN manufacturers ON materials.manufacturer_name = manufacturers.name
         WHERE categories.name = (?1)
@@ -31,8 +31,8 @@ pub fn load_category(category: &str) -> Result<Vec<Material>> {
 }
 
 fn f(row: &rusqlite::Row<'_>) -> Result<Material> {
-    let name: String = row.get(1)?;
     let id: String = row.get(0)?;
+    let name: String = row.get(1)?;
     let description: String = row.get(2)?;
     let gwp: f64 = row.get(3)?;
     let gwp_unit: String = row.get(4)?;
@@ -42,6 +42,8 @@ fn f(row: &rusqlite::Row<'_>) -> Result<Material> {
     let category_description: String = row.get(8)?;
     let manufacturer_name: String = row.get(9)?;
     let manufacturer_country: String = row.get(10)?;
+    let declared_value: f64 = row.get(11)?;
+    let declared_unit: String = row.get(12)?;
 
     Ok(ec3api::models::Ec3Material {
         name,
@@ -65,6 +67,11 @@ fn f(row: &rusqlite::Row<'_>) -> Result<Material> {
             id: category_id,
         },
         id,
+        declared_unit: ec3api::models::DeclaredUnit {
+            value: declared_value,
+            unit: ec3api::models::Unit::from_str(&declared_unit)
+                .unwrap_or(ec3api::models::Unit::Unknown),
+        },
     })
 }
 pub fn migrate() -> Result<()> {
@@ -96,6 +103,8 @@ pub fn migrate() -> Result<()> {
             gwp                 REAL,
             gwp_unit            TEXT,
             manufacturer_name   TEXT,
+            declared_value      REAL,
+            declared_unit       TEXT,           
             FOREIGN KEY(category_id) 
               REFERENCES categories (id),
             FOREIGN KEY(manufacturer_name)
@@ -163,7 +172,7 @@ pub fn write(materials: &Vec<Material>, parent: &str) -> Result<()> {
     println!("Inserting materials");
 
     let mut stmt = conn.prepare(
-            "INSERT INTO materials (id, name, description, category_id, gwp, gwp_unit, manufacturer_name) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)",
+            "INSERT INTO materials (id, name, description, category_id, gwp, gwp_unit, manufacturer_name, declared_value, declared_unit) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9)",
     )?;
     for material in materials {
         let _ = stmt
@@ -175,6 +184,8 @@ pub fn write(materials: &Vec<Material>, parent: &str) -> Result<()> {
                 &material.gwp.value.to_string(),
                 &format!("{:?}", &material.gwp.unit),
                 &material.manufacturer.name,
+                &material.declared_unit.value.to_string(),
+                &format!("{:?}", &material.declared_unit.unit),
             ])
             .map_err(|e| {
                 eprintln!(
@@ -197,7 +208,7 @@ pub fn query_materials(input: &str) -> Result<Vec<ec3api::models::Ec3Material>> 
 
     let mut stmt = conn.prepare(
         r"SELECT 
-            materials.id, materials.name, materials.description, materials.gwp, materials.gwp_unit, categories.name, categories.display_name, categories.id, categories.description, manufacturers.name, manufacturers.country FROM materials
+            materials.id, materials.name, materials.description, materials.gwp, materials.gwp_unit, categories.name, categories.display_name, categories.id, categories.description, manufacturers.name, manufacturers.country, materials.declared_value, materials.declared_unit FROM materials
         JOIN categories ON materials.category_id = categories.id
         LEFT JOIN manufacturers ON materials.manufacturer_name = manufacturers.name
         WHERE materials.name LIKE (?1)
