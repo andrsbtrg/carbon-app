@@ -4,7 +4,7 @@ pub struct SettingsProvider {}
 
 impl SettingsProvider {
     const APP_NAME: &'static str = "carbon";
-    fn default_path() -> PathBuf {
+    pub fn default_path() -> PathBuf {
         #[cfg(unix)]
         let app_data = std::env::var("HOME").expect("No HOME directory");
         #[cfg(windows)]
@@ -17,7 +17,15 @@ impl SettingsProvider {
             _ => todo!("This os is not supported."),
         }
     }
+    pub fn api_key_path() -> PathBuf {
+        Self::default_path().join("api_key.txt")
+    }
     pub fn cache_dir() -> PathBuf {
         Self::default_path().join("cache")
     }
+}
+
+pub fn set_api_key(key: &str) {
+    let path = SettingsProvider::api_key_path();
+    std::fs::write(path, key).expect("ERROR: not possible to write to default path");
 }

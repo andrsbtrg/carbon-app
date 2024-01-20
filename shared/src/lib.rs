@@ -37,14 +37,15 @@ pub struct State {
     materials_rx: Option<Receiver<Vec<Ec3Material>>>,
     categories_rx: Option<Receiver<Node<Ec3Category>>>,
     pub selected: Option<Ec3Material>,
-    pub api_key: String,
+    pub api_key: Option<String>,
     pub toasts: Toasts,
     pub category_stats: Option<f64>,
     pub project: Option<project::Project>,
+    pub api_key_input: String,
 }
 
 impl State {
-    pub fn new(api_key: String) -> State {
+    pub fn new(api_key: Option<String>) -> State {
         State {
             materials_loaded: false,
             materials: Vec::new(),
@@ -63,20 +64,22 @@ impl State {
             toasts: Toasts::default().with_anchor(Anchor::BottomRight),
             category_stats: None,
             project: None,
+            api_key_input: String::new(),
         }
     }
 
     /// Loads Categories
-    /// # Panics
-    /// Panics if .env is missing or incomplete.
     pub fn load_categories(&mut self) {
+        if self.api_key.is_none() {
+            return;
+        }
         let (categories_tx, categories_rx) = channel::<Node<Ec3Category>>();
 
         self.categories_rx = Some(categories_rx);
 
         let api_key = self.api_key.to_owned();
         thread::spawn(move || {
-            if let Ok(result) = ec3api::Ec3api::new(&api_key)
+            if let Ok(result) = ec3api::Ec3api::new(&api_key.unwrap())
                 .endpoint(ec3api::Endpoint::Categories)
                 .fetch_all()
             {
@@ -104,6 +107,9 @@ impl State {
     #[deprecated]
     #[allow(dead_code)]
     pub fn fetch_materials(&mut self, category: &str) {
+        if self.api_key.is_none() {
+            return;
+        }
         let mut mf = MaterialFilter::of_category(&category);
         self.materials_loaded = false;
         mf.add_filter("jurisdiction", "in", vec!["150"]);
@@ -114,7 +120,7 @@ impl State {
 
         let api_key = self.api_key.to_owned();
         thread::spawn(move || {
-            if let Ok(materials) = ec3api::Ec3api::new(&api_key)
+            if let Ok(materials) = ec3api::Ec3api::new(&api_key.unwrap())
                 .endpoint(ec3api::Endpoint::Materials)
                 .cache_dir(settings::SettingsProvider::cache_dir())
                 .material_filter(mf)

@@ -6,18 +6,13 @@ use eframe::{
     egui::{self, ViewportBuilder},
     epaint::Color32,
 };
-use std::env;
 
 struct Application {
     state: shared::State,
 }
 
 impl Application {
-    fn new(
-        cc: &eframe::CreationContext<'_>,
-        _hot_reload_libs_folder: &str,
-        api_key: String,
-    ) -> Application {
+    fn new(cc: &eframe::CreationContext<'_>, api_key: Option<String>) -> Application {
         setup_custom_fonts(&cc.egui_ctx);
 
         Application {
@@ -34,41 +29,41 @@ impl eframe::App for Application {
 
 // TODO: try this example https://github.com/rksm/hot-lib-reloader-rs/blob/master/examples/hot-egui/Cargo.toml
 fn main() -> Result<(), eframe::Error> {
-    let libraries_path = "target/debug";
-
-    // read environment
-    dotenv::dotenv().expect("No .env file found!");
-    let api_key = env::var("API_KEY").expect("API Key missing!");
-
-    // create cache dir
-    setup_cache();
-
-    // init egui
     env_logger::init();
+    // init egui
     let viewport = ViewportBuilder::default()
         .with_decorations(true)
         .with_resizable(true);
-
     let win_options = eframe::NativeOptions {
         viewport,
+        run_and_return: true,
         ..Default::default()
     };
+    setup_cache().unwrap_or_else(|e| {
+        eprintln!("ERROR: unable to set up cache directory: {e}");
+    });
+    let api_key = get_api_key();
     eframe::run_native(
         "Materials",
         win_options,
-        Box::new(|cc| Box::new(Application::new(cc, libraries_path, api_key))),
+        Box::new(|cc| Box::new(Application::new(cc, api_key))),
     )
 }
 
-/// Creates .cache directory to store materials
-fn setup_cache() -> () {
-    let dir = shared::settings::SettingsProvider::cache_dir();
-    if dir.exists() {
-        println!("Cache directory set")
-    } else {
-        std::fs::create_dir_all(dir).expect("Unable to create cache dir");
-        println!("Cache directory created")
+fn get_api_key() -> Option<String> {
+    match std::fs::read_to_string(shared::settings::SettingsProvider::api_key_path()) {
+        Ok(api_key) => Some(api_key),
+        Err(_) => {
+            println!("API key not found.");
+            None
+        }
     }
+}
+
+/// Creates .cache directory to store materials
+fn setup_cache() -> Result<(), std::io::Error> {
+    let dir = shared::settings::SettingsProvider::cache_dir();
+    std::fs::create_dir_all(dir)
 }
 
 fn setup_custom_fonts(ctx: &eframe::egui::Context) {

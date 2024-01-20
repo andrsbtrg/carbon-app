@@ -14,7 +14,7 @@ use shared::{
 
 /// Renders the view
 pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut eframe::Frame) {
-    let loading = state.preload_data();
+    // let loading = state.preload_data(); // do we still need this?
     // Top bar
     TopBottomPanel::top("top-bar").show(ctx, |ui| {
         ui.horizontal(|ui| {
@@ -32,26 +32,40 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
             ui.label(format!("{} materials", state.materials.len()));
         });
     });
-    // Main panel
-    // let frame = egui::Frame {
-    //     inner_margin: egui::Margin {
-    //         left: 20.,
-    //         right: 10.,
-    //         top: 5.,
-    //         bottom: 5.,
-    //     },
-    //     ..Default::default()
-    // };
-    CentralPanel::default().show(ctx, |ui| {
-        ui.add_space(4.);
-        match state.active_tab {
-            shared::Tabs::Search => search_page(state, ui),
-            shared::Tabs::Chart => chart_page(state, ui),
-            shared::Tabs::List => list_page(state, ui, loading),
-            shared::Tabs::Category => (),
-            shared::Tabs::Calculate => calculate_page(state, ui),
-        }
-    });
+    if state.api_key.is_none() {
+        egui::Window::new("Welcome!")
+            .collapsible(false)
+            .resizable(false)
+            .show(ctx, |ui| {
+                ui.horizontal(|ui| {
+                    ui.label(RichText::new("Welcome to Carbon!").color(Color32::WHITE));
+                });
+                ui.label("Carbon uses EC3 as a Database for EPDs and materials. At this moment, an API key is necessary to start.");
+                ui.horizontal(|ui| {
+                    ui.label("API-key: ");
+                    ui.text_edit_singleline(&mut state.api_key_input);
+                    ui.hyperlink_to("Help", "https://github.com/andrsbtrg/carbon_app");
+                });
+                if ui.button("Save").clicked() {
+                    // validate key
+                    if state.api_key_input.len() > 0 {
+                        shared::settings::set_api_key(&state.api_key_input);
+                        state.api_key = Some(state.api_key_input.clone());
+                    }
+                }
+            });
+    } else {
+        CentralPanel::default().show(ctx, |ui| {
+            ui.add_space(4.);
+            match state.active_tab {
+                shared::Tabs::Search => search_page(state, ui),
+                shared::Tabs::Chart => chart_page(state, ui),
+                shared::Tabs::List => list_page(state, ui),
+                shared::Tabs::Category => (),
+                shared::Tabs::Calculate => calculate_page(state, ui),
+            }
+        });
+    }
     state.toasts.show(ctx);
 }
 
@@ -139,7 +153,7 @@ fn calculate_page(state: &mut State, ui: &mut egui::Ui) {
     ui.label(total);
 }
 
-fn list_page(state: &mut State, ui: &mut egui::Ui, loading: bool) {
+fn list_page(state: &mut State, ui: &mut egui::Ui) {
     add_filtering(ui, state);
     ui.separator();
 
@@ -150,13 +164,6 @@ fn list_page(state: &mut State, ui: &mut egui::Ui, loading: bool) {
         .min_width(350.)
         .max_width(400.)
         .show_inside(ui, |panel_ui| {
-            if loading {
-                panel_ui.vertical_centered_justified(|ui| {
-                    ui.label("Loading...");
-                    // ui.spinner();
-                });
-                return;
-            }
             ScrollArea::vertical()
                 .auto_shrink([false; 2])
                 .show(panel_ui, |ui| {
@@ -278,8 +285,13 @@ fn search_page(state: &mut State, ui: &mut egui::Ui) {
             .on_hover_text("This is a lengthy operation which downloads a new copy of EC3 materials locally for searching")
             .clicked()
         {
-            let _ = shared::jobs::Runner::update_db(&state.api_key);
-            cb(state.toasts.basic("Updating db"));
+            if let Some(api_key) = &state.api_key {
+                let _ = shared::jobs::Runner::update_db(&api_key);
+                cb(state.toasts.basic("Updating db"));
+            }
+            else {
+                cb(state.toasts.error("Can't update db without API key!"));
+            }
         }
         /*
         if ui.button("Load wood from cache").clicked() {
