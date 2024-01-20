@@ -272,7 +272,7 @@ fn search_page(state: &mut State, ui: &mut egui::Ui) {
         if ui.button("Search").clicked() {
             // do something
             println!("Advanced material search.");
-            state.fetch_materials(&state.fetch_input.clone());
+            // state.fetch_materials(&state.fetch_input.clone());
         }
         if ui
             .button("Update db")

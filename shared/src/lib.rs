@@ -197,6 +197,10 @@ impl State {
         let result = material_db::load_category(category);
         match result {
             Ok(_materials) => {
+                self.loaded_categories = _materials
+                    .iter()
+                    .map(|mat| mat.category.name.clone())
+                    .collect::<BTreeSet<_>>();
                 self.materials = _materials;
                 self.materials_loaded = true;
             }

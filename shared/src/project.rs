@@ -46,8 +46,10 @@ pub struct UMaterial {
 impl UMaterial {
     pub fn get_from_db(category: &str) -> Self {
         let cat_avg = material_db::get_category_by_name(category).unwrap_or(0.);
+        let mut name = category.to_string();
+        name.push_str(" (Generic)");
         Self {
-            name: category.to_string(),
+            name,
             gwp: Gwp {
                 value: cat_avg,
                 unit: GwpUnits::KgCO2e,

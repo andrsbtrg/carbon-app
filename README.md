@@ -56,7 +56,8 @@ Sample response:
 - [x] Add a graph of material categories to visualize 
 - [ ] Visualize GWP averages per category on graph view
 - [x] Store and load materials from a local sqlite db 
-- [ ] Implement a basic quantities input specification
+- [x] Implement a basic quantities input specification
 - [ ] Implement advanced quantities reading from remote project (Speckle or APS)
+- [ ] Make material selectable on Chart view and display details
 
 
