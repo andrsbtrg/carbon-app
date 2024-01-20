@@ -1,3 +1,4 @@
+#![windows_subsystem = "windows"]
 extern crate shared;
 extern crate view;
 
@@ -32,7 +33,6 @@ impl eframe::App for Application {
 }
 
 // TODO: try this example https://github.com/rksm/hot-lib-reloader-rs/blob/master/examples/hot-egui/Cargo.toml
-
 fn main() -> Result<(), eframe::Error> {
     let libraries_path = "target/debug";
 
