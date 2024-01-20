@@ -4,13 +4,11 @@ use ec3api::models::Gwp;
 use rusqlite::{Connection, Result};
 
 use crate::{settings, Material};
-pub fn connection() -> Connection {
-    let conn = Connection::open(settings::SettingsProvider::cache_dir().join("carbon.db")).unwrap();
-    conn
+pub fn connection() -> Result<Connection> {
+    Connection::open(settings::SettingsProvider::default_path().join("carbon.db"))
 }
 pub fn load_category(category: &str) -> Result<Vec<Material>> {
-    let conn = Connection::open(settings::SettingsProvider::cache_dir().join("carbon.db"))?;
-
+    let conn = connection()?;
     let mut stmt = conn.prepare(
         r"SELECT 
             materials.id, materials.name, materials.description, materials.gwp, materials.gwp_unit, categories.name, categories.display_name, categories.id, categories.description, manufacturers.name, manufacturers.country, materials.declared_value, materials.declared_unit FROM materials
@@ -75,7 +73,7 @@ fn f(row: &rusqlite::Row<'_>) -> Result<Material> {
     })
 }
 pub fn migrate() -> Result<()> {
-    let conn = Connection::open(settings::SettingsProvider::cache_dir().join("carbon.db"))?;
+    let conn = connection()?;
     conn.execute(
         r"
         CREATE TABLE IF NOT EXISTS categories (
@@ -116,7 +114,7 @@ pub fn migrate() -> Result<()> {
     Ok(())
 }
 pub fn write(materials: &Vec<Material>, parent: &str) -> Result<()> {
-    let conn = Connection::open(settings::SettingsProvider::cache_dir().join("carbon.db"))?;
+    let conn = connection()?;
 
     // create a set of categories
     let categories: Vec<&ec3api::models::Category> = materials
@@ -200,8 +198,7 @@ pub fn write(materials: &Vec<Material>, parent: &str) -> Result<()> {
 
 /// Searches database for materials by name, category or parent category
 pub fn query_materials(input: &str) -> Result<Vec<ec3api::models::Ec3Material>> {
-    let conn = Connection::open(settings::SettingsProvider::cache_dir().join("carbon.db"))?;
-
+    let conn = connection()?;
     let mut query = String::from(input);
     query.insert(0, '%');
     query.push('%');
@@ -228,7 +225,7 @@ pub fn query_materials(input: &str) -> Result<Vec<ec3api::models::Ec3Material>> 
 }
 
 pub fn get_category_stats(category: &ec3api::models::Category) -> Result<f64> {
-    let conn = connection();
+    let conn = connection()?;
     let mut stmt = conn.prepare(
         "
 SELECT avg(gwp) from materials
@@ -245,7 +242,7 @@ WHERE category_id = (?1);
 }
 
 pub fn get_category_by_name(category: &str) -> Result<f64> {
-    let conn = connection();
+    let conn = connection()?;
     let mut stmt = conn.prepare(
         "
 SELECT avg(gwp) from materials
