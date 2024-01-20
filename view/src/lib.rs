@@ -13,7 +13,6 @@ use shared::{
 };
 
 /// Renders the view
-#[no_mangle]
 pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut eframe::Frame) {
     let loading = state.preload_data();
     // Top bar
