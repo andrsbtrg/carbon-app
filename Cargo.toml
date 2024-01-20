@@ -2,7 +2,6 @@
 resolver = "2"
 members = [
   "carbon_app",
-  "hot_reload_lib",
   "view",
   "shared",
 ]

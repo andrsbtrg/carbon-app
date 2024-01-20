@@ -1,46 +1,14 @@
 extern crate shared;
-
-#[cfg(feature = "hot_reload_libs")]
-extern crate hot_reload_lib;
-
-#[cfg(not(feature = "hot_reload_libs"))]
 extern crate view;
 
 use eframe::{
     egui::{self, ViewportBuilder},
     epaint::Color32,
 };
-
-#[cfg(feature = "hot_reload_libs")]
-use hot_reload_lib::HotReloadLib;
-
 use std::env;
-
-#[cfg(feature = "hot_reload_libs")]
-struct HotReloadLibs {
-    view: HotReloadLib,
-}
-
-#[cfg(feature = "hot_reload_libs")]
-impl HotReloadLibs {
-    fn new(hot_reload_libs_folder: &str) -> Self {
-        Self {
-            view: HotReloadLib::new(hot_reload_libs_folder, "view"),
-        }
-    }
-
-    fn update_libs(&mut self) {
-        if self.view.update() {
-            println!("Reloaded view lib");
-        }
-    }
-}
 
 struct Application {
     state: shared::State,
-
-    #[cfg(feature = "hot_reload_libs")]
-    libs: HotReloadLibs,
 }
 
 impl Application {
@@ -53,14 +21,10 @@ impl Application {
 
         Application {
             state: shared::State::new(api_key),
-
-            #[cfg(feature = "hot_reload_libs")]
-            libs: HotReloadLibs::new(_hot_reload_libs_folder),
         }
     }
 }
 
-#[cfg(not(feature = "hot_reload_libs"))]
 impl eframe::App for Application {
     fn update(&mut self, ctx: &eframe::egui::Context, _frame: &mut eframe::Frame) {
         view::update_view(&mut self.state, ctx, _frame);
@@ -68,23 +32,6 @@ impl eframe::App for Application {
 }
 
 // TODO: try this example https://github.com/rksm/hot-lib-reloader-rs/blob/master/examples/hot-egui/Cargo.toml
-
-#[cfg(feature = "hot_reload_libs")]
-impl eframe::App for Application {
-    fn update(&mut self, ctx: &eframe::egui::Context, _frame: &mut eframe::Frame) {
-        ctx.input(|input_state| {
-            if input_state.key_down(egui::Key::R) {
-                self.libs.update_libs();
-            }
-        });
-
-        self.libs
-            .view
-            .load_symbol::<fn(&shared::State, &eframe::egui::Context, &mut eframe::Frame)>(
-                "update_view",
-            )(&self.state, ctx, _frame);
-    }
-}
 
 fn main() -> Result<(), eframe::Error> {
     let libraries_path = "target/debug";
@@ -106,8 +53,6 @@ fn main() -> Result<(), eframe::Error> {
         viewport,
         ..Default::default()
     };
-    // let _ = shared::jobs::Runner::update_db(&api_key); // uncomment to update the db on every
-    // startup
     eframe::run_native(
         "Materials",
         win_options,
