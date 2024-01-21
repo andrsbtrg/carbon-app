@@ -111,7 +111,7 @@ impl State {
         if self.api_key.is_none() {
             return;
         }
-        let mut mf = MaterialFilter::of_category(&category);
+        let mut mf = MaterialFilter::of_category(category);
         self.materials_loaded = false;
         mf.add_filter("jurisdiction", "in", vec!["150"]);
 
@@ -148,7 +148,7 @@ impl State {
                 Ok(materials) => {
                     println!("Received materials");
                     let mut seen: HashSet<String> = HashSet::new();
-                    let mut filtered = Vec::from(materials);
+                    let mut filtered = materials;
 
                     filtered.retain(|x| {
                         let id = x.id.clone();
@@ -161,11 +161,9 @@ impl State {
                         .collect::<BTreeSet<_>>();
                     self.materials = filtered;
                     self.materials_loaded = true;
-                    return false;
+                    false
                 }
-                Err(_) => {
-                    return true;
-                }
+                Err(_) => true,
             }
         } else {
             false
@@ -227,9 +225,9 @@ impl State {
     }
 
     /// Performs a search on the database by the given input, loading internally the returned vector of materials
-    fn search_by_name(&mut self, input: &str) -> () {
+    fn search_by_name(&mut self, input: &str) {
         if input.is_empty() {
-            return ();
+            return;
         }
         let result = material_db::query_materials(input);
         match result {

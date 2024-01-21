@@ -232,11 +232,9 @@ SELECT avg(gwp) from materials
 WHERE category_id = (?1);
 ",
     )?;
-    let mut response = 0.;
-    let rows = stmt.query_map([&category.id], |row| row.get(0))?;
-    for row in rows {
+    let mut response: f64 = 0.;
+    if let Some(row) = stmt.query_map([&category.id], |row| row.get(0))?.next() {
         response = row?;
-        break;
     }
     Ok(response)
 }
@@ -251,10 +249,8 @@ WHERE categories.name = (?1);
 ",
     )?;
     let mut response = 0.;
-    let rows = stmt.query_map([category], |row| row.get(0))?;
-    for row in rows {
+    if let Some(row) = stmt.query_map([category], |row| row.get(0))?.next() {
         response = row?;
-        break;
     }
     Ok(response)
 }

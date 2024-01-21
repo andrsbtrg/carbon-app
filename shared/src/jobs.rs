@@ -111,7 +111,7 @@ impl Runner {
 fn first_level_fetch(categories: &[Node<Ec3Category>], api_key: &str) -> Result<()> {
     for cat in categories {
         let category = cat.value.name.clone();
-        let materials: Vec<Ec3Material> = fetch_category(&api_key, &category)?;
+        let materials: Vec<Ec3Material> = fetch_category(api_key, &category)?;
         println!(
             "Received {count} materials from {category}",
             count = materials.len()
@@ -124,12 +124,12 @@ fn first_level_fetch(categories: &[Node<Ec3Category>], api_key: &str) -> Result<
     Ok(())
 }
 
-fn traverse_fetch(categories: &[Node<Ec3Category>], api_key: &str) -> () {
+fn traverse_fetch(categories: &[Node<Ec3Category>], api_key: &str) {
     for cat in categories {
         let category = cat.value.name.clone();
-        let materials: Vec<Ec3Material> = match fetch_category(&api_key, &category) {
+        let materials: Vec<Ec3Material> = match fetch_category(api_key, &category) {
             Ok(mat) => mat,
-            Err(_) => return (),
+            Err(_) => return,
         };
         println!(
             "Received {count} materials from {category}",
@@ -139,18 +139,18 @@ fn traverse_fetch(categories: &[Node<Ec3Category>], api_key: &str) -> () {
             eprintln!("ERROR: while writing to db: {}", e);
             CError::FromDb
         });
-        if cat.children.as_ref().is_some_and(|c| c.len() > 0) {
+        if cat.children.as_ref().is_some_and(|c| !c.is_empty()) {
             let children = &cat.children.as_ref().unwrap();
-            traverse_fetch(&children, api_key);
+            traverse_fetch(children, api_key);
         }
     }
 }
 
 fn fetch_category(api_key: &str, query: &str) -> Result<Vec<Ec3Material>> {
-    let mut mf = ec3api::material_filter::MaterialFilter::of_category(&query);
+    let mut mf = ec3api::material_filter::MaterialFilter::of_category(query);
     mf.add_filter("jurisdiction", "in", vec!["150"]);
 
-    ec3api::Ec3api::new(&api_key)
+    ec3api::Ec3api::new(api_key)
         .endpoint(ec3api::Endpoint::Materials)
         .material_filter(mf)
         .cache_dir(settings::SettingsProvider::cache_dir())

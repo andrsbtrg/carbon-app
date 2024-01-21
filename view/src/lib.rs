@@ -66,7 +66,7 @@ fn welcome_window(ctx: &egui::Context, state: &mut State) {
                 });
                 if ui.button("Save").clicked() {
                     // validate key
-                    if state.api_key_input.len() > 0 {
+                    if !state.api_key_input.is_empty() {
                         shared::settings::set_api_key(&state.api_key_input);
                         state.api_key = Some(state.api_key_input.clone());
                     }
@@ -95,7 +95,7 @@ fn calculate_page(state: &mut State, ui: &mut egui::Ui) {
             ui.label("GWP (KgCO2e)");
             ui.label("-");
             ui.end_row();
-            for (_i, comp) in project.components.iter_mut().enumerate() {
+            for comp in project.components.iter_mut() {
                 ui.label(comp.material.get_name());
                 let value = DragValue::new(&mut comp.quantity);
                 if ui.add(value).changed() {
@@ -133,7 +133,7 @@ fn calculate_page(state: &mut State, ui: &mut egui::Ui) {
                             .selectable_label(state.selected_category == *cat, cat)
                             .clicked()
                         {
-                            project.add_generic_comp(&cat);
+                            project.add_generic_comp(cat);
                         }
                     }
                 });
@@ -205,7 +205,7 @@ fn list_page(state: &mut State, ui: &mut egui::Ui) {
                 gwp = selected.gwp.value,
                 unit = selected.gwp.unit
             ));
-            let color = match &avg_stat > &selected.gwp.value {
+            let color = match avg_stat > selected.gwp.value {
                 true => Color32::LIGHT_GREEN,
                 false => Color32::LIGHT_RED,
             };
@@ -270,11 +270,10 @@ fn search_page(state: &mut State, ui: &mut egui::Ui) {
             .button("Search")
             .on_hover_text("Type a material name to search in EC3")
             .clicked()
+            && !state.fetch_input.is_empty()
         {
-            if !state.fetch_input.is_empty() {
-                state.fetch_materials_from_input();
-                state.active_tab = shared::Tabs::List;
-            }
+            state.fetch_materials_from_input();
+            state.active_tab = shared::Tabs::List;
         }
     });
     ui.collapsing("More options", |ui| {
@@ -291,7 +290,7 @@ fn search_page(state: &mut State, ui: &mut egui::Ui) {
             .clicked()
         {
             if let Some(api_key) = &state.api_key {
-                let _ = shared::jobs::Runner::update_db(&api_key);
+                let _ = shared::jobs::Runner::update_db(api_key);
                 cb(state.toasts.basic("Updating db"));
             }
             else {
@@ -312,7 +311,7 @@ fn search_page(state: &mut State, ui: &mut egui::Ui) {
 /// Render recursively nodes in [shared::CategoriesTree]
 fn render_tree(ui: &mut egui::Ui, tree: &shared::CategoriesTree, state: &mut State) {
     if let Some(subcategories) = &tree.children {
-        if subcategories.len() == 0 {
+        if subcategories.is_empty() {
             ui.horizontal(|ui| {
                 ui.label(&tree.value.name);
                 if ui
@@ -330,18 +329,17 @@ fn render_tree(ui: &mut egui::Ui, tree: &shared::CategoriesTree, state: &mut Sta
                 let name = &v.value.name.clone();
                 ui.horizontal(|ui| {
                     let coll = ui.collapsing(name, |ui| {
-                        render_tree(ui, &v, state);
+                        render_tree(ui, v, state);
                     });
-                    if !coll.fully_open() {
-                        if ui
+                    if !coll.fully_open()
+                        && ui
                             .small_button("→")
                             .on_hover_text(format!("Search {name}"))
                             .clicked()
-                        {
-                            // use the callback function here
-                            state.load_by_category(name);
-                            state.active_tab = shared::Tabs::List;
-                        }
+                    {
+                        // use the callback function here
+                        state.load_by_category(name);
+                        state.active_tab = shared::Tabs::List;
                     }
                 });
             }
@@ -378,7 +376,7 @@ fn render_material_cards(state: &mut State, ui: &mut eframe::egui::Ui, filter: &
         .iter()
         .filter(|mat| mat.name.to_lowercase().contains(filter))
         .filter(|mat| {
-            if &state.selected_category != "" {
+            if !state.selected_category.is_empty() {
                 mat.category.name == state.selected_category
             } else {
                 true
@@ -410,7 +408,7 @@ fn render_material_cards(state: &mut State, ui: &mut eframe::egui::Ui, filter: &
 }
 
 /// Short way of adding a tab that is connected to a [Tabs] enum in [State]
-fn add_tab(ui: &mut egui::Ui, state: &mut State, tab: Tabs) -> () {
+fn add_tab(ui: &mut egui::Ui, state: &mut State, tab: Tabs) {
     if ui
         .selectable_label(state.active_tab == tab, format!("   {tab}   "))
         .clicked()
@@ -433,10 +431,8 @@ fn add_category_filter(ui: &mut egui::Ui, state: &mut State) {
                 }
             }
         });
-    if !state.selected_category.is_empty() {
-        if ui.small_button("Clear").clicked() {
-            state.selected_category = String::new();
-        }
+    if !state.selected_category.is_empty() && ui.small_button("Clear").clicked() {
+        state.selected_category = String::new();
     }
 }
 

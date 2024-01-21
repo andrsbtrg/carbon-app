@@ -6,6 +6,11 @@ pub struct Project {
     pub components: Vec<Component>,
     pub calculated_gwp: f64,
 }
+impl Default for Project {
+    fn default() -> Self {
+        Self::new()
+    }
+}
 impl Project {
     pub fn new() -> Self {
         Self {
@@ -13,7 +18,7 @@ impl Project {
             calculated_gwp: 0.,
         }
     }
-    pub fn calculate(&mut self) -> () {
+    pub fn calculate(&mut self) {
         self.calculated_gwp = self.components.iter().map(|c| c.calculated).sum::<f64>()
     }
 }
@@ -87,7 +92,7 @@ pub enum CmpResult {
     Smaller,
 }
 impl Component {
-    pub fn calculate(&mut self) -> () {
+    pub fn calculate(&mut self) {
         // to normalize: since the GWP value inside of material is per declared_unit
         // If the declared_unit is 1.5 Kg means the calculated value is qt * gwp / 1.5 kg
         self.calculated =
@@ -115,7 +120,7 @@ impl Project {
         });
     }
 
-    pub fn add_generic_comp(&mut self, cat: &str) -> () {
+    pub fn add_generic_comp(&mut self, cat: &str) {
         let material = UMaterial::get_from_db(cat);
         let category_avg = material.gwp.value;
         self.components.push(Component {
