@@ -62,7 +62,7 @@ fn welcome_window(ctx: &egui::Context, state: &mut State) {
                 ui.horizontal(|ui| {
                     ui.label("API-key: ");
                     ui.text_edit_singleline(&mut state.api_key_input);
-                    ui.hyperlink_to("Help", "https://github.com/andrsbtrg/carbon_app");
+                    ui.hyperlink_to("Help", "https://github.com/andrsbtrg/carbon-app/blob/main/HELP.md#how-to-get-an-api-key-for-ec3");
                 });
                 if ui.button("Save").clicked() {
                     // validate key
