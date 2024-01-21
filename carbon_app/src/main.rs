@@ -33,6 +33,7 @@ fn main() -> Result<(), eframe::Error> {
     // init egui
     let viewport = ViewportBuilder::default()
         .with_decorations(true)
+        .with_title("Carbon")
         .with_resizable(true);
     let win_options = eframe::NativeOptions {
         viewport,
@@ -44,7 +45,7 @@ fn main() -> Result<(), eframe::Error> {
     });
     let api_key = get_api_key();
     eframe::run_native(
-        "Materials",
+        "Carbon",
         win_options,
         Box::new(|cc| Box::new(Application::new(cc, api_key))),
     )
