@@ -28,12 +28,30 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
     // Bottom bar
     TopBottomPanel::bottom("bottom-bar").show(ctx, |ui| {
         ui.horizontal(|ui| {
+            // TODO: when toggling dark mode original colors are lost
             // egui::global_dark_light_mode_switch(ui);
             ui.label(format!("{} materials", state.materials.len()));
         });
     });
-    if state.api_key.is_none() {
-        egui::Window::new("Welcome!")
+    CentralPanel::default().show(ctx, |ui| {
+        if state.api_key.is_none() {
+            welcome_window(ctx, state);
+        } else {
+            ui.add_space(4.);
+            match state.active_tab {
+                shared::Tabs::Search => search_page(state, ui),
+                shared::Tabs::Chart => chart_page(state, ui),
+                shared::Tabs::List => list_page(state, ui),
+                shared::Tabs::Category => (),
+                shared::Tabs::Calculate => calculate_page(state, ui),
+            }
+        }
+    });
+    state.toasts.show(ctx);
+}
+
+fn welcome_window(ctx: &egui::Context, state: &mut State) {
+    egui::Window::new("Welcome!")
             .collapsible(false)
             .resizable(false)
             .show(ctx, |ui| {
@@ -54,19 +72,6 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
                     }
                 }
             });
-    } else {
-        CentralPanel::default().show(ctx, |ui| {
-            ui.add_space(4.);
-            match state.active_tab {
-                shared::Tabs::Search => search_page(state, ui),
-                shared::Tabs::Chart => chart_page(state, ui),
-                shared::Tabs::List => list_page(state, ui),
-                shared::Tabs::Category => (),
-                shared::Tabs::Calculate => calculate_page(state, ui),
-            }
-        });
-    }
-    state.toasts.show(ctx);
 }
 
 fn calculate_page(state: &mut State, ui: &mut egui::Ui) {
