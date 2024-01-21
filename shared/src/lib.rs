@@ -69,7 +69,7 @@ impl State {
     }
 
     /// Loads Categories
-    pub fn load_categories(&mut self) {
+    pub fn fetch_categories(&mut self) {
         if self.api_key.is_none() {
             return;
         }
@@ -101,6 +101,7 @@ impl State {
         // self.fetch_materials(&category);
         // self.load_by_category(&category);
         self.search_by_name(&input);
+        self.reset_filters();
     }
 
     /// Spawns thread to fetch materials
@@ -209,6 +210,7 @@ impl State {
                     .collect::<BTreeSet<_>>();
                 self.materials = _materials;
                 self.materials_loaded = true;
+                self.reset_filters();
             }
             Err(e) => eprintln!("ERROR: {}", e),
         }
@@ -242,6 +244,13 @@ impl State {
             }
             Err(e) => eprintln!("ERROR: {}", e),
         }
+    }
+
+    /// Removes selected material, category and filter_input
+    fn reset_filters(&mut self) {
+        self.selected = None;
+        self.selected_category = String::new();
+        self.filter_input = String::new();
     }
 }
 

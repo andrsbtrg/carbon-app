@@ -367,7 +367,7 @@ fn categories_page(state: &mut State, ui: &mut egui::Ui) {
                 render_tree(ui, &categories, state);
             });
     } else {
-        state.load_categories();
+        state.fetch_categories();
     }
 }
 
