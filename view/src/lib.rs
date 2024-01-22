@@ -14,6 +14,11 @@ use shared::{
 
 /// Renders the view
 pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut eframe::Frame) {
+    let cb = |t: &mut Toast| {
+        //Callback for the toast
+        t.set_closable(true)
+            .set_duration(Some(Duration::from_millis((1000. * 3.5) as u64)));
+    };
     // let loading = state.preload_data(); // do we still need this?
     // Top bar
     TopBottomPanel::top("top-bar").show(ctx, |ui| {
@@ -47,6 +52,12 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
             }
         }
     });
+    if let Some(rx) = &state.job_rx {
+        if rx.try_recv().is_ok() {
+            state.toasts.dismiss_oldest_toast();
+            cb(state.toasts.success("DB Update finished!"))
+        }
+    };
     state.toasts.show(ctx);
 }
 
@@ -290,8 +301,11 @@ fn search_page(state: &mut State, ui: &mut egui::Ui) {
             .clicked()
         {
             if let Some(api_key) = &state.api_key {
-                let _ = shared::jobs::Runner::update_db(api_key);
-                cb(state.toasts.basic("Updating db"));
+                match shared::jobs::Runner::update_db(api_key) {
+                    Ok(rx) => state.job_rx = Some(rx),
+                    Err(_) => cb(state.toasts.error("Could not update db")),
+                };
+                state.toasts.info("Db update in progress").set_duration(None);
             }
             else {
                 cb(state.toasts.error("Can't update db without API key!"));

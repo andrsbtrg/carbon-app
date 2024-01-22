@@ -17,6 +17,8 @@ use crate::{
 pub enum CError {
     FromApi,
     FromDb,
+    RequestError,
+    NoAuth,
 }
 pub type Result<T> = std::result::Result<T, CError>;
 
@@ -67,9 +69,10 @@ impl Runner {
             }
         });
     }
-    pub fn update_db(api_key: &str) -> Result<()> {
+    pub fn update_db(api_key: &str) -> Result<Receiver<()>> {
         let api_key = api_key.to_string();
 
+        let (tx, rx) = channel::<()>();
         thread::spawn(move || -> Result<()> {
             migrate().map_err(|e| {
                 eprintln!("ERROR: Not possible to migrate - {:?}", e);
@@ -100,10 +103,13 @@ impl Runner {
             // for each high level category
             traverse_fetch(&categories, &api_key);
             // first_level_fetch(&categories, &api_key)?;
+            if let Err(e) = tx.send(()) {
+                eprintln!("ERROR: not possible to send to another thread - {:?}", e);
+            }
             println!("Done updating DB!");
             Ok(())
         });
-        Ok(())
+        Ok(rx)
     }
 }
 
@@ -160,6 +166,10 @@ fn fetch_category(api_key: &str, query: &str) -> Result<Vec<Ec3Material>> {
                 "ERROR: while fetching materials from category {query} {:?}",
                 e
             );
-            CError::FromApi
+            match e {
+                ec3api::error::ApiError::RequestError() => CError::RequestError,
+                ec3api::error::ApiError::AuthError => CError::NoAuth,
+                _ => CError::FromApi,
+            }
         })
 }
