@@ -50,7 +50,8 @@ pub struct UMaterial {
 
 impl UMaterial {
     pub fn get_from_db(category: &str) -> Self {
-        let cat_avg = material_db::get_category_by_name(category).unwrap_or(0.);
+        let cat_avg = material_db::get_category_avg(category).unwrap_or(0.);
+        let unit = material_db::get_category_unit(category).unwrap_or_default();
         let mut name = category.to_string();
         name.push_str(" (Generic)");
         Self {
@@ -59,10 +60,7 @@ impl UMaterial {
                 value: cat_avg,
                 unit: GwpUnits::KgCO2e,
             },
-            unit: DeclaredUnit {
-                value: 1.,
-                unit: ec3api::models::Unit::Unknown,
-            },
+            unit,
         }
     }
 }

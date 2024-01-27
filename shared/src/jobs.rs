@@ -145,6 +145,7 @@ fn traverse_fetch(categories: &[Node<Ec3Category>], api_key: &str) {
             eprintln!("ERROR: while writing to db: {}", e);
             CError::FromDb
         });
+        let _ = crate::material_db::write_category(&cat.value);
         if cat.children.as_ref().is_some_and(|c| !c.is_empty()) {
             let children = &cat.children.as_ref().unwrap();
             traverse_fetch(children, api_key);

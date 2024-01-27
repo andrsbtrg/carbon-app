@@ -87,86 +87,95 @@ fn welcome_window(ctx: &egui::Context, state: &mut State) {
 
 fn calculate_page(state: &mut State, ui: &mut egui::Ui) {
     if state.project.is_none() {
-        ui.label("Wow, such emptiness here!\nTry to start by adding a material from the list");
+        ui.label("Wow, such emptiness here!\nStart a new project?");
+        if ui.button("New project").clicked() {
+            state.project = Some(Project::new());
+        }
         return;
     }
-    let mut grid_updated = false;
-    let project = state.project.as_mut().unwrap();
-    ui.add_space(10.);
-    egui::Grid::new("my_grid")
-        .num_columns(3)
-        .max_col_width(200.)
-        .min_row_height(40.)
-        .spacing([40.0, 4.0])
-        .striped(true)
+    ScrollArea::vertical()
+        .auto_shrink([false; 2])
         .show(ui, |ui| {
-            ui.label("Material");
-            ui.label("Quantity");
-            ui.label("Unit");
-            ui.label("GWP (KgCO2e)");
-            ui.label("-");
-            ui.end_row();
-            for comp in project.components.iter_mut() {
-                ui.label(comp.material.get_name());
-                let value = DragValue::new(&mut comp.quantity);
-                if ui.add(value).changed() {
-                    comp.calculate();
-                    grid_updated = true;
-                }
-                ui.label(format!("{unit:?}", unit = &comp.material.get_unit().unit));
-                ui.label(format!("{tots:.2}", tots = &comp.calculated));
-                match comp.cmp_to_average() {
-                    CmpResult::Smaller => ui
-                        .label(RichText::new("↓").color(Color32::LIGHT_GREEN))
-                        .on_hover_text(
-                            "This material has a smaller GWP than the category average!",
-                        ),
-                    CmpResult::Greater => ui
-                        .label(RichText::new("↑").color(Color32::LIGHT_RED))
-                        .on_hover_text(
-                            "This material has a greater GWP than the category average.",
-                        ),
-                    CmpResult::AlmostEqual => ui
-                        .label(RichText::new("=").color(Color32::LIGHT_YELLOW))
-                        .on_hover_text(
-                            "This material has about the same GWP as the category average.",
-                        ),
-                };
-                ui.end_row();
-            } // end of iterating through components in project
-
-            ComboBox::from_id_source("category-picker")
-                .width(200.)
-                .selected_text(fit_to_width(&state.selected_category, 25))
-                .show_ui(ui, |ui| {
-                    for cat in &state.loaded_categories {
-                        if ui
-                            .selectable_label(state.selected_category == *cat, cat)
-                            .clicked()
-                        {
-                            project.add_generic_comp(cat);
+            let mut grid_updated = false;
+            let project = state.project.as_mut().unwrap();
+            ui.add_space(10.);
+            egui::Grid::new("my_grid")
+                .num_columns(3)
+                .max_col_width(200.)
+                .min_row_height(40.)
+                .spacing([40.0, 4.0])
+                .striped(true)
+                .show(ui, |ui| {
+                    ui.label("Material");
+                    ui.label("Quantity");
+                    ui.label("Unit");
+                    ui.label("GWP (KgCO2e)");
+                    ui.label("-");
+                    ui.end_row();
+                    for comp in project.components.iter_mut() {
+                        ui.label(comp.material.get_name());
+                        let value = DragValue::new(&mut comp.quantity);
+                        if ui.add(value).changed() {
+                            comp.calculate();
+                            grid_updated = true;
                         }
-                    }
+                        ui.label(format!("{unit:?}", unit = &comp.material.get_unit().unit));
+                        ui.label(format!("{tots:.2}", tots = &comp.calculated));
+                        match comp.cmp_to_average() {
+                            CmpResult::Smaller => ui
+                                .label(RichText::new("↓").color(Color32::LIGHT_GREEN))
+                                .on_hover_text(
+                                    "This material has a smaller GWP than the category average!",
+                                ),
+                            CmpResult::Greater => ui
+                                .label(RichText::new("↑").color(Color32::LIGHT_RED))
+                                .on_hover_text(
+                                    "This material has a greater GWP than the category average.",
+                                ),
+                            CmpResult::AlmostEqual => ui
+                                .label(RichText::new("=").color(Color32::LIGHT_YELLOW))
+                                .on_hover_text(
+                                    "This material has about the same GWP as the category average.",
+                                ),
+                        };
+                        ui.end_row();
+                    } // end of iterating through components in project
+
+                    ComboBox::from_id_source("category-picker")
+                        .width(200.)
+                        .selected_text(fit_to_width(&state.selected_category, 25))
+                        .show_ui(ui, |ui| {
+                            // TODO: this dropdown should display the list of generic categories instead of
+                            // loaded categories
+                            for cat in &state.loaded_categories {
+                                if ui
+                                    .selectable_label(state.selected_category == *cat, cat)
+                                    .clicked()
+                                {
+                                    project.add_generic_comp(cat);
+                                }
+                            }
+                        });
+                    ui.label("Select a category to add a generic component");
+                    ui.end_row();
                 });
-            ui.label("Select a category to add a generic component");
-            ui.end_row();
+            if grid_updated {
+                project.calculate();
+            };
+            let total = match project.calculated_gwp > 1000. {
+                true => RichText::new(format!(
+                    "Total GWP: {total:.2} T CO2e",
+                    total = &project.calculated_gwp / 1000.
+                )),
+                false => RichText::new(format!(
+                    "Total GWP: {total:.2} KgCO2e",
+                    total = &project.calculated_gwp
+                )),
+            }
+            .color(Color32::WHITE);
+            ui.add_space(4.);
+            ui.label(total);
         });
-    if grid_updated {
-        project.calculate();
-    };
-    let total = match project.calculated_gwp > 1000. {
-        true => RichText::new(format!(
-            "Total GWP: {total:.2} T CO2e",
-            total = &project.calculated_gwp / 1000.
-        )),
-        false => RichText::new(format!(
-            "Total GWP: {total:.2} KgCO2e",
-            total = &project.calculated_gwp
-        )),
-    }
-    .color(Color32::WHITE);
-    ui.add_space(4.);
-    ui.label(total);
 }
 
 fn list_page(state: &mut State, ui: &mut egui::Ui) {

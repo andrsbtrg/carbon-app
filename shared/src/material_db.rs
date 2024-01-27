@@ -1,11 +1,32 @@
 use std::{collections::HashSet, str::FromStr};
 
-use ec3api::models::Gwp;
+use ec3api::models::{DeclaredUnit, Ec3Category, Gwp};
 use rusqlite::{Connection, Result};
 
 use crate::{settings, Material};
 pub fn connection() -> Result<Connection> {
     Connection::open(settings::SettingsProvider::default_path().join("carbon.db"))
+}
+pub fn write_category(category: &Ec3Category) -> Result<()> {
+    let conn = connection()?;
+
+    let mut stmt = conn
+        .prepare("UPDATE categories SET declared_value=(?1), declared_unit=(?2) WHERE id=(?3);")?;
+
+    match stmt.execute([
+        &category.declared_unit.value.to_string(),
+        &format!("{:?}", &category.declared_unit.unit),
+        &category.id,
+    ]) {
+        Ok(_) => {
+            println!("Update category {} into db.", { &category.name });
+            Ok(())
+        }
+        Err(e) => {
+            eprintln!("ERROR: Updating category {}", &category.name);
+            Err(e)
+        }
+    }
 }
 pub fn load_category(category: &str) -> Result<Vec<Material>> {
     let conn = connection()?;
@@ -28,6 +49,15 @@ pub fn load_category(category: &str) -> Result<Vec<Material>> {
     Ok(materials)
 }
 
+fn g(row: &rusqlite::Row<'_>) -> Result<DeclaredUnit> {
+    let declared_value: f64 = row.get(0)?;
+    let declared_unit: String = row.get(1)?;
+    Ok(DeclaredUnit {
+        value: declared_value,
+        unit: ec3api::models::Unit::from_str(&declared_unit)
+            .unwrap_or(ec3api::models::Unit::Unknown),
+    })
+}
 fn f(row: &rusqlite::Row<'_>) -> Result<Material> {
     let id: String = row.get(0)?;
     let name: String = row.get(1)?;
@@ -81,7 +111,9 @@ pub fn migrate() -> Result<()> {
             name TEXT NOT NULL,
             display_name TEXT,
             description TEXT,
-            parent_id TEXT
+            parent_id TEXT,
+            declared_value REAL,
+            declared_unit TEXT    
 );",
         (),
     )?;
@@ -124,8 +156,7 @@ pub fn write(materials: &Vec<Material>, parent: &str) -> Result<()> {
         .into_iter()
         .collect();
 
-    let mut stmt = conn.prepare(
-        "INSERT INTO categories (id, name, display_name, description, parent_id) VALUES (?1, ?2, ?3, ?4, ?5);",
+    let mut stmt = conn.prepare("INSERT INTO categories (id, name, display_name, description, parent_id) VALUES (?1, ?2, ?3, ?4, ?5);",
     )?;
     for any in categories {
         match stmt.execute([
@@ -239,7 +270,7 @@ WHERE category_id = (?1);
     Ok(response)
 }
 
-pub fn get_category_by_name(category: &str) -> Result<f64> {
+pub fn get_category_avg(category: &str) -> Result<f64> {
     let conn = connection()?;
     let mut stmt = conn.prepare(
         "
@@ -253,4 +284,17 @@ WHERE categories.name = (?1);
         response = row?;
     }
     Ok(response)
+}
+
+pub fn get_category_unit(category: &str) -> Result<DeclaredUnit> {
+    let conn = connection()?;
+    let mut stmt = conn.prepare(
+        "
+SELECT declared_value, declared_unit FROM categories
+WHERE categories.name = (?1);
+",
+    )?;
+    let row = stmt.query_map([category], g)?.next().unwrap();
+    let unit: DeclaredUnit = row?;
+    Ok(unit)
 }
