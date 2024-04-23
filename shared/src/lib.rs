@@ -252,6 +252,22 @@ impl State {
         self.selected_category = String::new();
         self.filter_input = String::new();
     }
+
+    pub fn get_category_info(&mut self) {
+        let category = self.selected.as_ref().unwrap().category.name.clone();
+        self.selected_category = category;
+        match material_db::get_category(&self.selected_category) {
+            Ok(category) => {
+                // set category in state to display
+                dbg!(category);
+            }
+            Err(e) => eprintln!("ERROR: gettin category from db: {e}"),
+        };
+    }
+
+    pub fn get_selected(&self) -> &ec3api::models::Ec3Material {
+        &self.selected.as_ref().unwrap()
+    }
 }
 
 #[derive(PartialEq, Eq)]

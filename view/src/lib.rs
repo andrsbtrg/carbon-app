@@ -21,15 +21,31 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
     };
     // let loading = state.preload_data(); // do we still need this?
     // Top bar
-    TopBottomPanel::top("top-bar").show(ctx, |ui| {
-        ui.horizontal(|ui| {
-            add_tab(ui, state, Tabs::Search);
-            add_tab(ui, state, Tabs::List);
-            add_tab(ui, state, Tabs::Chart);
-            add_tab(ui, state, Tabs::Category);
-            add_tab(ui, state, Tabs::Calculate);
+    let frame = egui::Frame {
+        inner_margin: egui::Margin::symmetric(8.0, 2.0),
+        fill: Color32::from_gray(20),
+        ..Default::default()
+    };
+    TopBottomPanel::top("top-bar")
+        .frame(frame)
+        .exact_height(44.0)
+        .show(ctx, |ui| {
+            ui.horizontal_centered(|ui| {
+                let logo = RichText::new("  🇨  ").size(26.).color(Color32::WHITE);
+                ui.menu_button(logo, |ui| {
+                    ui.label("About");
+                    if ui.button("Quit").clicked() {
+                        ui.ctx().send_viewport_cmd(egui::ViewportCommand::Close);
+                    }
+                });
+                ui.add_space(44.);
+                add_tab(ui, state, Tabs::Search);
+                add_tab(ui, state, Tabs::List);
+                add_tab(ui, state, Tabs::Chart);
+                add_tab(ui, state, Tabs::Category);
+                add_tab(ui, state, Tabs::Calculate);
+            });
         });
-    });
     // Bottom bar
     TopBottomPanel::bottom("bottom-bar").show(ctx, |ui| {
         ui.horizontal(|ui| {
@@ -47,7 +63,7 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
                 shared::Tabs::Search => search_page(state, ui),
                 shared::Tabs::Chart => chart_page(state, ui),
                 shared::Tabs::List => list_page(state, ui),
-                shared::Tabs::Category => (),
+                shared::Tabs::Category => categories_page(state, ui),
                 shared::Tabs::Calculate => calculate_page(state, ui),
             }
         }
@@ -59,6 +75,28 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
         }
     };
     state.toasts.show(ctx);
+}
+
+fn categories_page(state: &mut State, ui: &mut egui::Ui) {
+    egui::SidePanel::left("category-tree")
+        .default_width(400.)
+        .max_width(450.)
+        .resizable(true)
+        .show_inside(ui, |ui| categories_tree(state, ui));
+
+    if state.selected_category.is_empty() {
+        ui.label("Select a category to know more");
+        return;
+    }
+    // central panel
+
+    ui.vertical_centered(|ui| {
+        ui.heading(RichText::new(&state.selected_category).color(Color32::WHITE));
+    });
+    ui.add_space(2.0);
+    ui.indent("s-category", |_ui| {
+        // TODO: here render category
+    });
 }
 
 fn welcome_window(ctx: &egui::Context, state: &mut State) {
@@ -196,63 +234,69 @@ fn list_page(state: &mut State, ui: &mut egui::Ui) {
                 });
         });
     // render the selected material in the central panel
-    if let Some(selected) = &state.selected {
-        ui.vertical_centered(|ui| {
-            ui.heading(RichText::new(&selected.name).color(Color32::WHITE));
-        });
-        ui.add_space(2.0);
-        ui.indent("general-selected", |ui| {
-            ui.horizontal(|ui| {
-                ui.label("Category: ");
-                if ui
-                    .selectable_label(false, &selected.category.display_name)
-                    .on_hover_text(&selected.category.description)
-                    .clicked()
-                {
-                    // go to category tab
-                    state.toasts.info("Oops, let's forget about that");
-                }
-            });
+    if !state.selected.is_none() {
+        render_selected_material(state, ui);
+    }
+}
 
-            let avg_stat = state.category_stats.unwrap_or(0.);
-            let cat_avg = RichText::new(format!(
-                "Category average: {avg_stat:.2} {unit:?}",
-                unit = selected.gwp.unit
-            ));
-            ui.label(cat_avg);
-            let gwp = RichText::new(format!(
-                "GWP: {gwp:.2} {unit:?}",
-                gwp = selected.gwp.value,
-                unit = selected.gwp.unit
-            ));
-            let color = match avg_stat > selected.gwp.value {
-                true => Color32::LIGHT_GREEN,
-                false => Color32::LIGHT_RED,
-            };
-            ui.label(gwp.color(color));
-            if ui.button("Add to project →").clicked() {
-                state.active_tab = shared::Tabs::Calculate;
-
-                let copy = selected.clone();
-                if let Some(project) = state.project.as_mut() {
-                    project.add_component(copy, avg_stat);
-                } else {
-                    let mut p = Project::new();
-                    p.add_component(copy, avg_stat);
-                    state.project = Some(p);
-                }
+fn render_selected_material(state: &mut State, ui: &mut egui::Ui) {
+    let selected = state.selected.as_ref().unwrap().clone();
+    ui.vertical_centered(|ui| {
+        ui.heading(RichText::new(&selected.name).color(Color32::WHITE));
+    });
+    ui.add_space(2.0);
+    ui.indent("general-selected", |ui| {
+        ui.horizontal(|ui| {
+            ui.label("Category: ");
+            if ui
+                .selectable_label(false, &selected.category.display_name)
+                .on_hover_text(&selected.category.description)
+                .clicked()
+            {
+                // go to category tab
+                state.active_tab = Tabs::Category;
+                state.get_category_info();
             }
         });
-        ui.separator();
-        ScrollArea::vertical().show(ui, |ui| {
-            ui.indent("more", |ui| {
-                ui.add_space(2.0);
-                ui.label("Description: ");
-                ui.label(&selected.description);
-                ui.add_space(2.0);
-            });
+
+        let avg_stat = state.category_stats.unwrap_or(0.);
+        let cat_avg = RichText::new(format!(
+            "Category average: {avg_stat:.2} {unit:?}",
+            unit = selected.gwp.unit
+        ));
+        ui.label(cat_avg);
+        let gwp = RichText::new(format!(
+            "GWP: {gwp:.2} {unit:?}",
+            gwp = selected.gwp.value,
+            unit = selected.gwp.unit
+        ));
+        let color = match avg_stat > selected.gwp.value {
+            true => Color32::LIGHT_GREEN,
+            false => Color32::LIGHT_RED,
+        };
+        ui.label(gwp.color(color));
+        if ui.button("Add to project →").clicked() {
+            state.active_tab = shared::Tabs::Calculate;
+
+            let copy = selected.clone();
+            if let Some(project) = state.project.as_mut() {
+                project.add_component(copy, avg_stat);
+            } else {
+                let mut p = Project::new();
+                p.add_component(copy, avg_stat);
+                state.project = Some(p);
+            }
+        }
+    });
+    ui.separator();
+    ScrollArea::vertical().show(ui, |ui| {
+        ui.indent("more", |ui| {
+            ui.add_space(2.0);
+            ui.label("Description: ");
+            ui.label(&selected.description);
+            ui.add_space(2.0);
         });
-    }
+    });
 }
 
 fn chart_page(state: &mut State, ui: &mut egui::Ui) {
@@ -282,7 +326,7 @@ fn search_page(state: &mut State, ui: &mut egui::Ui) {
         .default_width(400.)
         .max_width(450.)
         .resizable(true)
-        .show_inside(ui, |ui| categories_page(state, ui));
+        .show_inside(ui, |ui| categories_tree(state, ui));
     ui.label("Search material by term");
     ui.horizontal(|ui| {
         ui.text_edit_singleline(&mut state.fetch_input);
@@ -371,7 +415,7 @@ fn render_tree(ui: &mut egui::Ui, tree: &shared::CategoriesTree, state: &mut Sta
 }
 
 /// Lazy loads and renders [shared::CategoriesTree]
-fn categories_page(state: &mut State, ui: &mut egui::Ui) {
+fn categories_tree(state: &mut State, ui: &mut egui::Ui) {
     if state.preload_categories() {
         ui.vertical_centered_justified(|ui| {
             ui.label("Loading...");
@@ -432,12 +476,16 @@ fn render_material_cards(state: &mut State, ui: &mut eframe::egui::Ui, filter: &
 
 /// Short way of adding a tab that is connected to a [Tabs] enum in [State]
 fn add_tab(ui: &mut egui::Ui, state: &mut State, tab: Tabs) {
-    if ui
-        .selectable_label(state.active_tab == tab, format!("   {tab}   "))
-        .clicked()
-    {
+    let color;
+    if state.active_tab == tab {
+        color = Color32::LIGHT_BLUE;
+    } else {
+        color = Color32::WHITE;
+    }
+    let text = RichText::new(format!("   {tab}   ")).color(color);
+    if ui.button(text).clicked() {
         state.active_tab = tab;
-    };
+    }
 }
 
 fn add_category_filter(ui: &mut egui::Ui, state: &mut State) {
@@ -450,7 +498,7 @@ fn add_category_filter(ui: &mut egui::Ui, state: &mut State) {
                     .selectable_label(state.selected_category == *cat, cat)
                     .clicked()
                 {
-                    state.selected_category = cat.to_string();
+                    state.selected_category = cat.to_owned();
                 }
             }
         });

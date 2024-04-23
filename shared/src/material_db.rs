@@ -1,6 +1,6 @@
 use std::{collections::HashSet, str::FromStr};
 
-use ec3api::models::{DeclaredUnit, Ec3Category, Gwp};
+use ec3api::models::{Category, DeclaredUnit, Ec3Category, Gwp};
 use rusqlite::{Connection, Result};
 
 use crate::{settings, Material};
@@ -49,6 +49,18 @@ pub fn load_category(category: &str) -> Result<Vec<Material>> {
     Ok(materials)
 }
 
+fn h(row: &rusqlite::Row<'_>) -> Result<Category> {
+    let id: String = row.get(0)?;
+    let name: String = row.get(1)?;
+    let display_name: String = row.get(2)?;
+    let description: String = row.get(3)?;
+    Ok(Category {
+        description,
+        name,
+        display_name,
+        id,
+    })
+}
 fn g(row: &rusqlite::Row<'_>) -> Result<DeclaredUnit> {
     let declared_value: f64 = row.get(0)?;
     let declared_unit: String = row.get(1)?;
@@ -296,5 +308,18 @@ WHERE categories.name = (?1);
     )?;
     let row = stmt.query_map([category], g)?.next().unwrap();
     let unit: DeclaredUnit = row?;
+    Ok(unit)
+}
+
+pub fn get_category(name: &str) -> Result<ec3api::models::Category> {
+    let conn = connection()?;
+    let mut stmt = conn.prepare(
+        "
+SELECT id, name, display_name, description FROM categories
+WHERE categories.name = (?1);
+",
+    )?;
+    let row = stmt.query_map([name], h)?.next().unwrap();
+    let unit: ec3api::models::Category = row?;
     Ok(unit)
 }
