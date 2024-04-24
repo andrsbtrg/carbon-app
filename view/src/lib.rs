@@ -82,7 +82,7 @@ fn categories_page(state: &mut State, ui: &mut egui::Ui) {
         .default_width(400.)
         .max_width(450.)
         .resizable(true)
-        .show_inside(ui, |ui| categories_tree(state, ui));
+        .show_inside(ui, |ui| show_categories_tree(state, ui));
 
     if state.selected_category.is_empty() {
         ui.label("Select a category to know more");
@@ -317,16 +317,24 @@ fn add_filtering(ui: &mut egui::Ui, state: &mut State) {
 }
 
 fn search_page(state: &mut State, ui: &mut egui::Ui) {
+    egui::SidePanel::left("category-tree")
+        .default_width(400.)
+        .resizable(true)
+        .show_inside(ui, |ui| show_categories_tree(state, ui));
+
+    // central panel
+    egui::CentralPanel::default().show_inside(ui, |ui| {
+        search_section(state, ui);
+    });
+}
+
+fn search_section(state: &mut State, ui: &mut egui::Ui) {
     let cb = |t: &mut Toast| {
         //Callback for the toast
         t.set_closable(true)
             .set_duration(Some(Duration::from_millis((1000. * 3.5) as u64)));
     };
-    egui::SidePanel::right("category-tree")
-        .default_width(400.)
-        .max_width(450.)
-        .resizable(true)
-        .show_inside(ui, |ui| categories_tree(state, ui));
+
     ui.label("Search material by term");
     ui.horizontal(|ui| {
         ui.text_edit_singleline(&mut state.fetch_input);
@@ -341,38 +349,24 @@ fn search_page(state: &mut State, ui: &mut egui::Ui) {
         }
     });
     ui.collapsing("More options", |ui| {
-        ui.label("Country:");
-        ui.text_edit_singleline(&mut state.country);
-        if ui.button("Search").clicked() {
-            // do something
-            println!("Advanced material search.");
-            // state.fetch_materials(&state.fetch_input.clone());
-        }
-        if ui
-            .button("Update db")
-            .on_hover_text("This is a lengthy operation which downloads a new copy of EC3 materials locally for searching")
-            .clicked()
-        {
-            if let Some(api_key) = &state.api_key {
-                match shared::jobs::Runner::update_db(api_key) {
-                    Ok(rx) => state.job_rx = Some(rx),
-                    Err(_) => cb(state.toasts.error("Could not update db")),
-                };
-                state.toasts.info("Db update in progress").set_duration(None);
+            ui.label("Country:");
+            if ui
+                .button("Update db")
+                .on_hover_text("This is a lengthy operation which downloads a new copy of EC3 materials locally for searching")
+                .clicked()
+            {
+                if let Some(api_key) = &state.api_key {
+                    match shared::jobs::Runner::update_db(api_key) {
+                        Ok(rx) => state.job_rx = Some(rx),
+                        Err(_) => cb(state.toasts.error("Could not update db")),
+                    };
+                    state.toasts.info("Db update in progress").set_duration(None);
+                }
+                else {
+                    cb(state.toasts.error("Can't update db without API key!"));
+                }
             }
-            else {
-                cb(state.toasts.error("Can't update db without API key!"));
-            }
-        }
-        /*
-        if ui.button("Load wood from cache").clicked() {
-            &state.fetch_materials("Wood");
-        }
-        if ui.button("Save to db").clicked() {
-            state.save_materials();
-        }
-        */
-    });
+        });
 }
 
 /// Render recursively nodes in [shared::CategoriesTree]
@@ -415,7 +409,7 @@ fn render_tree(ui: &mut egui::Ui, tree: &shared::CategoriesTree, state: &mut Sta
 }
 
 /// Lazy loads and renders [shared::CategoriesTree]
-fn categories_tree(state: &mut State, ui: &mut egui::Ui) {
+fn show_categories_tree(state: &mut State, ui: &mut egui::Ui) {
     if state.preload_categories() {
         ui.vertical_centered_justified(|ui| {
             ui.label("Loading...");
