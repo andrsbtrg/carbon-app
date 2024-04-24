@@ -1,4 +1,5 @@
 extern crate shared;
+mod visuals;
 use std::time::Duration;
 
 use eframe::{
@@ -78,11 +79,7 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
 }
 
 fn categories_page(state: &mut State, ui: &mut egui::Ui) {
-    egui::SidePanel::left("category-tree")
-        .default_width(400.)
-        .max_width(450.)
-        .resizable(true)
-        .show_inside(ui, |ui| show_categories_tree(state, ui));
+    visuals::Panels::left().show_inside(ui, |ui| show_categories_tree(state, ui));
 
     if state.selected_category.is_empty() {
         ui.label("Select a category to know more");
@@ -221,18 +218,13 @@ fn list_page(state: &mut State, ui: &mut egui::Ui) {
     ui.separator();
 
     // render the material list to the left
-    egui::SidePanel::left("list-materials")
-        .resizable(true)
-        .default_width(350.)
-        .min_width(350.)
-        .max_width(400.)
-        .show_inside(ui, |panel_ui| {
-            ScrollArea::vertical()
-                .auto_shrink([false; 2])
-                .show(panel_ui, |ui| {
-                    render_material_cards(state, ui, &state.filter_input.to_lowercase());
-                });
-        });
+    visuals::Panels::left().show_inside(ui, |panel_ui| {
+        ScrollArea::vertical()
+            .auto_shrink([false; 2])
+            .show(panel_ui, |ui| {
+                render_material_cards(state, ui, &state.filter_input.to_lowercase());
+            });
+    });
     // render the selected material in the central panel
     if !state.selected.is_none() {
         render_selected_material(state, ui);
@@ -317,10 +309,7 @@ fn add_filtering(ui: &mut egui::Ui, state: &mut State) {
 }
 
 fn search_page(state: &mut State, ui: &mut egui::Ui) {
-    egui::SidePanel::left("category-tree")
-        .default_width(400.)
-        .resizable(true)
-        .show_inside(ui, |ui| show_categories_tree(state, ui));
+    visuals::Panels::left().show_inside(ui, |ui| show_categories_tree(state, ui));
 
     // central panel
     egui::CentralPanel::default().show_inside(ui, |ui| {
@@ -335,26 +324,34 @@ fn search_section(state: &mut State, ui: &mut egui::Ui) {
             .set_duration(Some(Duration::from_millis((1000. * 3.5) as u64)));
     };
 
-    ui.label("Search material by term");
-    ui.horizontal(|ui| {
+    let grid = egui::Grid::new("search-grid")
+        .num_columns(2)
+        .spacing([40.0, 4.0]);
+
+    grid.show(ui, |ui| {
+        ui.label("Material Name:");
         ui.text_edit_singleline(&mut state.fetch_input);
-        if ui
-            .button("Search")
-            .on_hover_text("Type a material name to search in EC3")
-            .clicked()
-            && !state.fetch_input.is_empty()
-        {
-            state.fetch_materials_from_input();
-            state.active_tab = shared::Tabs::List;
-        }
+        ui.end_row();
+
+        ui.label("Country:");
+        ui.text_edit_singleline(&mut state.country);
+        ui.end_row();
     });
-    ui.collapsing("More options", |ui| {
-            ui.label("Country:");
-            if ui
-                .button("Update db")
-                .on_hover_text("This is a lengthy operation which downloads a new copy of EC3 materials locally for searching")
-                .clicked()
-            {
+
+    if ui
+        .button("Search")
+        .on_hover_text("Type a material name to search in EC3")
+        .clicked()
+        && !state.fetch_input.is_empty()
+    {
+        state.fetch_materials_from_input();
+        state.active_tab = shared::Tabs::List;
+    }
+    ui.separator();
+    ui.end_row();
+    if ui.button("Update db")
+            .on_hover_text("This is a lengthy operation which downloads a new copy of EC3 materials locally for searching")
+            .clicked() {
                 if let Some(api_key) = &state.api_key {
                     match shared::jobs::Runner::update_db(api_key) {
                         Ok(rx) => state.job_rx = Some(rx),
@@ -365,8 +362,7 @@ fn search_section(state: &mut State, ui: &mut egui::Ui) {
                 else {
                     cb(state.toasts.error("Can't update db without API key!"));
                 }
-            }
-        });
+        }
 }
 
 /// Render recursively nodes in [shared::CategoriesTree]

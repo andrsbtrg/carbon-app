@@ -6,9 +6,9 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-eframe = "0.24"
-egui-notify = "0.11.0"
-egui_plot = "0.24"
+eframe = "0.27"
+egui-notify = "0.14"
+egui_plot = "0.27"
 shared = { path = "../shared" }
 
 [lib]
