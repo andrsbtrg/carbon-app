@@ -13,118 +13,56 @@ impl Panels {
     }
 }
 
-pub trait Theme {
-    fn dark(&self) -> bool;
-     fn bg_color(&self) -> Color32;
-     fn panel_bg_color(&self) -> Color32;
-     fn inactive_bg_fill(&self) -> Color32;
-     fn hovered_color(&self) -> Color32;
-     fn highlight_color(&self) -> Color32;
-     fn bg_stroke_color(&self) -> Color32;// from figma. separator lines, panel lines, etc
-     fn default(&self) -> Color32;
-     fn subdued(&self) -> Color32;
-     fn strong(&self) -> Color32;
-     fn floating_color(&self) -> Color32;
+pub struct Theme {
+    pub dark: bool,
+    pub bg_color: Color32,
+    pub panel_bg_color: Color32,
+    pub inactive_bg_fill: Color32,
+    pub hovered_color: Color32,
+    pub highlight_color: Color32,
+    pub bg_stroke_color: Color32,// from figma. separator lines, panel lines, etc
+    pub default: Color32,
+    pub subdued: Color32,
+    pub strong: Color32,
+    pub floating_color: Color32,
 }
 
-pub struct LightTheme {}
-
-impl Theme for LightTheme {
-    fn dark(&self) -> bool {
-        false
+impl Theme {
+    pub fn light() -> Self {
+        Self {
+            dark: false,
+            bg_color: Color32::from_gray(255),
+            panel_bg_color: Color32::from_gray(248),
+            inactive_bg_fill: Color32::from_rgb(250, 250, 250),
+            hovered_color: Color32::from_gray(230),
+            highlight_color: Color32::from_rgb(90, 129, 255),
+            bg_stroke_color: Color32::from_gray(190),
+            default: Color32::from_gray(60),
+            subdued: Color32::from_gray(80),
+            strong: Color32::from_rgb(1, 1, 1),
+            floating_color: Color32::from_gray(195),
+        }
     }
-    fn bg_color(&self) -> Color32 {
-        Color32::from_gray(255)
-    }
-
-    fn panel_bg_color(&self) -> Color32 {
-        Color32::from_gray(248)
-    }
-
-    fn inactive_bg_fill(&self) -> Color32 {
-        Color32::from_rgb(250, 250, 250)
-    }
-
-    fn hovered_color(&self) -> Color32 {
-        Color32::from_gray(230)
-    }
-
-    fn highlight_color(&self) -> Color32 {
-        Color32::from_rgb(90, 129, 255)
-    }
-
-    fn bg_stroke_color(&self) -> Color32 {
-        Color32::from_gray(190)
-    }
-
-    fn default(&self) -> Color32 {
-        Color32::from_gray(60)
-    }
-
-    fn subdued(&self) -> Color32 {
-        Color32::from_gray(80)
-    }
-
-    fn strong(&self) -> Color32 {
-        Color32::from_rgb(1, 1, 1)
-    }
-
-    fn floating_color(&self) -> Color32 {
-        Color32::from_gray(195)
+    pub fn dark() -> Self {
+        Self {
+            dark: true,
+            bg_color: Color32::BLACK,
+            panel_bg_color: Color32::from_rgb(13, 16, 17),
+            inactive_bg_fill: Color32::from_rgb(5, 6, 7),
+            hovered_color: Color32::from_gray(64),
+            highlight_color: Color32::from_rgb(90, 129, 255),
+            bg_stroke_color: Color32::from_gray(30),
+            default: Color32::from_rgb(202, 216, 222),
+            subdued: Color32::from_rgb(108, 121, 127),
+            strong: Color32::from_rgb(249, 249, 249),
+            floating_color: Color32::from_gray(35),
+        }
     }
 }
 
-pub struct DarkTheme {}
-
-impl Theme for DarkTheme {
-    fn bg_color(&self) -> Color32 {
-        egui::Color32::BLACK
-    }
-
-    fn panel_bg_color(&self) -> Color32 {
-        Color32::from_rgb(13, 16, 17)
-    }
-
-    fn inactive_bg_fill(&self) -> Color32 {
-        Color32::from_rgb(5, 6, 7)
-    }
-
-    fn hovered_color(&self) -> Color32 {
-        Color32::from_gray(64)
-    }
-
-    fn highlight_color(&self) -> Color32 {
-        Color32::from_rgb(90, 129, 255)
-    }
-
-    fn bg_stroke_color(&self) -> Color32 {
-        Color32::from_gray(30)
-    }
-
-    fn default(&self) -> Color32 {
-        Color32::from_rgb(202, 216, 222)
-    }
-
-    fn subdued(&self) -> Color32 {
-        Color32::from_rgb(108, 121, 127)
-    }
-
-    fn strong(&self) -> Color32 {
-        Color32::from_rgb(249, 249, 249)
-    }
-
-    fn floating_color(&self) -> Color32 {
-        Color32::from_gray(35)
-    }
-
-    fn dark(&self) -> bool {
-        true
-    }
-}
-
-pub fn set_style(ctx: &egui::Context, theme: impl Theme) {
+pub fn set_style(ctx: &egui::Context, theme: Theme) {
     // Start with the default fonts (we will be adding to them rather than replacing them).
-    let base_style = match theme.dark() {
+    let base_style = match theme.dark {
         true => egui::Visuals::dark(),
         false => egui::Visuals::light(),
     };
@@ -145,22 +83,22 @@ pub fn set_style(ctx: &egui::Context, theme: impl Theme) {
         .unwrap()
         .size = 16.0;
     egui_style.spacing.interact_size.y = 15.0;
-    egui_style.visuals.extreme_bg_color = theme.bg_color();
+    egui_style.visuals.extreme_bg_color = theme.bg_color;
 
-    let panel_bg_color = theme.panel_bg_color();
+    let panel_bg_color = theme.panel_bg_color;
 
     egui_style.visuals.widgets.noninteractive.weak_bg_fill = panel_bg_color;
     egui_style.visuals.widgets.noninteractive.bg_fill = panel_bg_color;
 
     egui_style.visuals.button_frame = true;
     egui_style.visuals.widgets.inactive.weak_bg_fill = Default::default(); // Buttons have no background color when inactive
-    egui_style.visuals.widgets.inactive.bg_fill = theme.inactive_bg_fill();
+    egui_style.visuals.widgets.inactive.bg_fill = theme.inactive_bg_fill;
     // Fill of unchecked radio buttons, checkboxes, etc. Must be brigher than the background floating_color
 
     {
         // Background colors for buttons (menu buttons, blueprint buttons, etc) when hovered or clicked:
         // let hovered_color = get_aliased_color(&json, "{Alias.Color.Action.Hovered.value}");
-        let hovered_color = theme.hovered_color(); // TODO(emilk): change the content of the design_tokens.json origin instead
+        let hovered_color = theme.hovered_color;
         egui_style.visuals.widgets.hovered.weak_bg_fill = hovered_color;
         egui_style.visuals.widgets.hovered.bg_fill = hovered_color;
         egui_style.visuals.widgets.active.weak_bg_fill = hovered_color;
@@ -183,14 +121,14 @@ pub fn set_style(ctx: &egui::Context, theme: impl Theme) {
         egui_style.visuals.widgets.open.expansion = 2.0;
     }
 
-    let highlight_color = theme.highlight_color();
+    let highlight_color = theme.highlight_color;
     egui_style.visuals.selection.bg_fill = highlight_color;
 
-    egui_style.visuals.widgets.noninteractive.bg_stroke.color = theme.bg_stroke_color(); // from figma. separator lines, panel lines, etc
+    egui_style.visuals.widgets.noninteractive.bg_stroke.color = theme.bg_stroke_color; // from figma. separator lines, panel lines, etc
 
-    let default = theme.default();
-    let subdued = theme.subdued();
-    let strong = theme.strong();
+    let default = theme.default;
+    let subdued = theme.subdued;
+    let strong = theme.strong;
     egui_style.visuals.widgets.noninteractive.fg_stroke.color = subdued; // non-interactive text
     egui_style.visuals.widgets.inactive.fg_stroke.color = default; // button text
     egui_style.visuals.widgets.active.fg_stroke.color = strong; // strong text and active button text
@@ -198,7 +136,7 @@ pub fn set_style(ctx: &egui::Context, theme: impl Theme) {
     egui_style.visuals.popup_shadow = egui::epaint::Shadow::NONE;
     egui_style.visuals.window_shadow = egui::epaint::Shadow::NONE;
 
-    let floating_color = theme.floating_color();
+    let floating_color = theme.floating_color;
     egui_style.visuals.window_fill = floating_color; // tooltips and menus
     egui_style.visuals.window_stroke = egui::Stroke::NONE;
     egui_style.visuals.panel_fill = panel_bg_color;

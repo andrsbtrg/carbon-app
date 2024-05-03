@@ -12,7 +12,7 @@ struct Application {
 
 impl Application {
     fn new(cc: &eframe::CreationContext<'_>, api_key: Option<String>) -> Application {
-        view::visuals::set_style(&cc.egui_ctx, view::visuals::DarkTheme {});
+        view::visuals::set_style(&cc.egui_ctx, view::visuals::Theme::dark());
         setup_custom_fonts(&cc.egui_ctx);
 
         Application {

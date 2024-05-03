@@ -45,9 +45,9 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
                     }
                     if ui.button("Toggle light/dark mode").clicked() {
                         if style.visuals.dark_mode {
-                            visuals::set_style(ctx, visuals::LightTheme {})
+                            visuals::set_style(ctx, visuals::Theme::light())
                         } else  {
-                            visuals::set_style(ctx, visuals::DarkTheme {})
+                            visuals::set_style(ctx, visuals::Theme::dark())
                         }
 
                     }
