@@ -45,8 +45,6 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
                     }
                     if ui.button("Toggle light/dark mode").clicked() {
                         if style.visuals.dark_mode {
-                            // let new_visuals = egui::Visuals::light();
-                            // ctx.set_visuals(new_visuals);
                             visuals::set_style(ctx, visuals::LightTheme {})
                         } else  {
                             visuals::set_style(ctx, visuals::DarkTheme {})
@@ -94,8 +92,6 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
 }
 
 fn categories_page(state: &mut State, ui: &mut egui::Ui) {
-
-    let style: crate::Style = (*ui.ctx().style()).clone();
     visuals::Panels::left().show_inside(ui, |ui| show_categories_tree(state, ui));
 
     if state.selected_category.is_empty() {
@@ -105,7 +101,7 @@ fn categories_page(state: &mut State, ui: &mut egui::Ui) {
     // central panel
 
     ui.vertical_centered(|ui| {
-        ui.heading(RichText::new(&state.selected_category).color(style.visuals.strong_text_color()));
+        ui.heading(RichText::new(&state.selected_category));
     });
     ui.add_space(2.0);
     ui.indent("s-category", |_ui| {
@@ -138,7 +134,6 @@ fn welcome_window(ctx: &egui::Context, state: &mut State) {
 }
 
 fn calculate_page(state: &mut State, ui: &mut egui::Ui) {
-    let style: crate::Style = (*ui.ctx().style()).clone();
     if state.project.is_none() {
         ui.label("Wow, such emptiness here!\nStart a new project?");
         if ui.button("New project").clicked() {
@@ -224,10 +219,9 @@ fn calculate_page(state: &mut State, ui: &mut egui::Ui) {
                     "Total GWP: {total:.2} KgCO2e",
                     total = &project.calculated_gwp
                 )),
-            }
-            .color(style.visuals.strong_text_color());
+            };
             ui.add_space(4.);
-            ui.label(total);
+            ui.strong(total);
         });
 }
 
@@ -250,10 +244,9 @@ fn list_page(state: &mut State, ui: &mut egui::Ui) {
 }
 
 fn render_selected_material(state: &mut State, ui: &mut egui::Ui) {
-    let style: crate::Style = (*ui.ctx().style()).clone();
     let selected = state.selected.as_ref().unwrap().clone();
     ui.vertical_centered(|ui| {
-        ui.heading(RichText::new(&selected.name).color(style.visuals.strong_text_color()));
+        ui.heading(RichText::new(&selected.name));
     });
     ui.add_space(2.0);
     ui.indent("general-selected", |ui| {
@@ -447,7 +440,6 @@ fn show_categories_tree(state: &mut State, ui: &mut egui::Ui) {
 
 /// Renders the materials available in the [State] state as a list view
 fn render_material_cards(state: &mut State, ui: &mut eframe::egui::Ui, filter: &str) {
-    let style: crate::Style = (*ui.ctx().style()).clone();
     for m in state
         .materials
         .iter()
@@ -464,7 +456,7 @@ fn render_material_cards(state: &mut State, ui: &mut eframe::egui::Ui, filter: &
         if ui
             .selectable_label(
                 false,
-                RichText::new(&m.name).heading().color(style.visuals.strong_text_color()),
+                RichText::new(&m.name).heading(),
             )
             .clicked()
         {
