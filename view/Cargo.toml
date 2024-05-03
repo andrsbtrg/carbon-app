@@ -10,6 +10,7 @@ eframe = "0.27"
 egui-notify = "0.14"
 egui_plot = "0.27"
 shared = { path = "../shared" }
+egui_tiles = "0.8"
 
 [lib]
 crate-type = ["rlib", "dylib"]

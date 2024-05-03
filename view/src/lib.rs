@@ -1,9 +1,9 @@
 extern crate shared;
-mod visuals;
+pub mod visuals;
 use std::time::Duration;
 
 use eframe::{
-    egui::{self, CentralPanel, ComboBox, DragValue, RichText, ScrollArea, TopBottomPanel},
+    egui::{self, CentralPanel, ComboBox, DragValue, RichText, ScrollArea, Style, TopBottomPanel},
     epaint::Color32,
 };
 use egui_notify::Toast;
@@ -22,9 +22,14 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
     };
     // let loading = state.preload_data(); // do we still need this?
     // Top bar
+    let style: Style = (*ctx.style()).clone();
+    let frame_color = match style.visuals.dark_mode {
+        true => Color32::from_gray(20),
+        false => Color32::from_rgb(252, 252, 252),
+    };
     let frame = egui::Frame {
         inner_margin: egui::Margin::symmetric(8.0, 2.0),
-        fill: Color32::from_gray(20),
+        fill: frame_color, // from figma or something
         ..Default::default()
     };
     TopBottomPanel::top("top-bar")
@@ -32,11 +37,21 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
         .exact_height(44.0)
         .show(ctx, |ui| {
             ui.horizontal_centered(|ui| {
-                let logo = RichText::new("  🇨  ").size(26.).color(Color32::WHITE);
+                let logo = RichText::new("  🇨  ").size(26.).color(style.visuals.text_color());
                 ui.menu_button(logo, |ui| {
-                    ui.label("About");
+                    ui.label("About").on_hover_text("Carbon app - version 0.1");
                     if ui.button("Quit").clicked() {
                         ui.ctx().send_viewport_cmd(egui::ViewportCommand::Close);
+                    }
+                    if ui.button("Toggle light/dark mode").clicked() {
+                        if style.visuals.dark_mode {
+                            // let new_visuals = egui::Visuals::light();
+                            // ctx.set_visuals(new_visuals);
+                            visuals::set_style(ctx, visuals::LightTheme {})
+                        } else  {
+                            visuals::set_style(ctx, visuals::DarkTheme {})
+                        }
+
                     }
                 });
                 ui.add_space(44.);
@@ -79,6 +94,8 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
 }
 
 fn categories_page(state: &mut State, ui: &mut egui::Ui) {
+
+    let style: crate::Style = (*ui.ctx().style()).clone();
     visuals::Panels::left().show_inside(ui, |ui| show_categories_tree(state, ui));
 
     if state.selected_category.is_empty() {
@@ -88,7 +105,7 @@ fn categories_page(state: &mut State, ui: &mut egui::Ui) {
     // central panel
 
     ui.vertical_centered(|ui| {
-        ui.heading(RichText::new(&state.selected_category).color(Color32::WHITE));
+        ui.heading(RichText::new(&state.selected_category).color(style.visuals.strong_text_color()));
     });
     ui.add_space(2.0);
     ui.indent("s-category", |_ui| {
@@ -102,7 +119,7 @@ fn welcome_window(ctx: &egui::Context, state: &mut State) {
             .resizable(false)
             .show(ctx, |ui| {
                 ui.horizontal(|ui| {
-                    ui.label(RichText::new("Welcome to Carbon!").color(Color32::WHITE));
+                    ui.strong(RichText::new("Welcome to Carbon!"));
                 });
                 ui.label("Carbon uses EC3 as a Database for EPDs and materials. At this moment, an API key is necessary to start.");
                 ui.horizontal(|ui| {
@@ -121,6 +138,7 @@ fn welcome_window(ctx: &egui::Context, state: &mut State) {
 }
 
 fn calculate_page(state: &mut State, ui: &mut egui::Ui) {
+    let style: crate::Style = (*ui.ctx().style()).clone();
     if state.project.is_none() {
         ui.label("Wow, such emptiness here!\nStart a new project?");
         if ui.button("New project").clicked() {
@@ -207,7 +225,7 @@ fn calculate_page(state: &mut State, ui: &mut egui::Ui) {
                     total = &project.calculated_gwp
                 )),
             }
-            .color(Color32::WHITE);
+            .color(style.visuals.strong_text_color());
             ui.add_space(4.);
             ui.label(total);
         });
@@ -232,9 +250,10 @@ fn list_page(state: &mut State, ui: &mut egui::Ui) {
 }
 
 fn render_selected_material(state: &mut State, ui: &mut egui::Ui) {
+    let style: crate::Style = (*ui.ctx().style()).clone();
     let selected = state.selected.as_ref().unwrap().clone();
     ui.vertical_centered(|ui| {
-        ui.heading(RichText::new(&selected.name).color(Color32::WHITE));
+        ui.heading(RichText::new(&selected.name).color(style.visuals.strong_text_color()));
     });
     ui.add_space(2.0);
     ui.indent("general-selected", |ui| {
@@ -428,6 +447,7 @@ fn show_categories_tree(state: &mut State, ui: &mut egui::Ui) {
 
 /// Renders the materials available in the [State] state as a list view
 fn render_material_cards(state: &mut State, ui: &mut eframe::egui::Ui, filter: &str) {
+    let style: crate::Style = (*ui.ctx().style()).clone();
     for m in state
         .materials
         .iter()
@@ -444,7 +464,7 @@ fn render_material_cards(state: &mut State, ui: &mut eframe::egui::Ui, filter: &
         if ui
             .selectable_label(
                 false,
-                RichText::new(&m.name).heading().color(Color32::WHITE),
+                RichText::new(&m.name).heading().color(style.visuals.strong_text_color()),
             )
             .clicked()
         {
@@ -466,11 +486,12 @@ fn render_material_cards(state: &mut State, ui: &mut eframe::egui::Ui, filter: &
 
 /// Short way of adding a tab that is connected to a [Tabs] enum in [State]
 fn add_tab(ui: &mut egui::Ui, state: &mut State, tab: Tabs) {
+    let style: crate::Style = (*ui.ctx().style()).clone();
     let color;
     if state.active_tab == tab {
-        color = Color32::LIGHT_BLUE;
+        color = style.visuals.selection.bg_fill;
     } else {
-        color = Color32::WHITE;
+        color = style.visuals.text_color();
     }
     let text = RichText::new(format!("   {tab}   ")).color(color);
     if ui.button(text).clicked() {
