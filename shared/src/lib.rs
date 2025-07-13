@@ -81,16 +81,20 @@ impl State {
 
         let api_key = self.api_key.to_owned();
         thread::spawn(move || {
-            if let Ok(result) = ec3api::Ec3api::new(&api_key.unwrap())
+            match ec3api::Ec3api::new(&api_key.unwrap())
                 .endpoint(ec3api::Endpoint::Categories)
                 .fetch_all()
             {
-                // Send materials to the receiver
-                println!("Finished fetching categories.");
-                if let Ec3Result::Categories(categories) = result {
-                    if let Err(e) = categories_tx.send(categories) {
-                        println!("ERROR: {:?}", e);
+                Ok(result) => {
+                    println!("Finished fetching categories.");
+                    if let Ec3Result::Categories(categories) = result {
+                        if let Err(e) = categories_tx.send(categories) {
+                            println!("ERROR: {:?}", e);
+                        }
                     }
+                }
+                Err(err) => {
+                    println!("ERROR: {:?}", err);
                 }
             }
         });

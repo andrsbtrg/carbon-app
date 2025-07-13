@@ -2,9 +2,7 @@
 extern crate shared;
 extern crate view;
 
-use eframe::
-    egui::{self, ViewportBuilder}
-;
+use eframe::egui::{self, ViewportBuilder};
 
 struct Application {
     state: shared::State,
@@ -53,7 +51,7 @@ fn main() -> Result<(), eframe::Error> {
 
 fn get_api_key() -> Option<String> {
     match std::fs::read_to_string(shared::settings::SettingsProvider::api_key_path()) {
-        Ok(api_key) => Some(api_key),
+        Ok(api_key) => Some(api_key.trim().to_string()),
         Err(_) => {
             println!("API key not found.");
             None

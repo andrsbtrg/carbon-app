@@ -37,7 +37,9 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
         .exact_height(44.0)
         .show(ctx, |ui| {
             ui.horizontal_centered(|ui| {
-                let logo = RichText::new("  🇨  ").size(26.).color(style.visuals.text_color());
+                let logo = RichText::new("  🇨  ")
+                    .size(26.)
+                    .color(style.visuals.text_color());
                 ui.menu_button(logo, |ui| {
                     ui.label("About").on_hover_text("Carbon app - version 0.1");
                     if ui.button("Quit").clicked() {
@@ -46,10 +48,9 @@ pub fn update_view(state: &mut State, ctx: &eframe::egui::Context, _frame: &mut 
                     if ui.button("Toggle light/dark mode").clicked() {
                         if style.visuals.dark_mode {
                             visuals::set_style(ctx, visuals::Theme::light())
-                        } else  {
+                        } else {
                             visuals::set_style(ctx, visuals::Theme::dark())
                         }
-
                     }
                 });
                 ui.add_space(44.);
@@ -226,6 +227,10 @@ fn calculate_page(state: &mut State, ui: &mut egui::Ui) {
 }
 
 fn list_page(state: &mut State, ui: &mut egui::Ui) {
+    if state.materials.len() == 0 {
+        ui.label("Select a category from Search to display a list of materials.");
+        return;
+    }
     add_filtering(ui, state);
     ui.separator();
 
@@ -454,10 +459,7 @@ fn render_material_cards(state: &mut State, ui: &mut eframe::egui::Ui, filter: &
     {
         ui.add_space(2.);
         if ui
-            .selectable_label(
-                false,
-                RichText::new(&m.name).heading(),
-            )
+            .selectable_label(false, RichText::new(&m.name).heading())
             .clicked()
         {
             // calculate category stats
